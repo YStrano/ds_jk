@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data and Design with Python &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-scraping-jumpstreet.html">Scraping the Street</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_ML_Intro.html">Intro to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Data and Design with Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/00-overview.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Data-and-Design-with-Python">
+<h1>Data and Design with Python<a class="headerlink" href="#Data-and-Design-with-Python" title="Permalink to this headline">¶</a></h1>
+<p><strong>OVERVIEW</strong></p>
+<p>This short course aims to introduce participants to the Python computing
+language. We will investigate the use of Python to perform data
+analysis, access and structure information from the web, and build and
+deploy applications like web pages and message boards using Django.
+Students will be expected to complete a small project for each weeks
+topics described below.</p>
+<div class="section" id="Important-Material-Locations">
+<h2>Important Material Locations<a class="headerlink" href="#Important-Material-Locations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Course Documentation</strong>:
+<a class="reference external" href="http://data-and-design.readthedocs.io/en/latest/">http://data-and-design.readthedocs.io/en/latest/</a></li>
+<li><strong>Github Repository</strong>:
+<a class="reference external" href="https://github.com/jfkoehler/data-design/tree/master/source">https://github.com/jfkoehler/data-design/tree/master/source</a></li>
+<li><strong>Slack Channel</strong>: <a class="reference external" href="https://datadesignpython.slack.com/">https://datadesignpython.slack.com/</a></li>
+<li><strong>YouTube Channel</strong>:
+<a class="reference external" href="https://www.youtube.com/playlist?list=PLUCTTwyv9AdUYtNeV5w-2xMX5O9cCcfkB">https://www.youtube.com/playlist?list=PLUCTTwyv9AdUYtNeV5w-2xMX5O9cCcfkB</a></li>
+</ul>
+</div>
+<div class="section" id="Topics">
+<h2>Topics<a class="headerlink" href="#Topics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Introduction to Data and Visualizations</strong>: The first class will
+focus on using Pandas and Seaborn to explore data in <code class="docutils literal"><span class="pre">.csv</span></code> files
+and through API’s. We emphasize the use of the computer to explore
+the data and look for patterns and differences. Our first project
+involves writing an analysis of New York City’s <span class="math">\(8^{\text{th}}\)</span>
+grade mathematics scores.</li>
+<li><a class="reference internal" href="02-introPandas.html"><span class="doc">Introduction to Pandas and Seaborn</span></a></li>
+<li><a class="reference internal" href="03-datafiles.html"><span class="doc">Pandas and Seaborn</span></a></li>
+<li><a class="reference internal" href="04-ProjectA.html"><span class="doc">Assignment: Access and Analyze Data</span></a></li>
+<li><strong>Introduction to Web Scraping</strong>: Today, we investigate the use of
+webscraping to pull and clean data from websites. We will investigate
+some basics of HTML and CSS, and use the <code class="docutils literal"><span class="pre">requests</span></code> and
+<code class="docutils literal"><span class="pre">BeautifulSoup2</span></code> libraries to pull this information.</li>
+<li><a class="reference internal" href="05-intro_to_scraping_I.html"><span class="doc">Introduction to webscraping</span></a></li>
+<li><a class="reference internal" href="07-scraping-jumpstreet.html"><span class="doc">Scraping Part II</span></a></li>
+<li><strong>Natural Language Processing and Scraping</strong>: Today, we extend our
+webscraping work to analyze the text of documents scraped. We will
+use the Natural Language Toolkit to analyze text. We will also
+introduce the use of regular expressions in navigating text on the
+computer.</li>
+<li><a class="reference internal" href="08_scraping_and_nltk.html"><span class="doc">Webscraping and Natural Language
+Processing</span></a></li>
+<li><a class="reference internal" href="09-Machine-Learning-Intro.html"><span class="doc">Sentiment Analysis of Text</span></a></li>
+<li><a class="reference internal" href="09_ML_Intro.html"><span class="doc">More Machine Learning</span></a></li>
+<li><strong>Web Design with Django</strong>: In this workshop, we will use the Django
+framework to design and deploy a basic web application. Our
+assignment will be a basic website ready to display our earlier work
+with Jupyter notebooks. We discuss Django projects and applications
+to use Python to build a basic website.</li>
+<li><a class="reference internal" href="11-django-intro.html"><span class="doc">Basic WebSite with Django</span></a></li>
+<li><a class="reference internal" href="12-Django-templates.html"><span class="doc">Applications with Django</span></a></li>
+<li><strong>Data and our Website</strong>: The final class serves to connect our
+earlier work with data and Python through Django models, where we
+build a database for our website. We will add a Blog application to
+our site, post some information, and access these posts as data in
+the shell. Finally, we use the ListView and DetailView to display
+these posts together with template logic.</li>
+<li><a class="reference internal" href="13-Django-Models-Blogs.html"><span class="doc">Databases and Django: A Basic Blog</span></a></li>
+</ul>
+</div>
+<div class="section" id="Lessons-Learned">
+<h2>Lessons Learned<a class="headerlink" href="#Lessons-Learned" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Student Computers</strong>: A number of students experienced difficulties
+with their computers at different points during the semester. In the
+first weeks, students who lacked access to their own functioning
+laptops dropped from enrollment. Also, a few students who were
+unaware of the level of coding involved dropped the course. If we
+were able to identify an IT support person who is capable of helping
+students install and optimize their personal computers, this would be
+great.</li>
+</ul>
+</div>
+<div class="section" id="Technology-Work">
+<h2>Technology Work<a class="headerlink" href="#Technology-Work" title="Permalink to this headline">¶</a></h2>
+<p>Also, if we were able to provide a web-based coding environment this
+could alleviate many of these issues. Below are three such options:</p>
+<ul>
+<li><p class="first"><strong>OpenEdX</strong>: A Learning Management system built by MIT and Harvard as
+part of their opencourse initiatives. This is freely available,
+however we would need a person competent in full stack web
+development. Alternatively, third party companies will launch and
+manage these applications for a fee that based on my initial research
+would be in the $10,000 neighborhood.</p>
+</li>
+<li><p class="first"><strong>CoCalc</strong>: A collaborative computing platform that has many language
+capability. We should be able to launch some version of this
+ourselves, using the Jupyter notebook and text editor execution
+capabilities of the service. This would again require some support
+from an individual who understands servers and deploying interactive
+software applications on them.</p>
+</li>
+<li><p class="first"><strong>JupyterHub</strong>: There have been examples of institutions that
+integrate Jupyter notebooks and other code related interfaces into
+their Learning Management Systems through JupyterHub. The most
+popular example is the Data8 course at UC Berkeley.</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://data8.org/">http://data8.org/</a></p>
+<p>This class integrates the JupyterHub with a virtual textbook. I am
+close to such things however I don’t have full control over my
+JupyterHub.</p>
+<p>You can check it out at</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://hub.dubmathematics.com">http://hub.dubmathematics.com</a></p>
+</li>
+</ul>
+<p>My goal is to integrate this within a website that students can access
+using some kind of login token.</p>
+</div>
+<div class="section" id="Suggestions-for-Course">
+<h2>Suggestions for Course<a class="headerlink" href="#Suggestions-for-Course" title="Permalink to this headline">¶</a></h2>
+<p>Despite some bumps in the road, many students were able to complete
+excellent work. Here are some examples of student github repositories
+that house three projects and a completed website built with Django:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/charmillz/datadesign_python">https://github.com/charmillz/datadesign_python</a></li>
+<li><a class="reference external" href="https://github.com/jchan9/Data_Design_Python/tree/master/Data/Projects">https://github.com/jchan9/Data_Design_Python/tree/master/Data/Projects</a></li>
+<li><a class="reference external" href="https://github.com/warpz785/data-design">https://github.com/warpz785/data-design</a></li>
+<li><a class="reference external" href="https://github.com/kyler-ross/git-test">https://github.com/kyler-ross/git-test</a></li>
+</ul>
+<p>If I were to do the course over again, I would keep the aim for work
+with both Data Analysis and Web Design as the focus. Ideally, the class
+would be a regular 3 or 4 hour class where we can spend more time on all
+three areas. I would also be interested in connecting with other
+instructors who work in web design and data visualization to normalize
+the use of specific technologies.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Hypothetical-Semester-Length-Version">
+<h2>Hypothetical Semester Length Version<a class="headerlink" href="#Hypothetical-Semester-Length-Version" title="Permalink to this headline">¶</a></h2>
+<p>Here is a prospective outline for such a class:</p>
+<div class="section" id="Section-I:-Data-Analysis-and-Machine-Learning">
+<h3>Section I: Data Analysis and Machine Learning<a class="headerlink" href="#Section-I:-Data-Analysis-and-Machine-Learning" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Week I</strong>: Introduction to Python</li>
+</ul>
+<p>Base introduction to the Python language. Jupyter notebooks and
+plotting. Saving and reusing programs.</p>
+<ul class="simple">
+<li><strong>Week II</strong>: Introduction to Pandas</li>
+</ul>
+<p>Introduction to Data Structures and the Pandas library. Students will
+work with built in and external datasets.</p>
+<ul class="simple">
+<li><strong>Week III</strong>: Introduction to Machine Learning</li>
+</ul>
+<p>We introduce machine learning through the Regression and Clustering
+algorithms. We will see how to implement each of these algorithms on our
+data structured with Pandas.</p>
+<ul class="simple">
+<li><strong>Week IV</strong>: Machine Learning with TensorFlow</li>
+</ul>
+<p>In this week, we introduce applications of machine learning to visual
+and audio problems with the Google TensorFlow machine learning library.
+Here we will discuss neural networks and their use in solving computer
+vision problems.</p>
+</div>
+<div class="section" id="Section-II:-Data-and-the-Internet">
+<h3>Section II: Data and the Internet<a class="headerlink" href="#Section-II:-Data-and-the-Internet" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Week VI</strong>: Introduction to WebScraping</li>
+</ul>
+<p>This week focuses on data accession from the web. To start, we will
+scrape numerical tables into a Pandas DataFrame and use our earlier work
+with visualization and data analysis to explore the web data. Next we
+will focus on accessing and structuring textual data from tables in
+Wikipedia articles.</p>
+<ul class="simple">
+<li><strong>Week VII</strong>: WebCrawling</li>
+</ul>
+<p>This week we will use Scrapy to set up a web crawler that will extract
+data from multiple websites with a similar structure.</p>
+<ul class="simple">
+<li><strong>Week VIII</strong>: Natural Language Processing I</li>
+</ul>
+<p>Building on our earlier work with data analysis, we start turn text into
+data using the NLTK library. We discuss some introductory Natural
+Language Processing techniques and visualize novels from Project
+Gutenberg.</p>
+<ul class="simple">
+<li><strong>Week IX</strong>: Machine Learning and Text</li>
+</ul>
+<p>This week we focus on using Machine Learning to understand the sentiment
+and important topics in a range of text. This will take place with
+reviews on Yelp and Amazon.com.</p>
+</div>
+<div class="section" id="Section-III:-Web-Design-with-Django">
+<h3>Section III: Web Design with Django<a class="headerlink" href="#Section-III:-Web-Design-with-Django" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Week X</strong>: Introduction to Django</li>
+</ul>
+<p>Setup a basic static website using the Python web framework Django. We
+will discuss the basics of how the internet works and complete a basic
+website that contains static HTML files that include some basic p5.js
+animations.</p>
+<ul class="simple">
+<li><strong>Week XI</strong>: Django and Models</li>
+</ul>
+<p>The week we explore the use of databases with Django applications. We
+will build a blog for our site and begin to post entries based on our
+eariler projects. Next, we see how we can analyze this data using our
+Juptyer notebooks.</p>
+<ul class="simple">
+<li><strong>Week XII</strong>: Serving our Site</li>
+</ul>
+<p>This week we complete our work with styling the basic site and serve it
+live to the internet using the Heroku service.</p>
+<ul class="simple">
+<li><strong>Week XIII</strong>: User Authentication and Site Access</li>
+</ul>
+<p>Adding to our website, we build a user authentication interface that
+allows us to restrict access to all or part of our website.</p>
+<ul class="simple">
+<li><strong>Week XIV</strong>: Packaging your site as a reusable application</li>
+</ul>
+<p>Finally, we will package our site for public use. We will use the Python
+standards to share our work with the larger world, including the
+launching of our frameworks on their own computer using a simple
+<code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

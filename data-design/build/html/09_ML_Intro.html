@@ -1,0 +1,2419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Intro to Machine Learning &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/>
+        <link rel="next" title="Decision Tree Classifiers" href="010-Decision-Trees.html"/>
+        <link rel="prev" title="Introduction to Machine Learning" href="09-Machine-Learning-Intro.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-scraping-jumpstreet.html">Scraping the Street</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Intro to Machine Learning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Regression-Example:-Loading-and-Structuring-Data">Regression Example: Loading and Structuring Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Linear-Regression:-Fitting-and-Evaluating-the-Model">Linear Regression: Fitting and Evaluating the Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-StatsModels-and-Seaborn">Using StatsModels and Seaborn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Other-Examples-of-Machine-Learning">Other Examples of Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#What-kind-of-Flower-is-This?">What kind of Flower is This?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Learning-and-Predicting-with-Digits">Learning and Predicting with Digits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Intro to Machine Learning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/09_ML_Intro.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Intro-to-Machine-Learning">
+<h1>Intro to Machine Learning<a class="headerlink" href="#Intro-to-Machine-Learning" title="Permalink to this headline">¶</a></h1>
+<p>One of the main ideas of machine learning, is to split data into testing
+and training sets. These sets are used to develop the model, and
+subsequently test its accuracy. Later, we will repeat this process a
+number of times to get an even better model. Machine learning can be
+thought of as representing a philosophy to model building, where we
+improve our models by iteratively building the model and testing it’s
+performance on held out data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(400,)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">350</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">350</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;training set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">350</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">350</span><span class="p">:],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;test set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">frameon</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Idea of Test and Train Split </span><span class="se">\n</span><span class="s2">in Machine Learning&quot;</span><span class="p">,</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Text(0,1,&#39;Idea of Test and Train Split \nin Machine Learning&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_4_1.png" src="_images/09_ML_Intro_4_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="mi">350</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">[</span><span class="mi">350</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">[:</span><span class="mi">350</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">[</span><span class="mi">350</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(350, 1)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">reg</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">reg</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([[-0.0010095]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">y_predict</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;matplotlib.lines.Line2D at 0x1a159ebcf8&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_11_1.png" src="_images/09_ML_Intro_11_1.png" />
+</div>
+</div>
+<div class="section" id="Regression-Example:-Loading-and-Structuring-Data">
+<h2>Regression Example: Loading and Structuring Data<a class="headerlink" href="#Regression-Example:-Loading-and-Structuring-Data" title="Permalink to this headline">¶</a></h2>
+<p>Predicting level of diabetes based on body mass index measures.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">linear_model</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_diabetes</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>{&#39;DESCR&#39;: &#39;Diabetes dataset\n================\n\nNotes\n-----\n\nTen baseline variables, age, sex, body mass index, average blood\npressure, and six blood serum measurements were obtained for each of n =\n442 diabetes patients, as well as the response of interest, a\nquantitative measure of disease progression one year after baseline.\n\nData Set Characteristics:\n\n  :Number of Instances: 442\n\n  :Number of Attributes: First 10 columns are numeric predictive values\n\n  :Target: Column 11 is a quantitative measure of disease progression one year after baseline\n\n  :Attributes:\n    :Age:\n    :Sex:\n    :Body mass index:\n    :Average blood pressure:\n    :S1:\n    :S2:\n    :S3:\n    :S4:\n    :S5:\n    :S6:\n\nNote: Each of these 10 feature variables have been mean centered and scaled by the standard deviation times `n_samples` (i.e. the sum of squares of each column totals 1).\n\nSource URL:\nhttp://www4.stat.ncsu.edu/~boos/var.select/diabetes.html\n\nFor more information see:\nBradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) &quot;Least Angle Regression,&quot; Annals of Statistics (with discussion), 407-499.\n(http://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf)\n&#39;,
+ &#39;data&#39;: array([[ 0.03807591,  0.05068012,  0.06169621, ..., -0.00259226,
+          0.01990842, -0.01764613],
+        [-0.00188202, -0.04464164, -0.05147406, ..., -0.03949338,
+         -0.06832974, -0.09220405],
+        [ 0.08529891,  0.05068012,  0.04445121, ..., -0.00259226,
+          0.00286377, -0.02593034],
+        ...,
+        [ 0.04170844,  0.05068012, -0.01590626, ..., -0.01107952,
+         -0.04687948,  0.01549073],
+        [-0.04547248, -0.04464164,  0.03906215, ...,  0.02655962,
+          0.04452837, -0.02593034],
+        [-0.04547248, -0.04464164, -0.0730303 , ..., -0.03949338,
+         -0.00421986,  0.00306441]]),
+ &#39;feature_names&#39;: [&#39;age&#39;,
+  &#39;sex&#39;,
+  &#39;bmi&#39;,
+  &#39;bp&#39;,
+  &#39;s1&#39;,
+  &#39;s2&#39;,
+  &#39;s3&#39;,
+  &#39;s4&#39;,
+  &#39;s5&#39;,
+  &#39;s6&#39;],
+ &#39;target&#39;: array([ 151.,   75.,  141.,  206.,  135.,   97.,  138.,   63.,  110.,
+         310.,  101.,   69.,  179.,  185.,  118.,  171.,  166.,  144.,
+          97.,  168.,   68.,   49.,   68.,  245.,  184.,  202.,  137.,
+          85.,  131.,  283.,  129.,   59.,  341.,   87.,   65.,  102.,
+         265.,  276.,  252.,   90.,  100.,   55.,   61.,   92.,  259.,
+          53.,  190.,  142.,   75.,  142.,  155.,  225.,   59.,  104.,
+         182.,  128.,   52.,   37.,  170.,  170.,   61.,  144.,   52.,
+         128.,   71.,  163.,  150.,   97.,  160.,  178.,   48.,  270.,
+         202.,  111.,   85.,   42.,  170.,  200.,  252.,  113.,  143.,
+          51.,   52.,  210.,   65.,  141.,   55.,  134.,   42.,  111.,
+          98.,  164.,   48.,   96.,   90.,  162.,  150.,  279.,   92.,
+          83.,  128.,  102.,  302.,  198.,   95.,   53.,  134.,  144.,
+         232.,   81.,  104.,   59.,  246.,  297.,  258.,  229.,  275.,
+         281.,  179.,  200.,  200.,  173.,  180.,   84.,  121.,  161.,
+          99.,  109.,  115.,  268.,  274.,  158.,  107.,   83.,  103.,
+         272.,   85.,  280.,  336.,  281.,  118.,  317.,  235.,   60.,
+         174.,  259.,  178.,  128.,   96.,  126.,  288.,   88.,  292.,
+          71.,  197.,  186.,   25.,   84.,   96.,  195.,   53.,  217.,
+         172.,  131.,  214.,   59.,   70.,  220.,  268.,  152.,   47.,
+          74.,  295.,  101.,  151.,  127.,  237.,  225.,   81.,  151.,
+         107.,   64.,  138.,  185.,  265.,  101.,  137.,  143.,  141.,
+          79.,  292.,  178.,   91.,  116.,   86.,  122.,   72.,  129.,
+         142.,   90.,  158.,   39.,  196.,  222.,  277.,   99.,  196.,
+         202.,  155.,   77.,  191.,   70.,   73.,   49.,   65.,  263.,
+         248.,  296.,  214.,  185.,   78.,   93.,  252.,  150.,   77.,
+         208.,   77.,  108.,  160.,   53.,  220.,  154.,  259.,   90.,
+         246.,  124.,   67.,   72.,  257.,  262.,  275.,  177.,   71.,
+          47.,  187.,  125.,   78.,   51.,  258.,  215.,  303.,  243.,
+          91.,  150.,  310.,  153.,  346.,   63.,   89.,   50.,   39.,
+         103.,  308.,  116.,  145.,   74.,   45.,  115.,  264.,   87.,
+         202.,  127.,  182.,  241.,   66.,   94.,  283.,   64.,  102.,
+         200.,  265.,   94.,  230.,  181.,  156.,  233.,   60.,  219.,
+          80.,   68.,  332.,  248.,   84.,  200.,   55.,   85.,   89.,
+          31.,  129.,   83.,  275.,   65.,  198.,  236.,  253.,  124.,
+          44.,  172.,  114.,  142.,  109.,  180.,  144.,  163.,  147.,
+          97.,  220.,  190.,  109.,  191.,  122.,  230.,  242.,  248.,
+         249.,  192.,  131.,  237.,   78.,  135.,  244.,  199.,  270.,
+         164.,   72.,   96.,  306.,   91.,  214.,   95.,  216.,  263.,
+         178.,  113.,  200.,  139.,  139.,   88.,  148.,   88.,  243.,
+          71.,   77.,  109.,  272.,   60.,   54.,  221.,   90.,  311.,
+         281.,  182.,  321.,   58.,  262.,  206.,  233.,  242.,  123.,
+         167.,   63.,  197.,   71.,  168.,  140.,  217.,  121.,  235.,
+         245.,   40.,   52.,  104.,  132.,   88.,   69.,  219.,   72.,
+         201.,  110.,   51.,  277.,   63.,  118.,   69.,  273.,  258.,
+          43.,  198.,  242.,  232.,  175.,   93.,  168.,  275.,  293.,
+         281.,   72.,  140.,  189.,  181.,  209.,  136.,  261.,  113.,
+         131.,  174.,  257.,   55.,   84.,   42.,  146.,  212.,  233.,
+          91.,  111.,  152.,  120.,   67.,  310.,   94.,  183.,   66.,
+         173.,   72.,   49.,   64.,   48.,  178.,  104.,  132.,  220.,   57.])}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span><span class="o">.</span><span class="n">DESCR</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Diabetes dataset\n================\n\nNotes\n-----\n\nTen baseline variables, age, sex, body mass index, average blood\npressure, and six blood serum measurements were obtained for each of n =\n442 diabetes patients, as well as the response of interest, a\nquantitative measure of disease progression one year after baseline.\n\nData Set Characteristics:\n\n  :Number of Instances: 442\n\n  :Number of Attributes: First 10 columns are numeric predictive values\n\n  :Target: Column 11 is a quantitative measure of disease progression one year after baseline\n\n  :Attributes:\n    :Age:\n    :Sex:\n    :Body mass index:\n    :Average blood pressure:\n    :S1:\n    :S2:\n    :S3:\n    :S4:\n    :S5:\n    :S6:\n\nNote: Each of these 10 feature variables have been mean centered and scaled by the standard deviation times `n_samples` (i.e. the sum of squares of each column totals 1).\n\nSource URL:\nhttp://www4.stat.ncsu.edu/~boos/var.select/diabetes.html\n\nFor more information see:\nBradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) &quot;Least Angle Regression,&quot; Annals of Statistics (with discussion), 407-499.\n(http://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf)\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([[ 0.03807591,  0.05068012,  0.06169621, ..., -0.00259226,
+         0.01990842, -0.01764613],
+       [-0.00188202, -0.04464164, -0.05147406, ..., -0.03949338,
+        -0.06832974, -0.09220405],
+       [ 0.08529891,  0.05068012,  0.04445121, ..., -0.00259226,
+         0.00286377, -0.02593034],
+       ...,
+       [ 0.04170844,  0.05068012, -0.01590626, ..., -0.01107952,
+        -0.04687948,  0.01549073],
+       [-0.04547248, -0.04464164,  0.03906215, ...,  0.02655962,
+         0.04452837, -0.02593034],
+       [-0.04547248, -0.04464164, -0.0730303 , ..., -0.03949338,
+        -0.00421986,  0.00306441]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span><span class="o">.</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[34]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;bmi&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([[ 0.06169621],
+       [-0.05147406],
+       [ 0.04445121],
+       [-0.01159501],
+       [-0.03638469],
+       [-0.04069594],
+       [-0.04716281],
+       [-0.00189471],
+       [ 0.06169621],
+       [ 0.03906215],
+       [-0.08380842],
+       [ 0.01750591],
+       [-0.02884001],
+       [-0.00189471],
+       [-0.02560657],
+       [-0.01806189],
+       [ 0.04229559],
+       [ 0.01211685],
+       [-0.0105172 ],
+       [-0.01806189],
+       [-0.05686312],
+       [-0.02237314],
+       [-0.00405033],
+       [ 0.06061839],
+       [ 0.03582872],
+       [-0.01267283],
+       [-0.07734155],
+       [ 0.05954058],
+       [-0.02129532],
+       [-0.00620595],
+       [ 0.04445121],
+       [-0.06548562],
+       [ 0.12528712],
+       [-0.05039625],
+       [-0.06332999],
+       [-0.03099563],
+       [ 0.02289497],
+       [ 0.01103904],
+       [ 0.07139652],
+       [ 0.01427248],
+       [-0.00836158],
+       [-0.06764124],
+       [-0.0105172 ],
+       [-0.02345095],
+       [ 0.06816308],
+       [-0.03530688],
+       [-0.01159501],
+       [-0.0730303 ],
+       [-0.04177375],
+       [ 0.01427248],
+       [-0.00728377],
+       [ 0.0164281 ],
+       [-0.00943939],
+       [-0.01590626],
+       [ 0.0250506 ],
+       [-0.04931844],
+       [ 0.04121778],
+       [-0.06332999],
+       [-0.06440781],
+       [-0.02560657],
+       [-0.00405033],
+       [ 0.00457217],
+       [-0.00728377],
+       [-0.0374625 ],
+       [-0.02560657],
+       [-0.02452876],
+       [-0.01806189],
+       [-0.01482845],
+       [-0.02991782],
+       [-0.046085  ],
+       [-0.06979687],
+       [ 0.03367309],
+       [-0.00405033],
+       [-0.02021751],
+       [ 0.00241654],
+       [-0.03099563],
+       [ 0.02828403],
+       [-0.03638469],
+       [-0.05794093],
+       [-0.0374625 ],
+       [ 0.01211685],
+       [-0.02237314],
+       [-0.03530688],
+       [ 0.00996123],
+       [-0.03961813],
+       [ 0.07139652],
+       [-0.07518593],
+       [-0.00620595],
+       [-0.04069594],
+       [-0.04824063],
+       [-0.02560657],
+       [ 0.0519959 ],
+       [ 0.00457217],
+       [-0.06440781],
+       [-0.01698407],
+       [-0.05794093],
+       [ 0.00996123],
+       [ 0.08864151],
+       [-0.00512814],
+       [-0.06440781],
+       [ 0.01750591],
+       [-0.04500719],
+       [ 0.02828403],
+       [ 0.04121778],
+       [ 0.06492964],
+       [-0.03207344],
+       [-0.07626374],
+       [ 0.04984027],
+       [ 0.04552903],
+       [-0.00943939],
+       [-0.03207344],
+       [ 0.00457217],
+       [ 0.02073935],
+       [ 0.01427248],
+       [ 0.11019775],
+       [ 0.00133873],
+       [ 0.05846277],
+       [-0.02129532],
+       [-0.0105172 ],
+       [-0.04716281],
+       [ 0.00457217],
+       [ 0.01750591],
+       [ 0.08109682],
+       [ 0.0347509 ],
+       [ 0.02397278],
+       [-0.00836158],
+       [-0.06117437],
+       [-0.00189471],
+       [-0.06225218],
+       [ 0.0164281 ],
+       [ 0.09618619],
+       [-0.06979687],
+       [-0.02129532],
+       [-0.05362969],
+       [ 0.0433734 ],
+       [ 0.05630715],
+       [-0.0816528 ],
+       [ 0.04984027],
+       [ 0.11127556],
+       [ 0.06169621],
+       [ 0.01427248],
+       [ 0.04768465],
+       [ 0.01211685],
+       [ 0.00564998],
+       [ 0.04660684],
+       [ 0.12852056],
+       [ 0.05954058],
+       [ 0.09295276],
+       [ 0.01535029],
+       [-0.00512814],
+       [ 0.0703187 ],
+       [-0.00405033],
+       [-0.00081689],
+       [-0.04392938],
+       [ 0.02073935],
+       [ 0.06061839],
+       [-0.0105172 ],
+       [-0.03315126],
+       [-0.06548562],
+       [ 0.0433734 ],
+       [-0.06225218],
+       [ 0.06385183],
+       [ 0.03043966],
+       [ 0.07247433],
+       [-0.0191397 ],
+       [-0.06656343],
+       [-0.06009656],
+       [ 0.06924089],
+       [ 0.05954058],
+       [-0.02668438],
+       [-0.02021751],
+       [-0.046085  ],
+       [ 0.07139652],
+       [-0.07949718],
+       [ 0.00996123],
+       [-0.03854032],
+       [ 0.01966154],
+       [ 0.02720622],
+       [-0.00836158],
+       [-0.01590626],
+       [ 0.00457217],
+       [-0.04285156],
+       [ 0.00564998],
+       [-0.03530688],
+       [ 0.02397278],
+       [-0.01806189],
+       [ 0.04229559],
+       [-0.0547075 ],
+       [-0.00297252],
+       [-0.06656343],
+       [-0.01267283],
+       [-0.04177375],
+       [-0.03099563],
+       [-0.00512814],
+       [-0.05901875],
+       [ 0.0250506 ],
+       [-0.046085  ],
+       [ 0.00349435],
+       [ 0.05415152],
+       [-0.04500719],
+       [-0.05794093],
+       [-0.05578531],
+       [ 0.00133873],
+       [ 0.03043966],
+       [ 0.00672779],
+       [ 0.04660684],
+       [ 0.02612841],
+       [ 0.04552903],
+       [ 0.04013997],
+       [-0.01806189],
+       [ 0.01427248],
+       [ 0.03690653],
+       [ 0.00349435],
+       [-0.07087468],
+       [-0.03315126],
+       [ 0.09403057],
+       [ 0.03582872],
+       [ 0.03151747],
+       [-0.06548562],
+       [-0.04177375],
+       [-0.03961813],
+       [-0.03854032],
+       [-0.02560657],
+       [-0.02345095],
+       [-0.06656343],
+       [ 0.03259528],
+       [-0.046085  ],
+       [-0.02991782],
+       [-0.01267283],
+       [-0.01590626],
+       [ 0.07139652],
+       [-0.03099563],
+       [ 0.00026092],
+       [ 0.03690653],
+       [ 0.03906215],
+       [-0.01482845],
+       [ 0.00672779],
+       [-0.06871905],
+       [-0.00943939],
+       [ 0.01966154],
+       [ 0.07462995],
+       [-0.00836158],
+       [-0.02345095],
+       [-0.046085  ],
+       [ 0.05415152],
+       [-0.03530688],
+       [-0.03207344],
+       [-0.0816528 ],
+       [ 0.04768465],
+       [ 0.06061839],
+       [ 0.05630715],
+       [ 0.09834182],
+       [ 0.05954058],
+       [ 0.03367309],
+       [ 0.05630715],
+       [-0.06548562],
+       [ 0.16085492],
+       [-0.05578531],
+       [-0.02452876],
+       [-0.03638469],
+       [-0.00836158],
+       [-0.04177375],
+       [ 0.12744274],
+       [-0.07734155],
+       [ 0.02828403],
+       [-0.02560657],
+       [-0.06225218],
+       [-0.00081689],
+       [ 0.08864151],
+       [-0.03207344],
+       [ 0.03043966],
+       [ 0.00888341],
+       [ 0.00672779],
+       [-0.02021751],
+       [-0.02452876],
+       [-0.01159501],
+       [ 0.02612841],
+       [-0.05901875],
+       [-0.03638469],
+       [-0.02452876],
+       [ 0.01858372],
+       [-0.0902753 ],
+       [-0.00512814],
+       [-0.05255187],
+       [-0.02237314],
+       [-0.02021751],
+       [-0.0547075 ],
+       [-0.00620595],
+       [-0.01698407],
+       [ 0.05522933],
+       [ 0.07678558],
+       [ 0.01858372],
+       [-0.02237314],
+       [ 0.09295276],
+       [-0.03099563],
+       [ 0.03906215],
+       [-0.06117437],
+       [-0.00836158],
+       [-0.0374625 ],
+       [-0.01375064],
+       [ 0.07355214],
+       [-0.02452876],
+       [ 0.03367309],
+       [ 0.0347509 ],
+       [-0.03854032],
+       [-0.03961813],
+       [-0.00189471],
+       [-0.03099563],
+       [-0.046085  ],
+       [ 0.00133873],
+       [ 0.06492964],
+       [ 0.04013997],
+       [-0.02345095],
+       [ 0.05307371],
+       [ 0.04013997],
+       [-0.02021751],
+       [ 0.01427248],
+       [-0.03422907],
+       [ 0.00672779],
+       [ 0.00457217],
+       [ 0.03043966],
+       [ 0.0519959 ],
+       [ 0.06169621],
+       [-0.00728377],
+       [ 0.00564998],
+       [ 0.05415152],
+       [-0.00836158],
+       [ 0.114509  ],
+       [ 0.06708527],
+       [-0.05578531],
+       [ 0.03043966],
+       [-0.02560657],
+       [ 0.10480869],
+       [-0.00620595],
+       [-0.04716281],
+       [-0.04824063],
+       [ 0.08540807],
+       [-0.01267283],
+       [-0.03315126],
+       [-0.00728377],
+       [-0.01375064],
+       [ 0.05954058],
+       [ 0.02181716],
+       [ 0.01858372],
+       [-0.01159501],
+       [-0.00297252],
+       [ 0.01750591],
+       [-0.02991782],
+       [-0.02021751],
+       [-0.05794093],
+       [ 0.06061839],
+       [-0.04069594],
+       [-0.07195249],
+       [-0.05578531],
+       [ 0.04552903],
+       [-0.00943939],
+       [-0.03315126],
+       [ 0.04984027],
+       [-0.08488624],
+       [ 0.00564998],
+       [ 0.02073935],
+       [-0.00728377],
+       [ 0.10480869],
+       [-0.02452876],
+       [-0.00620595],
+       [-0.03854032],
+       [ 0.13714305],
+       [ 0.17055523],
+       [ 0.00241654],
+       [ 0.03798434],
+       [-0.05794093],
+       [-0.00943939],
+       [-0.02345095],
+       [-0.0105172 ],
+       [-0.03422907],
+       [-0.00297252],
+       [ 0.06816308],
+       [ 0.00996123],
+       [ 0.00241654],
+       [-0.03854032],
+       [ 0.02612841],
+       [-0.08919748],
+       [ 0.06061839],
+       [-0.02884001],
+       [-0.02991782],
+       [-0.0191397 ],
+       [-0.04069594],
+       [ 0.01535029],
+       [-0.02452876],
+       [ 0.00133873],
+       [ 0.06924089],
+       [-0.06979687],
+       [-0.02991782],
+       [-0.046085  ],
+       [ 0.01858372],
+       [ 0.00133873],
+       [-0.03099563],
+       [-0.00405033],
+       [ 0.01535029],
+       [ 0.02289497],
+       [ 0.04552903],
+       [-0.04500719],
+       [-0.03315126],
+       [ 0.097264  ],
+       [ 0.05415152],
+       [ 0.12313149],
+       [-0.08057499],
+       [ 0.09295276],
+       [-0.05039625],
+       [-0.01159501],
+       [-0.0277622 ],
+       [ 0.05846277],
+       [ 0.08540807],
+       [-0.00081689],
+       [ 0.00672779],
+       [ 0.00888341],
+       [ 0.08001901],
+       [ 0.07139652],
+       [-0.02452876],
+       [-0.0547075 ],
+       [-0.03638469],
+       [ 0.0164281 ],
+       [ 0.07786339],
+       [-0.03961813],
+       [ 0.01103904],
+       [-0.04069594],
+       [-0.03422907],
+       [ 0.00564998],
+       [ 0.08864151],
+       [-0.03315126],
+       [-0.05686312],
+       [-0.03099563],
+       [ 0.05522933],
+       [-0.06009656],
+       [ 0.00133873],
+       [-0.02345095],
+       [-0.07410811],
+       [ 0.01966154],
+       [-0.01590626],
+       [-0.01590626],
+       [ 0.03906215],
+       [-0.0730303 ]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes_X</span> <span class="o">=</span> <span class="n">diabetes</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([ 151.,   75.,  141.,  206.,  135.,   97.,  138.,   63.,  110.,
+        310.,  101.,   69.,  179.,  185.,  118.,  171.,  166.,  144.,
+         97.,  168.,   68.,   49.,   68.,  245.,  184.,  202.,  137.,
+         85.,  131.,  283.,  129.,   59.,  341.,   87.,   65.,  102.,
+        265.,  276.,  252.,   90.,  100.,   55.,   61.,   92.,  259.,
+         53.,  190.,  142.,   75.,  142.,  155.,  225.,   59.,  104.,
+        182.,  128.,   52.,   37.,  170.,  170.,   61.,  144.,   52.,
+        128.,   71.,  163.,  150.,   97.,  160.,  178.,   48.,  270.,
+        202.,  111.,   85.,   42.,  170.,  200.,  252.,  113.,  143.,
+         51.,   52.,  210.,   65.,  141.,   55.,  134.,   42.,  111.,
+         98.,  164.,   48.,   96.,   90.,  162.,  150.,  279.,   92.,
+         83.,  128.,  102.,  302.,  198.,   95.,   53.,  134.,  144.,
+        232.,   81.,  104.,   59.,  246.,  297.,  258.,  229.,  275.,
+        281.,  179.,  200.,  200.,  173.,  180.,   84.,  121.,  161.,
+         99.,  109.,  115.,  268.,  274.,  158.,  107.,   83.,  103.,
+        272.,   85.,  280.,  336.,  281.,  118.,  317.,  235.,   60.,
+        174.,  259.,  178.,  128.,   96.,  126.,  288.,   88.,  292.,
+         71.,  197.,  186.,   25.,   84.,   96.,  195.,   53.,  217.,
+        172.,  131.,  214.,   59.,   70.,  220.,  268.,  152.,   47.,
+         74.,  295.,  101.,  151.,  127.,  237.,  225.,   81.,  151.,
+        107.,   64.,  138.,  185.,  265.,  101.,  137.,  143.,  141.,
+         79.,  292.,  178.,   91.,  116.,   86.,  122.,   72.,  129.,
+        142.,   90.,  158.,   39.,  196.,  222.,  277.,   99.,  196.,
+        202.,  155.,   77.,  191.,   70.,   73.,   49.,   65.,  263.,
+        248.,  296.,  214.,  185.,   78.,   93.,  252.,  150.,   77.,
+        208.,   77.,  108.,  160.,   53.,  220.,  154.,  259.,   90.,
+        246.,  124.,   67.,   72.,  257.,  262.,  275.,  177.,   71.,
+         47.,  187.,  125.,   78.,   51.,  258.,  215.,  303.,  243.,
+         91.,  150.,  310.,  153.,  346.,   63.,   89.,   50.,   39.,
+        103.,  308.,  116.,  145.,   74.,   45.,  115.,  264.,   87.,
+        202.,  127.,  182.,  241.,   66.,   94.,  283.,   64.,  102.,
+        200.,  265.,   94.,  230.,  181.,  156.,  233.,   60.,  219.,
+         80.,   68.,  332.,  248.,   84.,  200.,   55.,   85.,   89.,
+         31.,  129.,   83.,  275.,   65.,  198.,  236.,  253.,  124.,
+         44.,  172.,  114.,  142.,  109.,  180.,  144.,  163.,  147.,
+         97.,  220.,  190.,  109.,  191.,  122.,  230.,  242.,  248.,
+        249.,  192.,  131.,  237.,   78.,  135.,  244.,  199.,  270.,
+        164.,   72.,   96.,  306.,   91.,  214.,   95.,  216.,  263.,
+        178.,  113.,  200.,  139.,  139.,   88.,  148.,   88.,  243.,
+         71.,   77.,  109.,  272.,   60.,   54.,  221.,   90.,  311.,
+        281.,  182.,  321.,   58.,  262.,  206.,  233.,  242.,  123.,
+        167.,   63.,  197.,   71.,  168.,  140.,  217.,  121.,  235.,
+        245.,   40.,   52.,  104.,  132.,   88.,   69.,  219.,   72.,
+        201.,  110.,   51.,  277.,   63.,  118.,   69.,  273.,  258.,
+         43.,  198.,  242.,  232.,  175.,   93.,  168.,  275.,  293.,
+        281.,   72.,  140.,  189.,  181.,  209.,  136.,  261.,  113.,
+        131.,  174.,  257.,   55.,   84.,   42.,  146.,  212.,  233.,
+         91.,  111.,  152.,  120.,   67.,  310.,   94.,  183.,   66.,
+        173.,   72.,   49.,   64.,   48.,  178.,  104.,  132.,  220.,   57.])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">diabetes_y</span> <span class="o">=</span> <span class="n">diabetes</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">x_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">diabetes_X</span><span class="p">)</span>
+<span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">diabetes_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Training Set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Test Set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Example Test Train Split from Diabetes Data&quot;</span><span class="p">,</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[32]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Text(0,1,&#39;Example Test Train Split from Diabetes Data&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_25_1.png" src="_images/09_ML_Intro_25_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Linear-Regression:-Fitting-and-Evaluating-the-Model">
+<h2>Linear Regression: Fitting and Evaluating the Model<a class="headerlink" href="#Linear-Regression:-Fitting-and-Evaluating-the-Model" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">regr</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">regr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[36]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">regr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The coefficients of the model are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">regr</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The coefficients of the model are:
+ [ 6.29641819]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The intercept of the model are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">regr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The intercept of the model are:
+ 152.512205614
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Equation for the Line of Best Fit is </span><span class="se">\n</span><span class="s2"> y = &quot;</span><span class="p">,</span> <span class="n">regr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="s1">&#39;x +&#39;</span><span class="p">,</span> <span class="n">regr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Equation for the Line of Best Fit is
+ y =  [ 6.29641819] x + 152.512205614
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">regr</span><span class="o">.</span><span class="n">coef_</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">regr</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[45]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([ 341.40475121])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Training Set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Test Set&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">l</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Line of Best Fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Example Test Train Split from Diabetes Data&quot;</span><span class="p">,</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[47]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Text(0,1,&#39;Example Test Train Split from Diabetes Data&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_36_1.png" src="_images/09_ML_Intro_36_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Mean Squared Error of the model is&quot;</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Mean Squared Error of the model is 6126.13411338
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The Variance Score is &quot;</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Variance Score is  -0.000950748287665
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">regr</span><span class="o">.</span><span class="n">get_params</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[51]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;bound method BaseEstimator.get_params of LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Using-StatsModels-and-Seaborn">
+<h2>Using StatsModels and Seaborn<a class="headerlink" href="#Using-StatsModels-and-Seaborn" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [67]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bmi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diabetes</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;disease&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diabetes</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [69]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[69]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bmi</th>
+      <th>disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.061696</td>
+      <td>151.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.051474</td>
+      <td>75.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.044451</td>
+      <td>141.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.011595</td>
+      <td>206.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.036385</td>
+      <td>135.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bmi&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[73]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>442
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [75]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">results</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;disease ~ bmi&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [76]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:                disease   R-squared:                       0.344
+Model:                            OLS   Adj. R-squared:                  0.342
+Method:                 Least Squares   F-statistic:                     230.7
+Date:                Sat, 10 Feb 2018   Prob (F-statistic):           3.47e-42
+Time:                        14:16:19   Log-Likelihood:                -2454.0
+No. Observations:                 442   AIC:                             4912.
+Df Residuals:                     440   BIC:                             4920.
+Df Model:                           1
+Covariance Type:            nonrobust
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    152.1335      2.974     51.162      0.000     146.289     157.978
+bmi          949.4353     62.515     15.187      0.000     826.570    1072.301
+==============================================================================
+Omnibus:                       11.674   Durbin-Watson:                   1.848
+Prob(Omnibus):                  0.003   Jarque-Bera (JB):                7.310
+Skew:                           0.156   Prob(JB):                       0.0259
+Kurtosis:                       2.453   Cond. No.                         21.0
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [77]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[78]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bmi</th>
+      <th>disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.061696</td>
+      <td>151.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.051474</td>
+      <td>75.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.044451</td>
+      <td>141.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.011595</td>
+      <td>206.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.036385</td>
+      <td>135.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df2b</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">300</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [80]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df2b</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[80]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bmi</th>
+      <th>disease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>300</th>
+      <td>0.073552</td>
+      <td>275.0</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>-0.024529</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>0.033673</td>
+      <td>198.0</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>0.034751</td>
+      <td>236.0</td>
+    </tr>
+    <tr>
+      <th>304</th>
+      <td>-0.038540</td>
+      <td>253.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [83]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">split_results</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;disease ~ bmi&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [84]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">split_results</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:                disease   R-squared:                       0.342
+Model:                            OLS   Adj. R-squared:                  0.340
+Method:                 Least Squares   F-statistic:                     154.8
+Date:                Sat, 10 Feb 2018   Prob (F-statistic):           6.61e-29
+Time:                        14:18:03   Log-Likelihood:                -1668.4
+No. Observations:                 300   AIC:                             3341.
+Df Residuals:                     298   BIC:                             3348.
+Df Model:                           1
+Covariance Type:            nonrobust
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    151.0306      3.651     41.372      0.000     143.846     158.215
+bmi          975.5736     78.405     12.443      0.000     821.276    1129.872
+==============================================================================
+Omnibus:                        9.498   Durbin-Watson:                   1.764
+Prob(Omnibus):                  0.009   Jarque-Bera (JB):                6.672
+Skew:                           0.238   Prob(JB):                       0.0356
+Kurtosis:                       2.446   Cond. No.                         21.5
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [87]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">split_results</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df2b</span><span class="p">[</span><span class="s1">&#39;bmi&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [88]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">predictions</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[88]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>300    222.786110
+301    127.100973
+302    183.881164
+303    184.932649
+304    113.431668
+305    112.380183
+306    149.182158
+307    120.792063
+308    106.071273
+309    152.336613
+dtype: float64
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [95]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="s1">&#39;bmi&#39;</span><span class="p">,</span> <span class="s1">&#39;disease&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[95]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;seaborn.axisgrid.JointGrid at 0x1c216fc438&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_57_1.png" src="_images/09_ML_Intro_57_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Other-Examples-of-Machine-Learning">
+<h2>Other Examples of Machine Learning<a class="headerlink" href="#Other-Examples-of-Machine-Learning" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>What category does this belong to?</li>
+<li>What is this a picture of?</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">digits</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[  0.   0.   5. ...,   0.   0.   0.]
+ [  0.   0.   0. ...,  10.   0.   0.]
+ [  0.   0.   0. ...,  16.   9.   0.]
+ ...,
+ [  0.   0.   1. ...,   6.   0.   0.]
+ [  0.   0.   2. ...,  12.   0.   0.]
+ [  0.   0.  10. ...,  12.   1.   0.]]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">digits</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([0, 1, 2, ..., 8, 9, 8])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">digits</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([[  0.,   0.,   5.,  13.,   9.,   1.,   0.,   0.],
+       [  0.,   0.,  13.,  15.,  10.,  15.,   5.,   0.],
+       [  0.,   3.,  15.,   2.,   0.,  11.,   8.,   0.],
+       [  0.,   4.,  12.,   0.,   0.,   8.,   8.,   0.],
+       [  0.,   5.,   8.,   0.,   0.,   9.,   8.,   0.],
+       [  0.,   4.,  11.,   0.,   1.,  12.,   7.,   0.],
+       [  0.,   2.,  14.,   5.,  10.,  12.,   0.,   0.],
+       [  0.,   0.,   6.,  13.,  10.,   0.,   0.,   0.]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([[ 5.1,  3.5,  1.4,  0.2],
+       [ 4.9,  3. ,  1.4,  0.2],
+       [ 4.7,  3.2,  1.3,  0.2],
+       [ 4.6,  3.1,  1.5,  0.2],
+       [ 5. ,  3.6,  1.4,  0.2]])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="What-kind-of-Flower-is-This?">
+<h2>What kind of Flower is This?<a class="headerlink" href="#What-kind-of-Flower-is-This?" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>K-Means Clustering</strong></li>
+<li><strong>Naive Bayes Classifier</strong></li>
+<li><strong>Decision Tree</strong></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.image.AxesImage at 0x1a15e43630&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_67_1.png" src="_images/09_ML_Intro_67_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Learning-and-Predicting-with-Digits">
+<h2>Learning and Predicting with Digits<a class="headerlink" href="#Learning-and-Predicting-with-Digits" title="Permalink to this headline">¶</a></h2>
+<p>Given an image, which digit does it represent? Here, we will <em>fit</em> an
+estimator to <em>predict</em> which class unknown images belong to. To do this,
+we will use the support vector classifier.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">svm</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1">#fit on all but last data point</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>SVC(C=100, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=&#39;ovr&#39;, degree=3, gamma=0.001, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([8])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[24]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.image.AxesImage at 0x1a15db4278&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09_ML_Intro_73_1.png" src="_images/09_ML_Intro_73_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="010-Decision-Trees.html" class="btn btn-neutral float-right" title="Decision Tree Classifiers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="09-Machine-Learning-Intro.html" class="btn btn-neutral" title="Introduction to Machine Learning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

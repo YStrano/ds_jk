@@ -1,0 +1,2163 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scraping the Street &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/>
+        <link rel="next" title="Webscraping and Natural Language Processing" href="08_scraping_and_nltk.html"/>
+        <link rel="prev" title="Introduction to Web Scraping" href="05-intro_to_scraping_I.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scraping the Street</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Wikipedia-List-of-Guest-Stars">Wikipedia List of Guest Stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-Attributes">Using Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_ML_Intro.html">Intro to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Scraping the Street</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/07-scraping-jumpstreet.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Scraping-the-Street">
+<h1>Scraping the Street<a class="headerlink" href="#Scraping-the-Street" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">HTML</span>
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/5GcOXA_41MU&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5GcOXA_41MU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+</div>
+<div class="figure">
+<img alt="" src="_images/21_jump_street.png" />
+</div>
+<p>One of the most important television shows of all time was <strong>21 Jump
+Street</strong>. The show gave birth to stars like Johnny Depp, Richard Greico,
+and Holly Robinson Peete. The show also spoke to the youth of the late
+80’s and early 90’s with a crew of undercover cops tackling law
+breakers.</p>
+<div class="section" id="Wikipedia-List-of-Guest-Stars">
+<h2>Wikipedia List of Guest Stars<a class="headerlink" href="#Wikipedia-List-of-Guest-Stars" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="" src="_images/wiki_jump.png" />
+</div>
+<p>Wikipedia has a page containing information on the list of guest stars
+for five seasons of 21 Jump Street. Our goal is to create a table with
+the information on all the guest stars.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>1
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[1, 2, 3]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[1, 3, 5]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">HTML</span>
+
+&lt;h1&gt;This a header&lt;/h1&gt;
+&lt;p&gt;This is a paragraph&lt;/p&gt;
+&lt;p class = &quot;special&quot;&gt;This is a paragraph with an attribute&lt;/p&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<h1>This a header</h1>
+<p>This is a paragraph</p>
+<p class = "special">This is a paragraph with an attribute</p></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://en.wikipedia.org/wiki/List_of_guest_stars_on_21_Jump_Street&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">page</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;Response [200]&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;List of guest stars on 21 Jump Street - Wikipedia&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">string</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;List of guest stars on 21 Jump Street - Wikipedia&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span><span class="o">.</span><span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span><span class="o">.</span><span class="n">div</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;div class=&quot;noprint&quot; id=&quot;mw-page-base&quot;&gt;&lt;/div&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#mw-head&quot;&gt;navigation&lt;/a&gt;,
+ &lt;a href=&quot;#p-search&quot;&gt;search&lt;/a&gt;,
+ &lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Television_personality&quot; title=&quot;Television personality&quot;&gt;television&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Fox_Broadcasting_Company&quot; title=&quot;Fox Broadcasting Company&quot;&gt;Fox&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/21_Jump_Street&quot; title=&quot;21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;#Season_1&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 1&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#Season_2&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 2&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#Season_3&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 3&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#Season_4&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 4&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#Season_5&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 5&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#See_also&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;See also&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;#References&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;References&lt;/span&gt;&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=1&quot; title=&quot;Edit section: Season 1&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Barney_Martin&quot; title=&quot;Barney Martin&quot;&gt;Barney Martin&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Brandon_Douglas&quot; title=&quot;Brandon Douglas&quot;&gt;Brandon Douglas&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Reginald_T._Dorsey&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Reginald T. Dorsey (page does not exist)&quot;&gt;Reginald T. Dorsey&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Billy_Jayne&quot; title=&quot;Billy Jayne&quot;&gt;Billy Jayne&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Steve_Antin&quot; title=&quot;Steve Antin&quot;&gt;Steve Antin&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Traci_Lind&quot; title=&quot;Traci Lind&quot;&gt;Traci Lind&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Leah_Ayres&quot; title=&quot;Leah Ayres&quot;&gt;Leah Ayres&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Geoffrey_Blake_(actor)&quot; title=&quot;Geoffrey Blake (actor)&quot;&gt;Geoffrey Blake&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Josh_Brolin&quot; title=&quot;Josh Brolin&quot;&gt;Josh Brolin&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Jamie_Bozian&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Jamie Bozian (page does not exist)&quot;&gt;Jamie Bozian&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/John_D%27Aquino&quot; title=&quot;John D&#39;Aquino&quot;&gt;John D&#39;Aquino&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Troy_Byer&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Troy Byer (page does not exist)&quot;&gt;Troy Byer&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Lezlie_Deane&quot; title=&quot;Lezlie Deane&quot;&gt;Lezlie Deane&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Blair_Underwood&quot; title=&quot;Blair Underwood&quot;&gt;Blair Underwood&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Robert_Picardo&quot; title=&quot;Robert Picardo&quot;&gt;Robert Picardo&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Scott_Schwartz&quot; title=&quot;Scott Schwartz&quot;&gt;Scott Schwartz&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Liane_Curtis&quot; title=&quot;Liane Curtis&quot;&gt;Liane Curtis&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Byron_Thames&quot; title=&quot;Byron Thames&quot;&gt;Byron Thames&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Sherilyn_Fenn&quot; title=&quot;Sherilyn Fenn&quot;&gt;Sherilyn Fenn&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Christopher_Heyerdahl&quot; title=&quot;Christopher Heyerdahl&quot;&gt;Christopher Heyerdahl&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kurtwood_Smith&quot; title=&quot;Kurtwood Smith&quot;&gt;Kurtwood Smith&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Sarah_G._Buxton&quot; title=&quot;Sarah G. Buxton&quot;&gt;Sarah G. Buxton&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Jason_Priestley&quot; title=&quot;Jason Priestley&quot;&gt;Jason Priestley&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=2&quot; title=&quot;Edit section: Season 2&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kurtwood_Smith&quot; title=&quot;Kurtwood Smith&quot;&gt;Kurtwood Smith&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Ray_Walston&quot; title=&quot;Ray Walston&quot;&gt;Ray Walston&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Pauly_Shore&quot; title=&quot;Pauly Shore&quot;&gt;Pauly Shore&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Shannon_Tweed&quot; title=&quot;Shannon Tweed&quot;&gt;Shannon Tweed&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Lochlyn_Munro&quot; title=&quot;Lochlyn Munro&quot;&gt;Lochlyn Munro&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Mindy_Cohn&quot; title=&quot;Mindy Cohn&quot;&gt;Mindy Cohn&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kent_McCord&quot; title=&quot;Kent McCord&quot;&gt;Kent McCord&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;,
+ &lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Tom_Wright_(actor)&quot; title=&quot;Tom Wright (actor)&quot;&gt;Tom Wright&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Jean_Sagal&quot; title=&quot;Jean Sagal&quot;&gt;Jean Sagal&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Liz_Sagal&quot; title=&quot;Liz Sagal&quot;&gt;Liz Sagal&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Deborah_Lacey&quot; title=&quot;Deborah Lacey&quot;&gt;Deborah Lacey&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Bradford_English&quot; title=&quot;Bradford English&quot;&gt;Bradford English&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Christina_Applegate&quot; title=&quot;Christina Applegate&quot;&gt;Christina Applegate&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Peter_Berg&quot; title=&quot;Peter Berg&quot;&gt;Peter Berg&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Gabriel_Jarret&quot; title=&quot;Gabriel Jarret&quot;&gt;Gabriel Jarret&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Bruce_French_(actor)&quot; title=&quot;Bruce French (actor)&quot;&gt;Bruce French&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Dann_Florek&quot; title=&quot;Dann Florek&quot;&gt;Dann Florek&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Gregory_Itzin&quot; title=&quot;Gregory Itzin&quot;&gt;Gregory Itzin&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Brad_Pitt&quot; title=&quot;Brad Pitt&quot;&gt;Brad Pitt&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Sam_Anderson&quot; title=&quot;Sam Anderson&quot;&gt;Sam Anderson&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=3&quot; title=&quot;Edit section: Season 3&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Leo_Rossi&quot; title=&quot;Leo Rossi&quot;&gt;Leo Rossi&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Peri_Gilpin&quot; title=&quot;Peri Gilpin&quot;&gt;Peri Gilpin&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kelly_Hu&quot; title=&quot;Kelly Hu&quot;&gt;Kelly Hu&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Russell_Wong&quot; title=&quot;Russell Wong&quot;&gt;Russell Wong&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Christopher_Titus&quot; title=&quot;Christopher Titus&quot;&gt;Christopher Titus&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Dom_DeLuise&quot; title=&quot;Dom DeLuise&quot;&gt;Dom DeLuise&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Kehli_O%27Byrne&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Kehli O&#39;Byrne (page does not exist)&quot;&gt;Kehli O&#39;Byrne&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Larenz_Tate&quot; title=&quot;Larenz Tate&quot;&gt;Larenz Tate&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Maia_Brewton&quot; title=&quot;Maia Brewton&quot;&gt;Maia Brewton&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Michael_DeLuise&quot; title=&quot;Michael DeLuise&quot;&gt;Michael DeLuise&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Mario_Van_Peebles&quot; title=&quot;Mario Van Peebles&quot;&gt;Mario Van Peebles&lt;/a&gt;,
+ &lt;a href=&quot;#endnote_reference_name_A&quot;&gt;*&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Bridget_Fonda&quot; title=&quot;Bridget Fonda&quot;&gt;Bridget Fonda&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Conor_O%27Farrell&quot; title=&quot;Conor O&#39;Farrell&quot;&gt;Conor O&#39;Farrell&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Andrew_Lauer&quot; title=&quot;Andrew Lauer&quot;&gt;Andrew Lauer&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Claude_Brooks&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Claude Brooks (page does not exist)&quot;&gt;Claude Brooks&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Margot_Rose&quot; title=&quot;Margot Rose&quot;&gt;Margot Rose&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=4&quot; title=&quot;Edit section: Season 4&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Robert_Romanus&quot; title=&quot;Robert Romanus&quot;&gt;Robert Romanus&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Rob_Estes&quot; title=&quot;Rob Estes&quot;&gt;Rob Estes&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Stu_Nahan&quot; title=&quot;Stu Nahan&quot;&gt;Stu Nahan&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Mario_Van_Peebles&quot; title=&quot;Mario Van Peebles&quot;&gt;Mario Van Peebles&lt;/a&gt;,
+ &lt;a href=&quot;#endnote_reference_name_A&quot;&gt;*&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Thomas_Haden_Church&quot; title=&quot;Thomas Haden Church&quot;&gt;Thomas Haden Church&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Billy_Warlock&quot; title=&quot;Billy Warlock&quot;&gt;Billy Warlock&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Tony_Plana&quot; title=&quot;Tony Plana&quot;&gt;Tony Plana&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Julie_Warner&quot; title=&quot;Julie Warner&quot;&gt;Julie Warner&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Barbara_Tarbuck&quot; title=&quot;Barbara Tarbuck&quot;&gt;Barbara Tarbuck&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kamala_Lopez&quot; title=&quot;Kamala Lopez&quot;&gt;Kamala Lopez&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Pamela_Adlon&quot; title=&quot;Pamela Adlon&quot;&gt;Pamela Adlon&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Christine_Elise&quot; title=&quot;Christine Elise&quot;&gt;Christine Elise&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Robyn_Lively&quot; title=&quot;Robyn Lively&quot;&gt;Robyn Lively&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Vince_Vaughn&quot; title=&quot;Vince Vaughn&quot;&gt;Vince Vaughn&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Mickey_Jones&quot; title=&quot;Mickey Jones&quot;&gt;Mickey Jones&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Ray_Baker_(actor)&quot; title=&quot;Ray Baker (actor)&quot;&gt;Ray Baker&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Keith_Coogan&quot; title=&quot;Keith Coogan&quot;&gt;Keith Coogan&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Shannen_Doherty&quot; title=&quot;Shannen Doherty&quot;&gt;Shannen Doherty&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Wallace_Langham&quot; title=&quot;Wallace Langham&quot;&gt;Wallace Langham&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Rosie_Perez&quot; title=&quot;Rosie Perez&quot;&gt;Rosie Perez&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Chick_Hearn&quot; title=&quot;Chick Hearn&quot;&gt;Chick Hearn&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kareem_Abdul-Jabbar&quot; title=&quot;Kareem Abdul-Jabbar&quot;&gt;Kareem Abdul-Jabbar&lt;/a&gt;,
+ &lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/John_Waters_(filmmaker)&quot; title=&quot;John Waters (filmmaker)&quot;&gt;John Waters&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/John_Pyper-Ferguson&quot; title=&quot;John Pyper-Ferguson&quot;&gt;John Pyper-Ferguson&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Diedrich_Bader&quot; title=&quot;Diedrich Bader&quot;&gt;Diedrich Bader&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kelly_Perine&quot; title=&quot;Kelly Perine&quot;&gt;Kelly Perine&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kristin_Dattilo&quot; title=&quot;Kristin Dattilo&quot;&gt;Kristin Dattilo&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=5&quot; title=&quot;Edit section: Season 5&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Lisa_Dean_Ryan&quot; title=&quot;Lisa Dean Ryan&quot;&gt;Lisa Dean Ryan&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Scott_Grimes&quot; title=&quot;Scott Grimes&quot;&gt;Scott Grimes&lt;/a&gt;,
+ &lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Brigitta_Dau&quot; title=&quot;Brigitta Dau&quot;&gt;Brigitta Dau&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Tony_Dakota&quot; title=&quot;Tony Dakota&quot;&gt;Tony Dakota&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Perrey_Reeves&quot; title=&quot;Perrey Reeves&quot;&gt;Perrey Reeves&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Johannah_Newmarch&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Johannah Newmarch (page does not exist)&quot;&gt;Johannah Newmarch&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Richard_Leacock&quot; title=&quot;Richard Leacock&quot;&gt;Richard Leacock&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Pat_Bermel&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Pat Bermel (page does not exist)&quot;&gt;Pat Bermel&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Deanna_Milligan&quot; title=&quot;Deanna Milligan&quot;&gt;Deanna Milligan&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Peter_Outerbridge&quot; title=&quot;Peter Outerbridge&quot;&gt;Peter Outerbridge&lt;/a&gt;,
+ &lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Don_MacKay&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Don MacKay (page does not exist)&quot;&gt;Don MacKay&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Terence_Kelly_(actor)&quot; title=&quot;Terence Kelly (actor)&quot;&gt;Terence Kelly&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Merrilyn_Gann&quot; title=&quot;Merrilyn Gann&quot;&gt;Merrilyn Gann&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Ocean_Hellman&quot; title=&quot;Ocean Hellman&quot;&gt;Ocean Hellman&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Lochlyn_Munro&quot; title=&quot;Lochlyn Munro&quot;&gt;Lochlyn Munro&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Leslie_Carlson&quot; title=&quot;Leslie Carlson&quot;&gt;Leslie Carlson&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/David_DeLuise&quot; title=&quot;David DeLuise&quot;&gt;David DeLuise&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Kamala_Lopez&quot; title=&quot;Kamala Lopez&quot;&gt;Kamala Lopez&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Jada_Pinkett_Smith&quot; title=&quot;Jada Pinkett Smith&quot;&gt;Jada Pinkett Smith&lt;/a&gt;,
+ &lt;a href=&quot;#ref_reference_name_A&quot;&gt;^*&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=6&quot; title=&quot;Edit section: See also&quot;&gt;edit&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Jump_Street_(franchise)&quot; title=&quot;Jump Street (franchise)&quot;&gt;Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=7&quot; title=&quot;Edit section: References&quot;&gt;edit&lt;/a&gt;,
+ &lt;a class=&quot;external text&quot; href=&quot;http://www.imdb.com/title/tt0092312/&quot; rel=&quot;nofollow&quot;&gt;&lt;i&gt;21 Jump Street&lt;/i&gt;&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/IMDb&quot; title=&quot;IMDb&quot;&gt;IMDb&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Template:21_Jump_Street&quot; title=&quot;Template:21 Jump Street&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;View this template&quot;&gt;v&lt;/abbr&gt;&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Template_talk:21_Jump_Street&quot; title=&quot;Template talk:21 Jump Street&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;Discuss this template&quot;&gt;t&lt;/abbr&gt;&lt;/a&gt;,
+ &lt;a class=&quot;external text&quot; href=&quot;//en.wikipedia.org/w/index.php?title=Template:21_Jump_Street&amp;amp;action=edit&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;Edit this template&quot;&gt;e&lt;/abbr&gt;&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Jump_Street_(franchise)&quot; title=&quot;Jump Street (franchise)&quot;&gt;Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/21_Jump_Street&quot; title=&quot;21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/List_of_21_Jump_Street_episodes&quot; title=&quot;List of 21 Jump Street episodes&quot;&gt;episodes&lt;/a&gt;,
+ &lt;a class=&quot;mw-selflink selflink&quot;&gt;guest stars&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Booker_(TV_series)&quot; title=&quot;Booker (TV series)&quot;&gt;Booker&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/21_Jump_Street_(film)&quot; title=&quot;21 Jump Street (film)&quot;&gt;21 Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/22_Jump_Street&quot; title=&quot;22 Jump Street&quot;&gt;22 Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/22_Jump_Street_(Original_Motion_Picture_Score)&quot; title=&quot;22 Jump Street (Original Motion Picture Score)&quot;&gt;Score&lt;/a&gt;,
+ &lt;a dir=&quot;ltr&quot; href=&quot;https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&quot;&gt;https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Help:Category&quot; title=&quot;Help:Category&quot;&gt;Categories&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Category:21_Jump_Street&quot; title=&quot;Category:21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Category:Lists_of_actors_by_role&quot; title=&quot;Category:Lists of actors by role&quot;&gt;Lists of actors by role&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Category:Lists_of_American_television_series_characters&quot; title=&quot;Category:Lists of American television series characters&quot;&gt;Lists of American television series characters&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Category:Lists_of_drama_television_characters&quot; title=&quot;Category:Lists of drama television characters&quot;&gt;Lists of drama television characters&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Category:Lists_of_guest_appearances_in_television&quot; title=&quot;Category:Lists of guest appearances in television&quot;&gt;Lists of guest appearances in television&lt;/a&gt;,
+ &lt;a accesskey=&quot;n&quot; href=&quot;/wiki/Special:MyTalk&quot; title=&quot;Discussion about edits from this IP address [n]&quot;&gt;Talk&lt;/a&gt;,
+ &lt;a accesskey=&quot;y&quot; href=&quot;/wiki/Special:MyContributions&quot; title=&quot;A list of edits made from this IP address [y]&quot;&gt;Contributions&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=Special:CreateAccount&amp;amp;returnto=List+of+guest+stars+on+21+Jump+Street&quot; title=&quot;You are encouraged to create an account and log in; however, it is not mandatory&quot;&gt;Create account&lt;/a&gt;,
+ &lt;a accesskey=&quot;o&quot; href=&quot;/w/index.php?title=Special:UserLogin&amp;amp;returnto=List+of+guest+stars+on+21+Jump+Street&quot; title=&quot;You&#39;re encouraged to log in; however, it&#39;s not mandatory. [o]&quot;&gt;Log in&lt;/a&gt;,
+ &lt;a accesskey=&quot;c&quot; href=&quot;/wiki/List_of_guest_stars_on_21_Jump_Street&quot; title=&quot;View the content page [c]&quot;&gt;Article&lt;/a&gt;,
+ &lt;a accesskey=&quot;t&quot; href=&quot;/wiki/Talk:List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;discussion&quot; title=&quot;Discussion about the content page [t]&quot;&gt;Talk&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/List_of_guest_stars_on_21_Jump_Street&quot;&gt;Read&lt;/a&gt;,
+ &lt;a accesskey=&quot;e&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&quot; title=&quot;Edit this page [e]&quot;&gt;Edit&lt;/a&gt;,
+ &lt;a accesskey=&quot;h&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=history&quot; title=&quot;Past revisions of this page [h]&quot;&gt;View history&lt;/a&gt;,
+ &lt;a class=&quot;mw-wiki-logo&quot; href=&quot;/wiki/Main_Page&quot; title=&quot;Visit the main page&quot;&gt;&lt;/a&gt;,
+ &lt;a accesskey=&quot;z&quot; href=&quot;/wiki/Main_Page&quot; title=&quot;Visit the main page [z]&quot;&gt;Main page&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Portal:Contents&quot; title=&quot;Guides to browsing Wikipedia&quot;&gt;Contents&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Portal:Featured_content&quot; title=&quot;Featured content – the best of Wikipedia&quot;&gt;Featured content&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Portal:Current_events&quot; title=&quot;Find background information on current events&quot;&gt;Current events&lt;/a&gt;,
+ &lt;a accesskey=&quot;x&quot; href=&quot;/wiki/Special:Random&quot; title=&quot;Load a random article [x]&quot;&gt;Random article&lt;/a&gt;,
+ &lt;a href=&quot;https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;amp;utm_medium=sidebar&amp;amp;utm_campaign=C13_en.wikipedia.org&amp;amp;uselang=en&quot; title=&quot;Support us&quot;&gt;Donate to Wikipedia&lt;/a&gt;,
+ &lt;a href=&quot;//shop.wikimedia.org&quot; title=&quot;Visit the Wikipedia store&quot;&gt;Wikipedia store&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Help:Contents&quot; title=&quot;Guidance on how to use and edit Wikipedia&quot;&gt;Help&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Wikipedia:About&quot; title=&quot;Find out about Wikipedia&quot;&gt;About Wikipedia&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Wikipedia:Community_portal&quot; title=&quot;About the project, what you can do, where to find things&quot;&gt;Community portal&lt;/a&gt;,
+ &lt;a accesskey=&quot;r&quot; href=&quot;/wiki/Special:RecentChanges&quot; title=&quot;A list of recent changes in the wiki [r]&quot;&gt;Recent changes&lt;/a&gt;,
+ &lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Contact_us&quot; title=&quot;How to contact Wikipedia&quot;&gt;Contact page&lt;/a&gt;,
+ &lt;a accesskey=&quot;j&quot; href=&quot;/wiki/Special:WhatLinksHere/List_of_guest_stars_on_21_Jump_Street&quot; title=&quot;List of all English Wikipedia pages containing links to this page [j]&quot;&gt;What links here&lt;/a&gt;,
+ &lt;a accesskey=&quot;k&quot; href=&quot;/wiki/Special:RecentChangesLinked/List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;nofollow&quot; title=&quot;Recent changes in pages linked from this page [k]&quot;&gt;Related changes&lt;/a&gt;,
+ &lt;a accesskey=&quot;u&quot; href=&quot;/wiki/Wikipedia:File_Upload_Wizard&quot; title=&quot;Upload files [u]&quot;&gt;Upload file&lt;/a&gt;,
+ &lt;a accesskey=&quot;q&quot; href=&quot;/wiki/Special:SpecialPages&quot; title=&quot;A list of all special pages [q]&quot;&gt;Special pages&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&quot; title=&quot;Permanent link to this revision of the page&quot;&gt;Permanent link&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=info&quot; title=&quot;More information about this page&quot;&gt;Page information&lt;/a&gt;,
+ &lt;a accesskey=&quot;g&quot; href=&quot;https://www.wikidata.org/wiki/Special:EntityPage/Q6621947&quot; title=&quot;Link to connected data repository item [g]&quot;&gt;Wikidata item&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=Special:CiteThisPage&amp;amp;page=List_of_guest_stars_on_21_Jump_Street&amp;amp;id=820109238&quot; title=&quot;Information on how to cite this page&quot;&gt;Cite this page&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=Special:Book&amp;amp;bookcmd=book_creator&amp;amp;referer=List+of+guest+stars+on+21+Jump+Street&quot;&gt;Create a book&lt;/a&gt;,
+ &lt;a href=&quot;/w/index.php?title=Special:ElectronPdf&amp;amp;page=List+of+guest+stars+on+21+Jump+Street&amp;amp;action=show-download-screen&quot;&gt;Download as PDF&lt;/a&gt;,
+ &lt;a accesskey=&quot;p&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;printable=yes&quot; title=&quot;Printable version of this page [p]&quot;&gt;Printable version&lt;/a&gt;,
+ &lt;a class=&quot;wbc-editpage&quot; href=&quot;https://www.wikidata.org/wiki/Special:EntityPage/Q6621947#sitelinks-wikipedia&quot; title=&quot;Add interlanguage links&quot;&gt;Add links&lt;/a&gt;,
+ &lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License&quot; rel=&quot;license&quot;&gt;Creative Commons Attribution-ShareAlike License&lt;/a&gt;,
+ &lt;a href=&quot;//creativecommons.org/licenses/by-sa/3.0/&quot; rel=&quot;license&quot; style=&quot;display:none;&quot;&gt;&lt;/a&gt;,
+ &lt;a href=&quot;//wikimediafoundation.org/wiki/Terms_of_Use&quot;&gt;Terms of Use&lt;/a&gt;,
+ &lt;a href=&quot;//wikimediafoundation.org/wiki/Privacy_policy&quot;&gt;Privacy Policy&lt;/a&gt;,
+ &lt;a href=&quot;//www.wikimediafoundation.org/&quot;&gt;Wikimedia Foundation, Inc.&lt;/a&gt;,
+ &lt;a class=&quot;extiw&quot; href=&quot;https://wikimediafoundation.org/wiki/Privacy_policy&quot; title=&quot;wmf:Privacy policy&quot;&gt;Privacy policy&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Wikipedia:About&quot; title=&quot;Wikipedia:About&quot;&gt;About Wikipedia&lt;/a&gt;,
+ &lt;a href=&quot;/wiki/Wikipedia:General_disclaimer&quot; title=&quot;Wikipedia:General disclaimer&quot;&gt;Disclaimers&lt;/a&gt;,
+ &lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Contact_us&quot;&gt;Contact Wikipedia&lt;/a&gt;,
+ &lt;a href=&quot;https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute&quot;&gt;Developers&lt;/a&gt;,
+ &lt;a href=&quot;https://wikimediafoundation.org/wiki/Cookie_statement&quot;&gt;Cookie statement&lt;/a&gt;,
+ &lt;a class=&quot;noprint stopMobileRedirectToggle&quot; href=&quot;//en.m.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;mobileaction=toggle_view_mobile&quot;&gt;Mobile view&lt;/a&gt;,
+ &lt;a href=&quot;https://wikimediafoundation.org/&quot;&gt;&lt;img alt=&quot;Wikimedia Foundation&quot; height=&quot;31&quot; src=&quot;/static/images/wikimedia-button.png&quot; srcset=&quot;/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x&quot; width=&quot;88&quot;/&gt;&lt;/a&gt;,
+ &lt;a href=&quot;//www.mediawiki.org/&quot;&gt;&lt;img alt=&quot;Powered by MediaWiki&quot; height=&quot;31&quot; src=&quot;/static/images/poweredby_mediawiki_88x31.png&quot; srcset=&quot;/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x&quot; width=&quot;88&quot;/&gt;&lt;/a&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">all_links</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">all_links</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+None
+#mw-head
+#p-search
+/wiki/Television_personality
+/wiki/Fox_Broadcasting_Company
+/wiki/21_Jump_Street
+#Season_1
+#Season_2
+#Season_3
+#Season_4
+#Season_5
+#See_also
+#References
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=1
+/wiki/Barney_Martin
+/wiki/Brandon_Douglas
+/w/index.php?title=Reginald_T._Dorsey&amp;action=edit&amp;redlink=1
+/wiki/Billy_Jayne
+/wiki/Steve_Antin
+/wiki/Traci_Lind
+/wiki/Leah_Ayres
+/wiki/Geoffrey_Blake_(actor)
+/wiki/Josh_Brolin
+/w/index.php?title=Jamie_Bozian&amp;action=edit&amp;redlink=1
+/wiki/John_D%27Aquino
+/w/index.php?title=Troy_Byer&amp;action=edit&amp;redlink=1
+/wiki/Lezlie_Deane
+/wiki/Blair_Underwood
+/wiki/Robert_Picardo
+/wiki/Scott_Schwartz
+/wiki/Liane_Curtis
+/wiki/Byron_Thames
+/wiki/Sherilyn_Fenn
+/wiki/Christopher_Heyerdahl
+/wiki/Kurtwood_Smith
+/wiki/Sarah_G._Buxton
+/wiki/Jason_Priestley
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=2
+/wiki/Kurtwood_Smith
+/wiki/Ray_Walston
+/wiki/Pauly_Shore
+/wiki/Shannon_Tweed
+/wiki/Lochlyn_Munro
+/wiki/Mindy_Cohn
+/wiki/Kent_McCord
+/wiki/Don_S._Davis
+/wiki/Tom_Wright_(actor)
+/wiki/Jean_Sagal
+/wiki/Liz_Sagal
+/wiki/Deborah_Lacey
+/wiki/Bradford_English
+/wiki/Christina_Applegate
+/wiki/Peter_Berg
+/wiki/Gabriel_Jarret
+/wiki/Bruce_French_(actor)
+/wiki/Dann_Florek
+/wiki/Gregory_Itzin
+/wiki/Brad_Pitt
+/wiki/Don_S._Davis
+/wiki/Sam_Anderson
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=3
+/wiki/Leo_Rossi
+/wiki/Peri_Gilpin
+/wiki/Kelly_Hu
+/wiki/Russell_Wong
+/wiki/Christopher_Titus
+/wiki/Dom_DeLuise
+/w/index.php?title=Kehli_O%27Byrne&amp;action=edit&amp;redlink=1
+/wiki/Larenz_Tate
+/wiki/Maia_Brewton
+/wiki/Michael_DeLuise
+/wiki/Mario_Van_Peebles
+#endnote_reference_name_A
+/wiki/Bridget_Fonda
+/wiki/Conor_O%27Farrell
+/wiki/Andrew_Lauer
+/w/index.php?title=Claude_Brooks&amp;action=edit&amp;redlink=1
+/wiki/Margot_Rose
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=4
+/wiki/Don_S._Davis
+/wiki/Robert_Romanus
+/wiki/Rob_Estes
+/wiki/Stu_Nahan
+/wiki/Mario_Van_Peebles
+#endnote_reference_name_A
+/wiki/Thomas_Haden_Church
+/wiki/Billy_Warlock
+/wiki/Tony_Plana
+/wiki/Julie_Warner
+/wiki/Barbara_Tarbuck
+/wiki/Kamala_Lopez
+/wiki/Pamela_Adlon
+/wiki/Christine_Elise
+/wiki/Robyn_Lively
+/wiki/Vince_Vaughn
+/wiki/Mickey_Jones
+/wiki/Ray_Baker_(actor)
+/wiki/Keith_Coogan
+/wiki/Shannen_Doherty
+/wiki/Wallace_Langham
+/wiki/Rosie_Perez
+/wiki/Don_S._Davis
+/wiki/Chick_Hearn
+/wiki/Kareem_Abdul-Jabbar
+/wiki/John_Waters_(filmmaker)
+/wiki/John_Pyper-Ferguson
+/wiki/Diedrich_Bader
+/wiki/Kelly_Perine
+/wiki/Kristin_Dattilo
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=5
+/wiki/Lisa_Dean_Ryan
+/wiki/Scott_Grimes
+/wiki/Brigitta_Dau
+/wiki/Tony_Dakota
+/wiki/Perrey_Reeves
+/w/index.php?title=Johannah_Newmarch&amp;action=edit&amp;redlink=1
+/wiki/Richard_Leacock
+/w/index.php?title=Pat_Bermel&amp;action=edit&amp;redlink=1
+/wiki/Deanna_Milligan
+/wiki/Peter_Outerbridge
+/w/index.php?title=Don_MacKay&amp;action=edit&amp;redlink=1
+/wiki/Terence_Kelly_(actor)
+/wiki/Merrilyn_Gann
+/wiki/Ocean_Hellman
+/wiki/Lochlyn_Munro
+/wiki/Leslie_Carlson
+/wiki/David_DeLuise
+/wiki/Kamala_Lopez
+/wiki/Don_S._Davis
+/wiki/Jada_Pinkett_Smith
+#ref_reference_name_A
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=6
+/wiki/Jump_Street_(franchise)
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit&amp;section=7
+http://www.imdb.com/title/tt0092312/
+/wiki/IMDb
+/wiki/Template:21_Jump_Street
+/wiki/Template_talk:21_Jump_Street
+//en.wikipedia.org/w/index.php?title=Template:21_Jump_Street&amp;action=edit
+/wiki/Jump_Street_(franchise)
+/wiki/21_Jump_Street
+/wiki/List_of_21_Jump_Street_episodes
+None
+/wiki/Booker_(TV_series)
+/wiki/21_Jump_Street_(film)
+/wiki/22_Jump_Street
+/wiki/22_Jump_Street_(Original_Motion_Picture_Score)
+https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;oldid=820109238
+/wiki/Help:Category
+/wiki/Category:21_Jump_Street
+/wiki/Category:Lists_of_actors_by_role
+/wiki/Category:Lists_of_American_television_series_characters
+/wiki/Category:Lists_of_drama_television_characters
+/wiki/Category:Lists_of_guest_appearances_in_television
+/wiki/Special:MyTalk
+/wiki/Special:MyContributions
+/w/index.php?title=Special:CreateAccount&amp;returnto=List+of+guest+stars+on+21+Jump+Street
+/w/index.php?title=Special:UserLogin&amp;returnto=List+of+guest+stars+on+21+Jump+Street
+/wiki/List_of_guest_stars_on_21_Jump_Street
+/wiki/Talk:List_of_guest_stars_on_21_Jump_Street
+/wiki/List_of_guest_stars_on_21_Jump_Street
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=edit
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=history
+/wiki/Main_Page
+/wiki/Main_Page
+/wiki/Portal:Contents
+/wiki/Portal:Featured_content
+/wiki/Portal:Current_events
+/wiki/Special:Random
+https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en
+//shop.wikimedia.org
+/wiki/Help:Contents
+/wiki/Wikipedia:About
+/wiki/Wikipedia:Community_portal
+/wiki/Special:RecentChanges
+//en.wikipedia.org/wiki/Wikipedia:Contact_us
+/wiki/Special:WhatLinksHere/List_of_guest_stars_on_21_Jump_Street
+/wiki/Special:RecentChangesLinked/List_of_guest_stars_on_21_Jump_Street
+/wiki/Wikipedia:File_Upload_Wizard
+/wiki/Special:SpecialPages
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;oldid=820109238
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;action=info
+https://www.wikidata.org/wiki/Special:EntityPage/Q6621947
+/w/index.php?title=Special:CiteThisPage&amp;page=List_of_guest_stars_on_21_Jump_Street&amp;id=820109238
+/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=List+of+guest+stars+on+21+Jump+Street
+/w/index.php?title=Special:ElectronPdf&amp;page=List+of+guest+stars+on+21+Jump+Street&amp;action=show-download-screen
+/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;printable=yes
+https://www.wikidata.org/wiki/Special:EntityPage/Q6621947#sitelinks-wikipedia
+//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License
+//creativecommons.org/licenses/by-sa/3.0/
+//wikimediafoundation.org/wiki/Terms_of_Use
+//wikimediafoundation.org/wiki/Privacy_policy
+//www.wikimediafoundation.org/
+https://wikimediafoundation.org/wiki/Privacy_policy
+/wiki/Wikipedia:About
+/wiki/Wikipedia:General_disclaimer
+//en.wikipedia.org/wiki/Wikipedia:Contact_us
+https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute
+https://wikimediafoundation.org/wiki/Cookie_statement
+//en.m.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;mobileaction=toggle_view_mobile
+https://wikimediafoundation.org/
+//www.mediawiki.org/
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">all_tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">all_tables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>6
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">all_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;\n\nActor\nCharacter\nSeason #\nEpisode #\nEpisode Title\n\n\nBarney Martin\nCharlie\n1\n1\n&quot;Pilot&quot;\n\n\nBrandon Douglas\nKenny Weckerle\n1\n1 &amp; 2\n&quot;Pilot&quot;\n\n\nReginald T. Dorsey\nTyrell &quot;Waxer&quot; Thompson\n1\n1 &amp; 2\n&quot;Pilot&quot;\n\n\nBilly Jayne\nMark Dorian\n1\n2\n&quot;America, What a Town&quot;\n\n\nSteve Antin\nStevie Delano\n1\n2\n&quot;America, What a Town&quot;\n\n\nTraci Lind\nNadia\n1\n2\n&quot;America, What a Town&quot;\n\n\nLeah Ayres\nSusan Chadwick\n1\n3\n&quot;Don\&#39;t Pet the Teacher&quot;\n\n\nGeoffrey Blake\nJeffrey Stone\n1\n3\n&quot;Don\&#39;t Pet the Teacher&quot;\n\n\nJosh Brolin\nTaylor Rolator\n1\n4\n&quot;My Future\&#39;s So Bright, I Gotta Wear Shades&quot;\n\n\nJamie Bozian\nKurt Niles\n1\n4\n&quot;My Future\&#39;s So Bright, I Gotta Wear Shades&quot;\n\n\nJohn D\&#39;Aquino\nVinny Morgan\n1\n4\n&quot;My Future\&#39;s So Bright, I Gotta Wear Shades&quot;\n\n\nTroy Byer\nPatty Blatcher\n1\n5\n&quot;The Worst Night of Your Life&quot;\n\n\nLezlie Deane\nJane Kinney\n1\n5\n&quot;The Worst Night of Your Life&quot;\n\n\nBlair Underwood\nReginald Brooks\n1\n6\n&quot;Gotta Finish the Riff&quot;\n\n\nRobert Picardo\nRalph Buckley\n1\n6\n&quot;Gotta Finish the Riff&quot;\n\n\nScott Schwartz\nJordan Simms\n1\n7\n&quot;Bad Influence&quot;\n\n\nLiane Curtis\nLauren Carlson\n1\n7\n&quot;Bad Influence&quot;\n\n\nByron Thames\nDylan Taylor\n1\n7\n&quot;Bad Influence&quot;\n\n\nSherilyn Fenn\nDiane Nelson\n1\n8\n&quot;Blindsided&quot;\n\n\nChristopher Heyerdahl\nJake\n1\n9\n&quot;Next Generation&quot;\n\n\nKurtwood Smith\nSpencer Phillips\n1\n10\n&quot;Low and Away&quot;\n\n\nDavid Raynr\nKipling &quot;Kip&quot; Fuller\n1\n11\n&quot;16 Blown to 35&quot;\n\n\nSarah G. Buxton\nKatrina\n1\n11\n&quot;16 Blown to 35&quot;\n\n\nJason Priestley\nTober\n1\n12\n&quot;Mean Streets and Pastel Houses&quot;\n\n&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Using-Attributes">
+<h2>Using Attributes<a class="headerlink" href="#Using-Attributes" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="" src="_images/wikitable.png" />
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;wikitable&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>5
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">right_tables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>bs4.element.ResultSet
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[24]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Barney_Martin&quot; title=&quot;Barney Martin&quot;&gt;Barney Martin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Charlie&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Brandon_Douglas&quot; title=&quot;Brandon Douglas&quot;&gt;Brandon Douglas&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kenny Weckerle&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1 &amp;amp; 2&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Reginald_T._Dorsey&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Reginald T. Dorsey (page does not exist)&quot;&gt;Reginald T. Dorsey&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tyrell &quot;Waxer&quot; Thompson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1 &amp;amp; 2&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Billy_Jayne&quot; title=&quot;Billy Jayne&quot;&gt;Billy Jayne&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Mark Dorian&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Steve_Antin&quot; title=&quot;Steve Antin&quot;&gt;Steve Antin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Stevie Delano&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Traci_Lind&quot; title=&quot;Traci Lind&quot;&gt;Traci Lind&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Nadia&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Leah_Ayres&quot; title=&quot;Leah Ayres&quot;&gt;Leah Ayres&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Susan Chadwick&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Don&#39;t Pet the Teacher&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Geoffrey_Blake_(actor)&quot; title=&quot;Geoffrey Blake (actor)&quot;&gt;Geoffrey Blake&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jeffrey Stone&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Don&#39;t Pet the Teacher&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Josh_Brolin&quot; title=&quot;Josh Brolin&quot;&gt;Josh Brolin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Taylor Rolator&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Jamie_Bozian&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Jamie Bozian (page does not exist)&quot;&gt;Jamie Bozian&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kurt Niles&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/John_D%27Aquino&quot; title=&quot;John D&#39;Aquino&quot;&gt;John D&#39;Aquino&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Vinny Morgan&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Troy_Byer&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Troy Byer (page does not exist)&quot;&gt;Troy Byer&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Patty Blatcher&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;The Worst Night of Your Life&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Lezlie_Deane&quot; title=&quot;Lezlie Deane&quot;&gt;Lezlie Deane&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jane Kinney&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;The Worst Night of Your Life&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Blair_Underwood&quot; title=&quot;Blair Underwood&quot;&gt;Blair Underwood&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Reginald Brooks&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Gotta Finish the Riff&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Robert_Picardo&quot; title=&quot;Robert Picardo&quot;&gt;Robert Picardo&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Ralph Buckley&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Gotta Finish the Riff&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Scott_Schwartz&quot; title=&quot;Scott Schwartz&quot;&gt;Scott Schwartz&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jordan Simms&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Liane_Curtis&quot; title=&quot;Liane Curtis&quot;&gt;Liane Curtis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lauren Carlson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Byron_Thames&quot; title=&quot;Byron Thames&quot;&gt;Byron Thames&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dylan Taylor&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Sherilyn_Fenn&quot; title=&quot;Sherilyn Fenn&quot;&gt;Sherilyn Fenn&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Diane Nelson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;&quot;Blindsided&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Christopher_Heyerdahl&quot; title=&quot;Christopher Heyerdahl&quot;&gt;Christopher Heyerdahl&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jake&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;Next Generation&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kurtwood_Smith&quot; title=&quot;Kurtwood Smith&quot;&gt;Kurtwood Smith&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Spencer Phillips&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Low and Away&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;David Raynr&lt;/td&gt;
+&lt;td&gt;Kipling &quot;Kip&quot; Fuller&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;16 Blown to 35&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Sarah_G._Buxton&quot; title=&quot;Sarah G. Buxton&quot;&gt;Sarah G. Buxton&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Katrina&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;16 Blown to 35&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Jason_Priestley&quot; title=&quot;Jason Priestley&quot;&gt;Jason Priestley&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tober&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;&quot;Mean Streets and Pastel Houses&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[25]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;\nActor\nCharacter\nSeason #\nEpisode #\nEpisode Title\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[26]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;\nReginald T. Dorsey\nTyrell &quot;Waxer&quot; Thompson\n1\n1 &amp; 2\n&quot;Pilot&quot;\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+    <span class="n">cells</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">cells</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;td&gt;&lt;a href=&quot;/wiki/Jason_Priestley&quot; title=&quot;Jason Priestley&quot;&gt;Jason Priestley&lt;/a&gt;&lt;/td&gt;,
+ &lt;td&gt;Tober&lt;/td&gt;,
+ &lt;td&gt;1&lt;/td&gt;,
+ &lt;td&gt;12&lt;/td&gt;,
+ &lt;td&gt;&quot;Mean Streets and Pastel Houses&quot;&lt;/td&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">right_tables</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Jada Pinkett Smith&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[31]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Nicole&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[32]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Barney Martin&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[33]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Charlie&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[34]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;1&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[35]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;1&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[36]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;&quot;Pilot&quot;&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[37]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Brandon Douglas&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[38]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>120
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[39]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>135
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">120</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">135</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[42]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>105
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">c</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">e</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">right_tables</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">))):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">right_tables</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[46]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(&#39;&quot;Mean Streets and Pastel Houses&quot;&#39;,
+ &#39;&quot;School\&#39;s Out&quot;&#39;,
+ &#39;&quot;Loc\&#39;d Out Part 2&quot;&#39;,
+ &#39;&quot;Blackout&quot;&#39;,
+ &#39;&quot;Homegirls&quot;&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[</span><span class="mi">130</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-47-b47504dfcc6c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>a<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">130</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-red-fg">IndexError</span>: list index out of range
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[</span><span class="mi">131</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-48-8718084a62c9&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>a<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">131</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-red-fg">IndexError</span>: list index out of range
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[49]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Barney Martin&#39;,
+ &#39;Charlie&#39;,
+ &#39;1&#39;,
+ &#39;1&#39;,
+ &#39;&quot;Pilot&quot;&#39;,
+ &#39;Brandon Douglas&#39;,
+ &#39;Kenny Weckerle&#39;,
+ &#39;1&#39;,
+ &#39;1 &amp; 2&#39;,
+ &#39;&quot;Pilot&quot;&#39;,
+ &#39;Reginald T. Dorsey&#39;,
+ &#39;Tyrell &quot;Waxer&quot; Thompson&#39;,
+ &#39;1&#39;,
+ &#39;1 &amp; 2&#39;,
+ &#39;&quot;Pilot&quot;&#39;,
+ &#39;Billy Jayne&#39;,
+ &#39;Mark Dorian&#39;,
+ &#39;1&#39;,
+ &#39;2&#39;,
+ &#39;&quot;America, What a Town&quot;&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[50]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Barney Martin&#39;,
+ &#39;Brandon Douglas&#39;,
+ &#39;Reginald T. Dorsey&#39;,
+ &#39;Billy Jayne&#39;,
+ &#39;Steve Antin&#39;,
+ &#39;Traci Lind&#39;,
+ &#39;Leah Ayres&#39;,
+ &#39;Geoffrey Blake&#39;,
+ &#39;Josh Brolin&#39;,
+ &#39;Jamie Bozian&#39;,
+ &quot;John D&#39;Aquino&quot;,
+ &#39;Troy Byer&#39;,
+ &#39;Lezlie Deane&#39;,
+ &#39;Blair Underwood&#39;,
+ &#39;Robert Picardo&#39;,
+ &#39;Scott Schwartz&#39;,
+ &#39;Liane Curtis&#39;,
+ &#39;Byron Thames&#39;,
+ &#39;Sherilyn Fenn&#39;,
+ &#39;Christopher Heyerdahl&#39;,
+ &#39;Kurtwood Smith&#39;,
+ &#39;David Raynr&#39;,
+ &#39;Sarah G. Buxton&#39;,
+ &#39;Jason Priestley&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">actors</span> <span class="o">=</span> <span class="n">a</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">character</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">season</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">episode</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">actors</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[52]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Barney Martin&#39;, &#39;Brandon Douglas&#39;, &#39;Reginald T. Dorsey&#39;, &#39;Billy Jayne&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Actors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">actors</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Character&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">character</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Season&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">season</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Episode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">episode</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[56]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Actors</th>
+      <th>Character</th>
+      <th>Season</th>
+      <th>Episode</th>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Barney Martin</td>
+      <td>Charlie</td>
+      <td>1</td>
+      <td>1</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brandon Douglas</td>
+      <td>Kenny Weckerle</td>
+      <td>1</td>
+      <td>1 &amp; 2</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Reginald T. Dorsey</td>
+      <td>Tyrell "Waxer" Thompson</td>
+      <td>1</td>
+      <td>1 &amp; 2</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Billy Jayne</td>
+      <td>Mark Dorian</td>
+      <td>1</td>
+      <td>2</td>
+      <td>"America, What a Town"</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Steve Antin</td>
+      <td>Stevie Delano</td>
+      <td>1</td>
+      <td>2</td>
+      <td>"America, What a Town"</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[57]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(129, 5)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/jumpstreet.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="08_scraping_and_nltk.html" class="btn btn-neutral float-right" title="Webscraping and Natural Language Processing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="05-intro_to_scraping_I.html" class="btn btn-neutral" title="Introduction to Web Scraping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

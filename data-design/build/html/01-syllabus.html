@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data and Design with Python &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-scraping-jumpstreet.html">Scraping the Street</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_ML_Intro.html">Intro to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Data and Design with Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/01-syllabus.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="figure">
+<img alt="" src="_images/logo.jpg" />
+</div>
+<div class="section" id="Data-and-Design-with-Python">
+<h1>Data and Design with Python<a class="headerlink" href="#Data-and-Design-with-Python" title="Permalink to this headline">¶</a></h1>
+<p><strong>LMTH 2075: Spring 2018</strong></p>
+<p><strong>Fridays 12:10 - 2:45</strong></p>
+<p><strong>65 West 11th St, Room 458</strong></p>
+</div>
+<div class="section" id="Overview">
+<h1>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h1>
+<p>This course covers some introductory ideas for data acquisition,
+analysis, and deployment on the web using the Python computer language.
+We cover basic data analysis and visualization, web scraping and
+crawling, some natural language processing and text analysis, web
+applications with Django, and game design with PyGame. By the end,
+students should feel comfortable pursuing further advanced work with
+Python and design.</p>
+<div class="section" id="Course-Requirements">
+<h2>Course Requirements<a class="headerlink" href="#Course-Requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Participation/Attendance 20%</li>
+<li>Lab Projects 80%</li>
+</ul>
+</div>
+<div class="section" id="Course-Materials">
+<h2>Course Materials<a class="headerlink" href="#Course-Materials" title="Permalink to this headline">¶</a></h2>
+<p>All available online through our github repository at
+<a class="reference external" href="https://github.com/jfkoehler/data-design/">https://github.com/jfkoehler/data-design/</a>. This will be updated weekly
+as we move through our weeks together.</p>
+<p>Also, you are to download and install
+<a class="reference external" href="https://www.anaconda.com/download/#macos">Anaconda</a>, making sure
+that you are able to run Jupyter notebooks on your computer. We will
+install additional software as we go.</p>
+</div>
+<div class="section" id="Learning-Outcomes">
+<h2>Learning Outcomes<a class="headerlink" href="#Learning-Outcomes" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Use Python to perform basic data analysis</li>
+<li>Use Matplotlib and Seaborn to visualize data</li>
+<li>Use webscraping to access numerical and textual information</li>
+<li>Use NLTK to investigate the text of scraped documents</li>
+<li>Scrape multiple sites using a web crawlers and spiders</li>
+<li>Deploy basic website and applications with Django</li>
+</ol>
+</div>
+<div class="section" id="Resources">
+<h2>Resources<a class="headerlink" href="#Resources" title="Permalink to this headline">¶</a></h2>
+<p>The university provides many resources to help students achieve academic
+and artistic excellence. These resources include: - University
+Libraries: <a class="reference external" href="http://library.newschool.edu">http://library.newschool.edu</a> - University Learning Center:
+<a class="reference external" href="http://www.newschool.edu/learning-center">http://www.newschool.edu/learning-center</a> - University Disabilities
+Service: www.newschool.edu/student-disability-services/ In keeping with
+the university’s policy of providing equal access for students with
+disabilities, any student with a disability who needs academic
+accommodations is welcome to meet with me privately. All conversations
+will be kept confidential. Students requesting any accommodations will
+also need to contact Student Disability Service (SDS). SDS will conduct
+an intake and, if appropriate, the Director will provide an academic
+accommodation notification letter for you to bring to me. At that point,
+I will review the letter with you and discuss these accommodations in
+relation to this course. Student Ombuds:
+<a class="reference external" href="http://www.newschool.edu/intercultural-support/ombuds/">http://www.newschool.edu/intercultural-support/ombuds/</a> The Student
+Ombuds office provides students assistance in resolving conflicts,
+disputes or complaints on an informal basis. This office is independent,
+neutral, and confidential.</p>
+</div>
+<div class="section" id="University-Policies">
+<h2>University Policies<a class="headerlink" href="#University-Policies" title="Permalink to this headline">¶</a></h2>
+<p>University, College/School, and Program Policies [Faculty must include
+policies on academic honesty and attendance, as well as any required
+college/program policies]</p>
+<p>Academic Honesty and Integrity Compromising your academic integrity may
+lead to serious consequences, including (but not limited to) one or more
+of the following: failure of the assignment, failure of the course,
+academic warning, disciplinary probation, suspension from the
+university, or dismissal from the university.</p>
+<p>Students are responsible for understanding the University’s policy on
+academic honesty and integrity and must make use of proper citations of
+sources for writing papers, creating, presenting, and performing their
+work, taking examinations, and doing research. It is the responsibility
+of students to learn the procedures specific to their discipline for
+correctly and appropriately differentiating their own work from that of
+others. The full text of the policy, including adjudication procedures,
+is found at <a class="reference external" href="http://www.newschool.edu/policies/">http://www.newschool.edu/policies/</a></p>
+<p>Resources regarding what plagiarism is and how to avoid it can be found
+on the Learning Center’s website:
+<a class="reference external" href="http://www.newschool.edu/university-learning-center/avoiding-plagiarism.pdf">http://www.newschool.edu/university-learning-center/avoiding-plagiarism.pdf</a>
+[Additional college-specific standards for what constitutes academic
+dishonesty may be included here.]</p>
+<p>Intellectual Property Rights:
+<a class="reference external" href="http://www.newschool.edu/provost/accreditation-policies/">http://www.newschool.edu/provost/accreditation-policies/</a> Grade Policies:
+<a class="reference external" href="http://www.newschool.edu/registrar/academic-policies/">http://www.newschool.edu/registrar/academic-policies/</a></p>
+</div>
+<div class="section" id="Attendance">
+<h2>Attendance<a class="headerlink" href="#Attendance" title="Permalink to this headline">¶</a></h2>
+<p>“Absences may justify some grade reduction and a total of four absences
+mandate a reduction of one letter grade for the course. More than four
+absences mandate a failing grade for the course, unless there are
+extenuating circumstances, such as the following: an extended illness
+requiring hospitalization or visit to a physician (with documentation);
+a family emergency, e.g. serious illness (with written explanation);
+observance of a religious holiday.</p>
+<p>The attendance and lateness policies are enforced as of the first day of
+classes for all registered students. If registered during the first week
+of the add/drop period, the student is responsible for any missed
+assignments and coursework.</p>
+<p>For significant lateness, the instructor may consider the tardiness as
+an absence for the day. Students failing a course due to attendance
+should consult with an academic advisor to discuss options. Divisional
+and/or departmental/program policies serve as minimal guidelines, but
+policies may contain additional elements determined by the faculty
+member.”</p>
+</div>
+<div class="section" id="Student-Course-Ratings">
+<h2>Student Course Ratings<a class="headerlink" href="#Student-Course-Ratings" title="Permalink to this headline">¶</a></h2>
+<p>During the last two weeks of the semester, students are asked to provide
+feedback for each of their courses through an online survey. They cannot
+view grades until providing feedback or officially declining to do so.
+Course evaluations are a vital space where students can speak about the
+learning experience. It is an important process which provides valuable
+data about the successful delivery and support of a course or topic to
+both the faculty and administrators. Instructors rely on course rating
+surveys for feedback on the course and teaching methods, so they can
+understand what aspects of the class are most successful in teaching
+students, and what aspects might be improved or changed in future.
+Without this information, it can be difficult for an instructor to
+reflect upon and improve teaching methods and course design. In
+addition, program/department chairs and other administrators review
+course surveys. Instructions are available online at
+<a class="reference external" href="http://www.newschool.edu/provost/course-evaluations-student-instructions.pdf">http://www.newschool.edu/provost/course-evaluations-student-instructions.pdf</a>.</p>
+</div>
+<div class="section" id="Workshop-Outline">
+<h2>Workshop Outline<a class="headerlink" href="#Workshop-Outline" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Data Analysis and Visualization with Pandas and Seaborn.</li>
+</ol>
+<ul class="simple">
+<li>Basic Overview of Python for Data Analysis and Visualization</li>
+<li>Access and investigate data from the World Bank using API</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li>Data Acquisition and Web Scraping.<ul>
+<li>How to access and structure data from the web</li>
+<li>Scrape and structure data from web sources</li>
+<li>Introduce basic NLP tasks (tokenize, frequency distributions, stop
+word removal)</li>
+</ul>
+</li>
+<li>Natural Language Processing and Social Media Analysis with NLTK.<ul>
+<li>Use scraping knowledge to pull and structure text from web</li>
+<li>Use additional Natural Language Processing techniques to
+investigate text from scraped sites</li>
+</ul>
+</li>
+<li>Web Application Development with Django<ul>
+<li>Basic Web Design Overview</li>
+<li>Web Applications with DJango</li>
+</ul>
+</li>
+<li>Game Design with PyGame<ul>
+<li>Motion and Movement</li>
+<li>Basic Games with PyGame</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data Accession &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/>
+        <link rel="next" title="Project A" href="04-ProjectA.html"/>
+        <link rel="prev" title="Welcome to Data and Design’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Accession</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#.csv-files"><code class="docutils literal"><span class="pre">.csv</span></code> files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Reading-.csv-files-from-web">Reading <code class="docutils literal"><span class="pre">.csv</span></code> files from web</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Problems">Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Accessing-data-through-API">Accessing data through API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#StatsModels">StatsModels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-scraping-jumpstreet.html">Scraping the Street</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_ML_Intro.html">Intro to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Data Accession</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/03-datafiles.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Data-Accession">
+<h1>Data Accession<a class="headerlink" href="#Data-Accession" title="Permalink to this headline">¶</a></h1>
+<p>For today’s workshop we will be using the <code class="docutils literal"><span class="pre">pandas</span></code> library, the
+<code class="docutils literal"><span class="pre">matplotlib</span></code> library, and the <code class="docutils literal"><span class="pre">seaborn</span></code> library. Also, we will read
+data from the web with the <code class="docutils literal"><span class="pre">pandas-datareader</span></code>. By the end of the
+workshop, participants should be able to use Python to tell a story
+about a dataset they build from an open data source.</p>
+<p><strong>GOALS</strong>:</p>
+<ul class="simple">
+<li>Understand how to load data as <code class="docutils literal"><span class="pre">.csv</span></code> files into Pandas</li>
+<li>Import data from web with <code class="docutils literal"><span class="pre">pandas-datareader</span></code> and compare
+development indicators from the World Bank</li>
+<li>Use API’s and requests to pull data from web</li>
+</ul>
+<div class="section" id=".csv-files">
+<h2><code class="docutils literal"><span class="pre">.csv</span></code> files<a class="headerlink" href="#.csv-files" title="Permalink to this headline">¶</a></h2>
+<p>In the first session, we explored built-in datasets. Typically, we would
+want to use our own data for analysis. A common filetype is the <code class="docutils literal"><span class="pre">.csv</span></code>
+or comma separated values type. You have probably used a spreadsheet
+program before, something like Microsoft Excel or Google Sheets. These
+programs allow you to save the data as a universally recognized formats,
+including the <code class="docutils literal"><span class="pre">.csv</span></code> extension. This is important as the <code class="docutils literal"><span class="pre">.csv</span></code>
+filetype can be understood and read by most data analysis languages
+including Python and R.</p>
+<p>To begin, we will use Python to load a <code class="docutils literal"><span class="pre">.csv</span></code> file. Starting with the
+tips dataset from last lesson, we will save this data as a csv file in
+our data folder. Then, we can read the data in using Pandas <code class="docutils literal"><span class="pre">read_csv</span></code>
+method.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;tips&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>total_bill</th>
+      <th>tip</th>
+      <th>sex</th>
+      <th>smoker</th>
+      <th>day</th>
+      <th>time</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16.99</td>
+      <td>1.01</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10.34</td>
+      <td>1.66</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>21.01</td>
+      <td>3.50</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>23.68</td>
+      <td>3.31</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>24.59</td>
+      <td>3.61</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">tips</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/tips.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/tips.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>total_bill</th>
+      <th>tip</th>
+      <th>sex</th>
+      <th>smoker</th>
+      <th>day</th>
+      <th>time</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>16.99</td>
+      <td>1.01</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>10.34</td>
+      <td>1.66</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>21.01</td>
+      <td>3.50</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>23.68</td>
+      <td>3.31</td>
+      <td>Male</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>24.59</td>
+      <td>3.61</td>
+      <td>Female</td>
+      <td>No</td>
+      <td>Sun</td>
+      <td>Dinner</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># add a column for tip percent</span>
+<span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip_pct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">tips</span><span class="p">[</span><span class="s1">&#39;total_bill&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># create variable grouped that groups the tips by sex and smoker</span>
+<span class="n">grouped</span> <span class="o">=</span> <span class="n">tips</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;smoker&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># create variable grouped_pct that contains the tip_pct column from grouped</span>
+<span class="n">grouped_pct</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="s1">&#39;tip_pct&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1">#what does executing this cell show?  Explain the .agg method.</span>
+<span class="n">grouped_pct</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>sex     smoker
+Female  No        0.156921
+        Yes       0.182150
+Male    No        0.160669
+        Yes       0.152771
+Name: tip_pct, dtype: float64
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># What other options can you pass to the .agg function?</span>
+<span class="n">grouped_pct</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th>smoker</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">Female</th>
+      <th>No</th>
+      <td>0.156921</td>
+      <td>0.036421</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>0.182150</td>
+      <td>0.071595</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">Male</th>
+      <th>No</th>
+      <td>0.160669</td>
+      <td>0.041849</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>0.152771</td>
+      <td>0.090588</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>grouped_pct.agg<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Reading-.csv-files-from-web">
+<h2>Reading <code class="docutils literal"><span class="pre">.csv</span></code> files from web<a class="headerlink" href="#Reading-.csv-files-from-web" title="Permalink to this headline">¶</a></h2>
+<p>If we have access to the file as a url, we can use the Pandas
+<code class="docutils literal"><span class="pre">read_csv</span></code> method to pass the url of the csv file instead of loading
+it from our local machine. For example, the Data and Software Carpentry
+organizations have a <code class="docutils literal"><span class="pre">.csv</span></code> file located in their github repository as
+seen below.</p>
+<div class="figure">
+<img alt="" src="_images/swcarp.png" />
+</div>
+<p>The first file on <code class="docutils literal"><span class="pre">asia_gdp_per_capita</span></code> can be loaded by using the
+link to the raw file on github:</p>
+<p><a class="reference external" href="https://raw.githubusercontent.com/swcarpentry/python-novice-gapminder/gh-pages/data/asia_gdp_per_capita.csv">https://raw.githubusercontent.com/swcarpentry/python-novice-gapminder/gh-pages/data/asia_gdp_per_capita.csv</a></p>
+<p>hence, we pass this url to the <code class="docutils literal"><span class="pre">read_csv</span></code> function and have a new
+dataframe.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">asia_gdp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/swcarpentry/python-novice-gapminder/gh-pages/data/asia_gdp_per_capita.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">asia_gdp</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>'year'</th>
+      <th>'Afghanistan'</th>
+      <th>'Bahrain'</th>
+      <th>'Bangladesh'</th>
+      <th>'Cambodia'</th>
+      <th>'China'</th>
+      <th>'Hong Kong China'</th>
+      <th>'India'</th>
+      <th>'Indonesia'</th>
+      <th>'Iran'</th>
+      <th>...</th>
+      <th>'Philippines'</th>
+      <th>'Saudi Arabia'</th>
+      <th>'Singapore'</th>
+      <th>'Sri Lanka'</th>
+      <th>'Syria'</th>
+      <th>'Taiwan'</th>
+      <th>'Thailand'</th>
+      <th>'Vietnam'</th>
+      <th>'West Bank and Gaza'</th>
+      <th>'Yemen Rep.'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1952</td>
+      <td>779.445314</td>
+      <td>9867.084765</td>
+      <td>684.244172</td>
+      <td>368.469286</td>
+      <td>400.448611</td>
+      <td>3054.421209</td>
+      <td>546.565749</td>
+      <td>749.681655</td>
+      <td>3035.326002</td>
+      <td>...</td>
+      <td>1272.880995</td>
+      <td>6459.554823</td>
+      <td>2315.138227</td>
+      <td>1083.532030</td>
+      <td>1643.485354</td>
+      <td>1206.947913</td>
+      <td>757.797418</td>
+      <td>605.066492</td>
+      <td>1515.592329</td>
+      <td>781.717576</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1957</td>
+      <td>820.853030</td>
+      <td>11635.799450</td>
+      <td>661.637458</td>
+      <td>434.038336</td>
+      <td>575.987001</td>
+      <td>3629.076457</td>
+      <td>590.061996</td>
+      <td>858.900271</td>
+      <td>3290.257643</td>
+      <td>...</td>
+      <td>1547.944844</td>
+      <td>8157.591248</td>
+      <td>2843.104409</td>
+      <td>1072.546602</td>
+      <td>2117.234893</td>
+      <td>1507.861290</td>
+      <td>793.577415</td>
+      <td>676.285448</td>
+      <td>1827.067742</td>
+      <td>804.830455</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1962</td>
+      <td>853.100710</td>
+      <td>12753.275140</td>
+      <td>686.341554</td>
+      <td>496.913648</td>
+      <td>487.674018</td>
+      <td>4692.648272</td>
+      <td>658.347151</td>
+      <td>849.289770</td>
+      <td>4187.329802</td>
+      <td>...</td>
+      <td>1649.552153</td>
+      <td>11626.419750</td>
+      <td>3674.735572</td>
+      <td>1074.471960</td>
+      <td>2193.037133</td>
+      <td>1822.879028</td>
+      <td>1002.199172</td>
+      <td>772.049160</td>
+      <td>2198.956312</td>
+      <td>825.623201</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1967</td>
+      <td>836.197138</td>
+      <td>14804.672700</td>
+      <td>721.186086</td>
+      <td>523.432314</td>
+      <td>612.705693</td>
+      <td>6197.962814</td>
+      <td>700.770611</td>
+      <td>762.431772</td>
+      <td>5906.731805</td>
+      <td>...</td>
+      <td>1814.127430</td>
+      <td>16903.048860</td>
+      <td>4977.418540</td>
+      <td>1135.514326</td>
+      <td>1881.923632</td>
+      <td>2643.858681</td>
+      <td>1295.460660</td>
+      <td>637.123289</td>
+      <td>2649.715007</td>
+      <td>862.442146</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1972</td>
+      <td>739.981106</td>
+      <td>18268.658390</td>
+      <td>630.233627</td>
+      <td>421.624026</td>
+      <td>676.900092</td>
+      <td>8315.928145</td>
+      <td>724.032527</td>
+      <td>1111.107907</td>
+      <td>9613.818607</td>
+      <td>...</td>
+      <td>1989.374070</td>
+      <td>24837.428650</td>
+      <td>8597.756202</td>
+      <td>1213.395530</td>
+      <td>2571.423014</td>
+      <td>4062.523897</td>
+      <td>1524.358936</td>
+      <td>699.501644</td>
+      <td>3133.409277</td>
+      <td>1265.047031</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Problems">
+<h2>Problems<a class="headerlink" href="#Problems" title="Permalink to this headline">¶</a></h2>
+<p>Try to locate and load some <code class="docutils literal"><span class="pre">.csv</span></code> files using the internet. There are
+many great resources out there. Also, I want you to try the
+<code class="docutils literal"><span class="pre">pd.read_clipboard</span></code> method, where you’ve copied a data table from the
+internet. In both cases create a brief exploratory notebook for the data
+that contains the following:</p>
+<ul class="simple">
+<li>Jupyter notebook with analysis and discussion</li>
+<li>Data folder with relevant <code class="docutils literal"><span class="pre">.csv</span></code> files</li>
+<li>Images folder with at least one image loaded into the notebook</li>
+</ul>
+</div>
+<div class="section" id="Accessing-data-through-API">
+<h2>Accessing data through API<a class="headerlink" href="#Accessing-data-through-API" title="Permalink to this headline">¶</a></h2>
+<p>Pandas has the functionality to access certain data through a
+datareader. We will use the <code class="docutils literal"><span class="pre">pandas_datareader</span></code> to investigate
+information about the World Bank. For more information, please see the
+documentation:</p>
+<p><a class="reference external" href="http://pandas-datareader.readthedocs.io/en/latest/remote_data.html">http://pandas-datareader.readthedocs.io/en/latest/remote_data.html</a></p>
+<p>We will explore other examples with the datareader later, but to start
+let’s access the World Bank’s data. For a full description of the
+available data, look over the source from the World Bank.</p>
+<p><a class="reference external" href="https://data.worldbank.org/indicator">https://data.worldbank.org/indicator</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pandas_datareader</span> <span class="k">import</span> <span class="n">wb</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">wb</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;gdp.*capita.*const&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[40]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>646</th>
+      <td>6.0.GDPpc_constant</td>
+      <td>GDP per capita, PPP (constant 2011 internation...</td>
+    </tr>
+    <tr>
+      <th>8064</th>
+      <td>NY.GDP.PCAP.KD</td>
+      <td>GDP per capita (constant 2010 US$)</td>
+    </tr>
+    <tr>
+      <th>8066</th>
+      <td>NY.GDP.PCAP.KN</td>
+      <td>GDP per capita (constant LCU)</td>
+    </tr>
+    <tr>
+      <th>8068</th>
+      <td>NY.GDP.PCAP.PP.KD</td>
+      <td>GDP per capita, PPP (constant 2011 internation...</td>
+    </tr>
+    <tr>
+      <th>8069</th>
+      <td>NY.GDP.PCAP.PP.KD.87</td>
+      <td>GDP per capita, PPP (constant 1987 internation...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">indicator</span><span class="o">=</span><span class="s1">&#39;NY.GDP.PCAP.KD&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;US&#39;</span><span class="p">,</span><span class="s1">&#39;CA&#39;</span><span class="p">,</span><span class="s1">&#39;MX&#39;</span><span class="p">],</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">2005</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">2016</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;NY.GDP.PCAP.KD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[43]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>country
+Canada           48601.353408
+Mexico            9236.997678
+United States    49731.965366
+Name: NY.GDP.PCAP.KD, dtype: float64
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">wb</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;cell.*%&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[44]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6339</th>
+      <td>IT.CEL.COVR.ZS</td>
+      <td>Population covered by mobile cellular network (%)</td>
+    </tr>
+    <tr>
+      <th>6394</th>
+      <td>IT.MOB.COV.ZS</td>
+      <td>Population coverage of mobile cellular telepho...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NY.GDP.PCAP.KD&#39;</span><span class="p">,</span> <span class="s1">&#39;IT.MOB.COV.ZS&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">indicator</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">country</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">dat</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="s1">&#39;cellphone&#39;</span><span class="p">]</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>gdp</th>
+      <th>cellphone</th>
+    </tr>
+    <tr>
+      <th>country</th>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Swaziland</th>
+      <th>2011</th>
+      <td>3704.140658</td>
+      <td>94.9</td>
+    </tr>
+    <tr>
+      <th>Tunisia</th>
+      <th>2011</th>
+      <td>4014.916793</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Uganda</th>
+      <th>2011</th>
+      <td>629.240447</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Zambia</th>
+      <th>2011</th>
+      <td>1499.728311</td>
+      <td>62.0</td>
+    </tr>
+    <tr>
+      <th>Zimbabwe</th>
+      <th>2011</th>
+      <td>813.834010</td>
+      <td>72.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">dat</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span><span class="s1">&#39;cellphone&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;gdp&#39;</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[48]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a2215fe80&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03-datafiles_28_1.png" src="_images/03-datafiles_28_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03-datafiles_29_0.png" src="_images/03-datafiles_29_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;cellphone&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03-datafiles_30_0.png" src="_images/03-datafiles_30_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;cellphone&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[51]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;seaborn.axisgrid.JointGrid at 0x1a22099cf8&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03-datafiles_31_1.png" src="_images/03-datafiles_31_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;cellphone&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s1">&#39;gdp&#39;</span><span class="p">]),</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;hex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[52]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;seaborn.axisgrid.JointGrid at 0x1a2144fc88&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/03-datafiles_32_1.png" src="_images/03-datafiles_32_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="StatsModels">
+<h2>StatsModels<a class="headerlink" href="#StatsModels" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="" src="_images/statsmodels.png" />
+</div>
+<p>StatsModels is a library that contains a wealth of classical statistical
+techniques. Depending on your comfort or interest in deeper use of
+classical statistics, you can consult the documentation at
+<a class="reference external" href="http://www.statsmodels.org/stable/index.html">http://www.statsmodels.org/stable/index.html</a> . Below, we show how to use
+statsmodels to perform a basic ordinary least squares fit with our
+<span class="math">\(y\)</span> or dependent variable as <code class="docutils literal"><span class="pre">cellphone</span></code> and <span class="math">\(x\)</span> or
+independent variable as <code class="docutils literal"><span class="pre">log(gdp)</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="n">mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;cellphone ~ np.log(gdp)&quot;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mod</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[54]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>        <td>cellphone</td>    <th>  R-squared:         </th> <td>   0.321</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.296</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   13.21</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Sat, 13 Jan 2018</td> <th>  Prob (F-statistic):</th>  <td>0.00111</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>12:28:27</td>     <th>  Log-Likelihood:    </th> <td> -127.26</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    30</td>      <th>  AIC:               </th> <td>   258.5</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    28</td>      <th>  BIC:               </th> <td>   261.3</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+       <td></td>          <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>   <td>   -2.3708</td> <td>   24.082</td> <td>   -0.098</td> <td> 0.922</td> <td>  -51.700</td> <td>   46.959</td>
+</tr>
+<tr>
+  <th>np.log(gdp)</th> <td>   11.9971</td> <td>    3.301</td> <td>    3.635</td> <td> 0.001</td> <td>    5.236</td> <td>   18.758</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>27.737</td> <th>  Durbin-Watson:     </th> <td>   2.064</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td> <th>  Jarque-Bera (JB):  </th> <td>  62.978</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td>-1.931</td> <th>  Prob(JB):          </th> <td>2.11e-14</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 8.956</td> <th>  Cond. No.          </th> <td>    56.3</td>
+</tr>
+</table></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="04-ProjectA.html" class="btn btn-neutral float-right" title="Project A" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Data and Design’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

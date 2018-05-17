@@ -1,0 +1,2676 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scraping Stars &mdash; Data and Design version 32ed99b</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 32ed99b" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_scraping_II.html">Web Scraping with Python</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Scraping Stars</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/07_scraping_standards.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Scraping-Stars">
+<h1>Scraping Stars<a class="headerlink" href="#Scraping-Stars" title="Permalink to this headline">¶</a></h1>
+<p>This is a quick example to structure some additional forms of data from
+a website dealing with some mathematical content from the Common Core
+State Standards. We can see there are a few different kinds of things on
+the page. Titles for groups of standards, standard codes, and a
+paragraph description of the standards, some including examples.</p>
+<p>The goal is to create a dataframe that has each of these elements in
+it’s own column.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [75]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://en.wikipedia.org/wiki/List_of_guest_stars_on_21_Jump_Street&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [76]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">text</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [77]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">soup</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[79]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;!DOCTYPE html&gt;
+
+&lt;html class=&quot;client-nojs&quot; dir=&quot;ltr&quot; lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;/&gt;
+&lt;title&gt;List of guest stars on 21 Jump Street - Wikipedia&lt;/title&gt;
+&lt;script&gt;document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, &quot;$1client-js$2&quot; );&lt;/script&gt;
+&lt;script&gt;(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({&quot;wgCanonicalNamespace&quot;:&quot;&quot;,&quot;wgCanonicalSpecialPageName&quot;:false,&quot;wgNamespaceNumber&quot;:0,&quot;wgPageName&quot;:&quot;List_of_guest_stars_on_21_Jump_Street&quot;,&quot;wgTitle&quot;:&quot;List of guest stars on 21 Jump Street&quot;,&quot;wgCurRevisionId&quot;:820109238,&quot;wgRevisionId&quot;:820109238,&quot;wgArticleId&quot;:28400841,&quot;wgIsArticle&quot;:true,&quot;wgIsRedirect&quot;:false,&quot;wgAction&quot;:&quot;view&quot;,&quot;wgUserName&quot;:null,&quot;wgUserGroups&quot;:[&quot;*&quot;],&quot;wgCategories&quot;:[&quot;21 Jump Street&quot;,&quot;Lists of actors by role&quot;,&quot;Lists of American television series characters&quot;,&quot;Lists of drama television characters&quot;,&quot;Lists of guest appearances in television&quot;],&quot;wgBreakFrames&quot;:false,&quot;wgPageContentLanguage&quot;:&quot;en&quot;,&quot;wgPageContentModel&quot;:&quot;wikitext&quot;,&quot;wgSeparatorTransformTable&quot;:[&quot;&quot;,&quot;&quot;],&quot;wgDigitTransformTable&quot;:[&quot;&quot;,&quot;&quot;],&quot;wgDefaultDateFormat&quot;:&quot;dmy&quot;,&quot;wgMonthNames&quot;:[&quot;&quot;,&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;,&quot;July&quot;,&quot;August&quot;,&quot;September&quot;,&quot;October&quot;,&quot;November&quot;,&quot;December&quot;],&quot;wgMonthNamesShort&quot;:[&quot;&quot;,&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;,&quot;Sep&quot;,&quot;Oct&quot;,&quot;Nov&quot;,&quot;Dec&quot;],&quot;wgRelevantPageName&quot;:&quot;List_of_guest_stars_on_21_Jump_Street&quot;,&quot;wgRelevantArticleId&quot;:28400841,&quot;wgRequestId&quot;:&quot;WnS59wpAMFQAADBc4OEAAACR&quot;,&quot;wgIsProbablyEditable&quot;:true,&quot;wgRelevantPageIsProbablyEditable&quot;:true,&quot;wgRestrictionEdit&quot;:[],&quot;wgRestrictionMove&quot;:[],&quot;wgFlaggedRevsParams&quot;:{&quot;tags&quot;:{}},&quot;wgStableRevisionId&quot;:null,&quot;wgWikiEditorEnabledModules&quot;:[],&quot;wgBetaFeaturesFeatures&quot;:[],&quot;wgMediaViewerOnClick&quot;:true,&quot;wgMediaViewerEnabledByDefault&quot;:true,&quot;wgPopupsShouldSendModuleToUser&quot;:true,&quot;wgPopupsConflictsWithNavPopupGadget&quot;:false,&quot;wgVisualEditor&quot;:{&quot;pageLanguageCode&quot;:&quot;en&quot;,&quot;pageLanguageDir&quot;:&quot;ltr&quot;,&quot;pageVariantFallbacks&quot;:&quot;en&quot;,&quot;usePageImages&quot;:true,&quot;usePageDescriptions&quot;:true},&quot;wgPreferredVariant&quot;:&quot;en&quot;,&quot;wgMFExpandAllSectionsUserOption&quot;:false,&quot;wgMFDisplayWikibaseDescriptions&quot;:{&quot;search&quot;:true,&quot;nearby&quot;:true,&quot;watchlist&quot;:true,&quot;tagline&quot;:false},&quot;wgRelatedArticles&quot;:null,&quot;wgRelatedArticlesUseCirrusSearch&quot;:true,&quot;wgRelatedArticlesOnlyUseCirrusSearch&quot;:false,&quot;wgULSCurrentAutonym&quot;:&quot;English&quot;,&quot;wgNoticeProject&quot;:&quot;wikipedia&quot;,&quot;wgCentralNoticeCookiesToDelete&quot;:[],&quot;wgCentralNoticeCategoriesUsingLegacy&quot;:[&quot;Fundraising&quot;,&quot;fundraising&quot;],&quot;wgCategoryTreePageCategoryOptions&quot;:&quot;{\&quot;mode\&quot;:0,\&quot;hideprefix\&quot;:20,\&quot;showcount\&quot;:true,\&quot;namespaces\&quot;:false}&quot;,&quot;wgWikibaseItemId&quot;:&quot;Q6621947&quot;,&quot;wgScoreNoteLanguages&quot;:{&quot;arabic&quot;:&quot;العربية&quot;,&quot;catalan&quot;:&quot;català&quot;,&quot;deutsch&quot;:&quot;Deutsch&quot;,&quot;english&quot;:&quot;English&quot;,&quot;espanol&quot;:&quot;español&quot;,&quot;italiano&quot;:&quot;italiano&quot;,&quot;nederlands&quot;:&quot;Nederlands&quot;,&quot;norsk&quot;:&quot;norsk&quot;,&quot;portugues&quot;:&quot;português&quot;,&quot;suomi&quot;:&quot;suomi&quot;,&quot;svenska&quot;:&quot;svenska&quot;,&quot;vlaams&quot;:&quot;West-Vlams&quot;},&quot;wgScoreDefaultNoteLanguage&quot;:&quot;nederlands&quot;,&quot;wgCentralAuthMobileDomain&quot;:false,&quot;wgCodeMirrorEnabled&quot;:false,&quot;wgVisualEditorToolbarScrollOffset&quot;:0,&quot;wgVisualEditorUnsupportedEditParams&quot;:[&quot;undo&quot;,&quot;undoafter&quot;,&quot;veswitched&quot;],&quot;wgEditSubmitButtonLabelPublish&quot;:true});mw.loader.state({&quot;ext.gadget.charinsert-styles&quot;:&quot;ready&quot;,&quot;ext.globalCssJs.user.styles&quot;:&quot;ready&quot;,&quot;ext.globalCssJs.site.styles&quot;:&quot;ready&quot;,&quot;site.styles&quot;:&quot;ready&quot;,&quot;noscript&quot;:&quot;ready&quot;,&quot;user.styles&quot;:&quot;ready&quot;,&quot;user&quot;:&quot;ready&quot;,&quot;user.options&quot;:&quot;ready&quot;,&quot;user.tokens&quot;:&quot;loading&quot;,&quot;wikibase.client.init&quot;:&quot;ready&quot;,&quot;ext.visualEditor.desktopArticleTarget.noscript&quot;:&quot;ready&quot;,&quot;ext.uls.interlanguage&quot;:&quot;ready&quot;,&quot;ext.wikimediaBadges&quot;:&quot;ready&quot;,&quot;mediawiki.legacy.shared&quot;:&quot;ready&quot;,&quot;mediawiki.legacy.commonPrint&quot;:&quot;ready&quot;,&quot;mediawiki.sectionAnchor&quot;:&quot;ready&quot;,&quot;mediawiki.skinning.interface&quot;:&quot;ready&quot;,&quot;skins.vector.styles&quot;:&quot;ready&quot;,&quot;ext.globalCssJs.user&quot;:&quot;ready&quot;,&quot;ext.globalCssJs.site&quot;:&quot;ready&quot;});mw.loader.implement(&quot;user.tokens@1dqfd7l&quot;,function ( $, jQuery, require, module ) {
+mw.user.tokens.set({&quot;editToken&quot;:&quot;+\\&quot;,&quot;patrolToken&quot;:&quot;+\\&quot;,&quot;watchToken&quot;:&quot;+\\&quot;,&quot;csrfToken&quot;:&quot;+\\&quot;});/*@nomin*/
+
+});mw.loader.load([&quot;site&quot;,&quot;mediawiki.page.startup&quot;,&quot;mediawiki.user&quot;,&quot;mediawiki.hidpi&quot;,&quot;mediawiki.page.ready&quot;,&quot;mediawiki.toc&quot;,&quot;mediawiki.searchSuggest&quot;,&quot;ext.gadget.teahouse&quot;,&quot;ext.gadget.ReferenceTooltips&quot;,&quot;ext.gadget.watchlist-notice&quot;,&quot;ext.gadget.DRN-wizard&quot;,&quot;ext.gadget.charinsert&quot;,&quot;ext.gadget.refToolbar&quot;,&quot;ext.gadget.extra-toolbar-buttons&quot;,&quot;ext.gadget.switcher&quot;,&quot;ext.centralauth.centralautologin&quot;,&quot;ext.popups&quot;,&quot;ext.visualEditor.desktopArticleTarget.init&quot;,&quot;ext.visualEditor.targetLoader&quot;,&quot;ext.eventLogging.subscriber&quot;,&quot;ext.wikimediaEvents&quot;,&quot;ext.navigationTiming&quot;,&quot;ext.uls.eventlogger&quot;,&quot;ext.uls.init&quot;,&quot;ext.uls.interface&quot;,&quot;ext.centralNotice.geoIP&quot;,&quot;ext.centralNotice.startUp&quot;,&quot;skins.vector.js&quot;]);});&lt;/script&gt;
+&lt;link href=&quot;/w/load.php?debug=false&amp;amp;lang=en&amp;amp;modules=ext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cwikibase.client.init&amp;amp;only=styles&amp;amp;skin=vector&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;script async=&quot;&quot; src=&quot;/w/load.php?debug=false&amp;amp;lang=en&amp;amp;modules=startup&amp;amp;only=scripts&amp;amp;skin=vector&quot;&gt;&lt;/script&gt;
+&lt;meta content=&quot;&quot; name=&quot;ResourceLoaderDynamicStyles&quot;/&gt;
+&lt;link href=&quot;/w/load.php?debug=false&amp;amp;lang=en&amp;amp;modules=ext.gadget.charinsert-styles&amp;amp;only=styles&amp;amp;skin=vector&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;link href=&quot;/w/load.php?debug=false&amp;amp;lang=en&amp;amp;modules=site.styles&amp;amp;only=styles&amp;amp;skin=vector&quot; rel=&quot;stylesheet&quot;/&gt;
+&lt;meta content=&quot;MediaWiki 1.31.0-wmf.17&quot; name=&quot;generator&quot;/&gt;
+&lt;meta content=&quot;origin-when-cross-origin&quot; name=&quot;referrer&quot;/&gt;
+&lt;link href=&quot;android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;alternate&quot;/&gt;
+&lt;link href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&quot; rel=&quot;alternate&quot; title=&quot;Edit this page&quot; type=&quot;application/x-wiki&quot;/&gt;
+&lt;link href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&quot; rel=&quot;edit&quot; title=&quot;Edit this page&quot;/&gt;
+&lt;link href=&quot;/static/apple-touch/wikipedia.png&quot; rel=&quot;apple-touch-icon&quot;/&gt;
+&lt;link href=&quot;/static/favicon/wikipedia.ico&quot; rel=&quot;shortcut icon&quot;/&gt;
+&lt;link href=&quot;/w/opensearch_desc.php&quot; rel=&quot;search&quot; title=&quot;Wikipedia (en)&quot; type=&quot;application/opensearchdescription+xml&quot;/&gt;
+&lt;link href=&quot;//en.wikipedia.org/w/api.php?action=rsd&quot; rel=&quot;EditURI&quot; type=&quot;application/rsd+xml&quot;/&gt;
+&lt;link href=&quot;//creativecommons.org/licenses/by-sa/3.0/&quot; rel=&quot;license&quot;/&gt;
+&lt;link href=&quot;https://en.wikipedia.org/wiki/List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;canonical&quot;/&gt;
+&lt;link href=&quot;//login.wikimedia.org&quot; rel=&quot;dns-prefetch&quot;/&gt;
+&lt;link href=&quot;//meta.wikimedia.org&quot; rel=&quot;dns-prefetch&quot;/&gt;
+&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;/w/load.php?debug=false&amp;amp;lang=en&amp;amp;modules=html5shiv&amp;amp;only=scripts&amp;amp;skin=vector&amp;amp;sync=1&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;
+&lt;/head&gt;
+&lt;body class=&quot;mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-List_of_guest_stars_on_21_Jump_Street rootpage-List_of_guest_stars_on_21_Jump_Street skin-vector action-view&quot;&gt; &lt;div class=&quot;noprint&quot; id=&quot;mw-page-base&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;noprint&quot; id=&quot;mw-head-base&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;mw-body&quot; id=&quot;content&quot; role=&quot;main&quot;&gt;
+&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;
+&lt;div class=&quot;mw-body-content&quot; id=&quot;siteNotice&quot;&gt;&lt;!-- CentralNotice --&gt;&lt;/div&gt;&lt;div class=&quot;mw-indicators mw-body-content&quot;&gt;
+&lt;/div&gt;
+&lt;h1 class=&quot;firstHeading&quot; id=&quot;firstHeading&quot; lang=&quot;en&quot;&gt;List of guest stars on &lt;i&gt;21 Jump Street&lt;/i&gt;&lt;/h1&gt; &lt;div class=&quot;mw-body-content&quot; id=&quot;bodyContent&quot;&gt;
+&lt;div class=&quot;noprint&quot; id=&quot;siteSub&quot;&gt;From Wikipedia, the free encyclopedia&lt;/div&gt; &lt;div id=&quot;contentSub&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;mw-jump&quot; id=&quot;jump-to-nav&quot;&gt;
+                                    Jump to:                                        &lt;a href=&quot;#mw-head&quot;&gt;navigation&lt;/a&gt;,                                      &lt;a href=&quot;#p-search&quot;&gt;search&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;mw-content-ltr&quot; dir=&quot;ltr&quot; id=&quot;mw-content-text&quot; lang=&quot;en&quot;&gt;&lt;div class=&quot;mw-parser-output&quot;&gt;&lt;p&gt;The following is a list of notable &lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Television_personality&quot; title=&quot;Television personality&quot;&gt;television&lt;/a&gt; and film personalities who made guest appearances on the &lt;a href=&quot;/wiki/Fox_Broadcasting_Company&quot; title=&quot;Fox Broadcasting Company&quot;&gt;Fox&lt;/a&gt; crime drama &lt;i&gt;&lt;a href=&quot;/wiki/21_Jump_Street&quot; title=&quot;21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;&lt;/i&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;div class=&quot;toc&quot; id=&quot;toc&quot;&gt;
+&lt;div class=&quot;toctitle&quot; dir=&quot;ltr&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot;&gt;
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li class=&quot;toclevel-1 tocsection-1&quot;&gt;&lt;a href=&quot;#Season_1&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 1&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-2&quot;&gt;&lt;a href=&quot;#Season_2&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 2&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-3&quot;&gt;&lt;a href=&quot;#Season_3&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 3&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-4&quot;&gt;&lt;a href=&quot;#Season_4&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 4&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-5&quot;&gt;&lt;a href=&quot;#Season_5&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;Season 5&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-6&quot;&gt;&lt;a href=&quot;#See_also&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;See also&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;toclevel-1 tocsection-7&quot;&gt;&lt;a href=&quot;#References&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;References&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Season_1&quot;&gt;Season 1&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=1&quot; title=&quot;Edit section: Season 1&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Barney_Martin&quot; title=&quot;Barney Martin&quot;&gt;Barney Martin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Charlie&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Brandon_Douglas&quot; title=&quot;Brandon Douglas&quot;&gt;Brandon Douglas&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kenny Weckerle&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1 &amp;amp; 2&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Reginald_T._Dorsey&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Reginald T. Dorsey (page does not exist)&quot;&gt;Reginald T. Dorsey&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tyrell &quot;Waxer&quot; Thompson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1 &amp;amp; 2&lt;/td&gt;
+&lt;td&gt;&quot;Pilot&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Billy_Jayne&quot; title=&quot;Billy Jayne&quot;&gt;Billy Jayne&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Mark Dorian&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Steve_Antin&quot; title=&quot;Steve Antin&quot;&gt;Steve Antin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Stevie Delano&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Traci_Lind&quot; title=&quot;Traci Lind&quot;&gt;Traci Lind&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Nadia&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;America, What a Town&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Leah_Ayres&quot; title=&quot;Leah Ayres&quot;&gt;Leah Ayres&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Susan Chadwick&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Don&#39;t Pet the Teacher&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Geoffrey_Blake_(actor)&quot; title=&quot;Geoffrey Blake (actor)&quot;&gt;Geoffrey Blake&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jeffrey Stone&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Don&#39;t Pet the Teacher&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Josh_Brolin&quot; title=&quot;Josh Brolin&quot;&gt;Josh Brolin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Taylor Rolator&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Jamie_Bozian&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Jamie Bozian (page does not exist)&quot;&gt;Jamie Bozian&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kurt Niles&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/John_D%27Aquino&quot; title=&quot;John D&#39;Aquino&quot;&gt;John D&#39;Aquino&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Vinny Morgan&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;My Future&#39;s So Bright, I Gotta Wear Shades&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Troy_Byer&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Troy Byer (page does not exist)&quot;&gt;Troy Byer&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Patty Blatcher&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;The Worst Night of Your Life&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Lezlie_Deane&quot; title=&quot;Lezlie Deane&quot;&gt;Lezlie Deane&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jane Kinney&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;The Worst Night of Your Life&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Blair_Underwood&quot; title=&quot;Blair Underwood&quot;&gt;Blair Underwood&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Reginald Brooks&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Gotta Finish the Riff&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Robert_Picardo&quot; title=&quot;Robert Picardo&quot;&gt;Robert Picardo&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Ralph Buckley&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Gotta Finish the Riff&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Scott_Schwartz&quot; title=&quot;Scott Schwartz&quot;&gt;Scott Schwartz&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jordan Simms&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Liane_Curtis&quot; title=&quot;Liane Curtis&quot;&gt;Liane Curtis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lauren Carlson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Byron_Thames&quot; title=&quot;Byron Thames&quot;&gt;Byron Thames&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dylan Taylor&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Bad Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Sherilyn_Fenn&quot; title=&quot;Sherilyn Fenn&quot;&gt;Sherilyn Fenn&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Diane Nelson&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;&quot;Blindsided&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Christopher_Heyerdahl&quot; title=&quot;Christopher Heyerdahl&quot;&gt;Christopher Heyerdahl&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jake&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;Next Generation&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kurtwood_Smith&quot; title=&quot;Kurtwood Smith&quot;&gt;Kurtwood Smith&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Spencer Phillips&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Low and Away&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;David Raynr&lt;/td&gt;
+&lt;td&gt;Kipling &quot;Kip&quot; Fuller&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;16 Blown to 35&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Sarah_G._Buxton&quot; title=&quot;Sarah G. Buxton&quot;&gt;Sarah G. Buxton&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Katrina&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;16 Blown to 35&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Jason_Priestley&quot; title=&quot;Jason Priestley&quot;&gt;Jason Priestley&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tober&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;&quot;Mean Streets and Pastel Houses&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Season_2&quot;&gt;Season 2&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=2&quot; title=&quot;Edit section: Season 2&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kurtwood_Smith&quot; title=&quot;Kurtwood Smith&quot;&gt;Kurtwood Smith&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Spencer Phillips&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;In the Custody of a Clown&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Ray_Walston&quot; title=&quot;Ray Walston&quot;&gt;Ray Walston&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Judge Desmond&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;In the Custody of a Clown&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Barney Martin&lt;/td&gt;
+&lt;td&gt;Edison Coulter&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;In the Custody of a Clown&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Jason Priestley&lt;/td&gt;
+&lt;td&gt;Brian Krompasick&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Two for the Road &quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Pauly_Shore&quot; title=&quot;Pauly Shore&quot;&gt;Pauly Shore&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kenny Ryan&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Two for the Road&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Reginald T. Dorsey&lt;/td&gt;
+&lt;td&gt;Tyrell &quot;Waxer&quot; Thompson&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;You Oughta Be in Prison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Shannon_Tweed&quot; title=&quot;Shannon Tweed&quot;&gt;Shannon Tweed&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jody Kleinman&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;You Oughta Be in Prison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Lochlyn_Munro&quot; title=&quot;Lochlyn Munro&quot;&gt;Lochlyn Munro&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Derek&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;You Oughta Be in Prison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Mindy_Cohn&quot; title=&quot;Mindy Cohn&quot;&gt;Mindy Cohn&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Rosa&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Christmas in Saigon&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kent_McCord&quot; title=&quot;Kent McCord&quot;&gt;Kent McCord&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tom Hanson Sr.&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mindy Cohn&lt;/td&gt;
+&lt;td&gt;Rosa&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Frank&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Tom_Wright_(actor)&quot; title=&quot;Tom Wright (actor)&quot;&gt;Tom Wright&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Judy&#39;s Date&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Jean_Sagal&quot; title=&quot;Jean Sagal&quot;&gt;Jean Sagal&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Betty Sue Fitzgerald&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Liz_Sagal&quot; title=&quot;Liz Sagal&quot;&gt;Liz Sagal&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Mary Lou Fitzgerald&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Deborah_Lacey&quot; title=&quot;Deborah Lacey&quot;&gt;Deborah Lacey&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lynette Johnson&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Bradford_English&quot; title=&quot;Bradford English&quot;&gt;Bradford English&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Charlie&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Chapel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Brandon Douglas&lt;/td&gt;
+&lt;td&gt;Kenny Weckerle&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;&quot;I&#39;m OK - You Need Work&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Christina_Applegate&quot; title=&quot;Christina Applegate&quot;&gt;Christina Applegate&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tina&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;&quot;I&#39;m OK - You Need Work&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Peter_Berg&quot; title=&quot;Peter Berg&quot;&gt;Peter Berg&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jerome Sawyer&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Champagne High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Gabriel_Jarret&quot; title=&quot;Gabriel Jarret&quot;&gt;Gabriel Jarret&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Ricky&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Champagne High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Bruce_French_(actor)&quot; title=&quot;Bruce French (actor)&quot;&gt;Bruce French&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Brother Williams&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;&quot;Brother Hanson &amp;amp; the Miracle of Renner&#39;s Pond&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Dann_Florek&quot; title=&quot;Dann Florek&quot;&gt;Dann Florek&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jim Crawford&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;&quot;Brother Hanson &amp;amp; the Miracle of Renner&#39;s Pond&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Gregory_Itzin&quot; title=&quot;Gregory Itzin&quot;&gt;Gregory Itzin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Principal Garner&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;&quot;Brother Hanson &amp;amp; the Miracle of Renner&#39;s Pond&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Brad_Pitt&quot; title=&quot;Brad Pitt&quot;&gt;Brad Pitt&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Peter&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Best Years of Your Life&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Principal&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;&quot;School&#39;s Out&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Sam_Anderson&quot; title=&quot;Sam Anderson&quot;&gt;Sam Anderson&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dan Finger&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;&quot;School&#39;s Out&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Season_3&quot;&gt;Season 3&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=3&quot; title=&quot;Edit section: Season 3&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Leo_Rossi&quot; title=&quot;Leo Rossi&quot;&gt;Leo Rossi&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Sgt. Walker&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;Slippin&#39; Into Darkness&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tim Russ&lt;/td&gt;
+&lt;td&gt;Ray Davies&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;Slippin&#39; Into Darkness&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Peri_Gilpin&quot; title=&quot;Peri Gilpin&quot;&gt;Peri Gilpin&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Fitzgerald&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;The Currency We Trade In&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kelly_Hu&quot; title=&quot;Kelly Hu&quot;&gt;Kelly Hu&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kim Van Luy&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;The Dragon and the Angel&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Russell_Wong&quot; title=&quot;Russell Wong&quot;&gt;Russell Wong&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Locke&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;The Dragon and the Angel&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Christopher_Titus&quot; title=&quot;Christopher Titus&quot;&gt;Christopher Titus&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jack Archer&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Dom_DeLuise&quot; title=&quot;Dom DeLuise&quot;&gt;Dom DeLuise&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Uncle Nick&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Kehli_O%27Byrne&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Kehli O&#39;Byrne (page does not exist)&quot;&gt;Kehli O&#39;Byrne&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Carol&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Larenz_Tate&quot; title=&quot;Larenz Tate&quot;&gt;Larenz Tate&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Young Adam Fuller&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Maia_Brewton&quot; title=&quot;Maia Brewton&quot;&gt;Maia Brewton&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Maureen Maroney&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Michael_DeLuise&quot; title=&quot;Michael DeLuise&quot;&gt;Michael DeLuise&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Doug Penhall at Age 16&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;&quot;Woolly Bullies&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Savannah Smith Boucher&lt;/td&gt;
+&lt;td&gt;Dr. St. John&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Nemesis&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Mario_Van_Peebles&quot; title=&quot;Mario Van Peebles&quot;&gt;Mario Van Peebles&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dana&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;&quot;High High&quot;&lt;sup class=&quot;reference plainlinks nourlexpansion&quot; id=&quot;ref_reference_name_A&quot;&gt;&lt;a href=&quot;#endnote_reference_name_A&quot;&gt;*&lt;/a&gt;&lt;/sup&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Bridget_Fonda&quot; title=&quot;Bridget Fonda&quot;&gt;Bridget Fonda&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Molly &#39;Moho&#39; Chapman&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Blinded by the Thousand Points of Light&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Conor_O%27Farrell&quot; title=&quot;Conor O&#39;Farrell&quot;&gt;Conor O&#39;Farrell&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Frank Farrell&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 1&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Andrew_Lauer&quot; title=&quot;Andrew Lauer&quot;&gt;Andrew Lauer&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Psycho&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 1&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Claude_Brooks&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Claude Brooks (page does not exist)&quot;&gt;Claude Brooks&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lil Monster&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 1&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Conor O&#39;Farrell&lt;/td&gt;
+&lt;td&gt;Frank Farrell&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Margot_Rose&quot; title=&quot;Margot Rose&quot;&gt;Margot Rose&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;D.A. Katherine Sullivan&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Andrew Lauer&lt;/td&gt;
+&lt;td&gt;Psycho&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Claude Brooks&lt;/td&gt;
+&lt;td&gt;Lil Monster&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Loc&#39;d Out Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Season_4&quot;&gt;Season 4&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=4&quot; title=&quot;Edit section: Season 4&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Conor O&#39;Farrell&lt;/td&gt;
+&lt;td&gt;Frank Farrell&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Draw the Line&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Warden&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Draw the Line&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Robert_Romanus&quot; title=&quot;Robert Romanus&quot;&gt;Robert Romanus&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Cadet Mortellaro&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Draw the Line&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Rob_Estes&quot; title=&quot;Rob Estes&quot;&gt;Rob Estes&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Darryl&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;Say It Ain&#39;t So, Pete&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Stu_Nahan&quot; title=&quot;Stu Nahan&quot;&gt;Stu Nahan&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Himself&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;Say It Ain&#39;t So, Pete&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Mario_Van_Peebles&quot; title=&quot;Mario Van Peebles&quot;&gt;Mario Van Peebles&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dancer&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Eternal Flame&quot;&lt;sup class=&quot;reference plainlinks nourlexpansion&quot; id=&quot;ref_reference_name_A&quot;&gt;&lt;a href=&quot;#endnote_reference_name_A&quot;&gt;*&lt;/a&gt;&lt;/sup&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Thomas_Haden_Church&quot; title=&quot;Thomas Haden Church&quot;&gt;Thomas Haden Church&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tony&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Eternal Flame&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Billy_Warlock&quot; title=&quot;Billy Warlock&quot;&gt;Billy Warlock&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Ron Greenwood&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Come from the Shadows&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Tony_Plana&quot; title=&quot;Tony Plana&quot;&gt;Tony Plana&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Robert Mendez&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Come from the Shadows&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Julie_Warner&quot; title=&quot;Julie Warner&quot;&gt;Julie Warner&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Alice Greenwood&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Come from the Shadows&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Barbara_Tarbuck&quot; title=&quot;Barbara Tarbuck&quot;&gt;Barbara Tarbuck&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Judge&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Come from the Shadows&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kamala_Lopez&quot; title=&quot;Kamala Lopez&quot;&gt;Kamala Lopez&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Marta&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Come from the Shadows&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Pamela_Adlon&quot; title=&quot;Pamela Adlon&quot;&gt;Pamela Adlon&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dori&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Old Haunts in a New Age&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Christine_Elise&quot; title=&quot;Christine Elise&quot;&gt;Christine Elise&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Quincy&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;Out of Control&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Robyn_Lively&quot; title=&quot;Robyn Lively&quot;&gt;Robyn Lively&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Helen Akerly&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;Mike&#39;s P.O.V.&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Vince_Vaughn&quot; title=&quot;Vince Vaughn&quot;&gt;Vince Vaughn&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Bill Peterson&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;Mike&#39;s P.O.V.&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Mickey_Jones&quot; title=&quot;Mickey Jones&quot;&gt;Mickey Jones&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Bobo&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Wheels and Deals: Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Ray_Baker_(actor)&quot; title=&quot;Ray Baker (actor)&quot;&gt;Ray Baker&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Raymond Crane&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Wheels and Deals: Part 2&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Keith_Coogan&quot; title=&quot;Keith Coogan&quot;&gt;Keith Coogan&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kyle DeGray&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;&quot;Things We Said Today&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Shannen_Doherty&quot; title=&quot;Shannen Doherty&quot;&gt;Shannen Doherty&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Janine DeGray&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;&quot;Things We Said Today&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Wallace_Langham&quot; title=&quot;Wallace Langham&quot;&gt;Wallace Langham&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Poole&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;&quot;Research and Destroy&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Rosie_Perez&quot; title=&quot;Rosie Perez&quot;&gt;Rosie Perez&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Rosie Martinez&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;&quot;2245&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Chapman&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;&quot;2245&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Chick_Hearn&quot; title=&quot;Chick Hearn&quot;&gt;Chick Hearn&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Himself&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Hi Mom&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kareem_Abdul-Jabbar&quot; title=&quot;Kareem Abdul-Jabbar&quot;&gt;Kareem Abdul-Jabbar&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Wesley Williams&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Hi Mom&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;David Raynr&lt;/td&gt;
+&lt;td&gt;Kipling &#39;Kip&#39; Fuller&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Hi Mom&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/John_Waters_(filmmaker)&quot; title=&quot;John Waters (filmmaker)&quot;&gt;John Waters&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Mr. Bean&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;&quot;Awomp-Bomp-Aloobomb, Aloop Bamboom&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/John_Pyper-Ferguson&quot; title=&quot;John Pyper-Ferguson&quot;&gt;John Pyper-Ferguson&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Dealer&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;&lt;i&gt;Awomp-Bomp-Aloobomb, Aloop Bamboom&quot;&lt;/i&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Diedrich_Bader&quot; title=&quot;Diedrich Bader&quot;&gt;Diedrich Bader&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Paul&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;&quot;Last Chance High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kelly_Perine&quot; title=&quot;Kelly Perine&quot;&gt;Kelly Perine&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Holt&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;26&lt;/td&gt;
+&lt;td&gt;&quot;Blackout&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kristin_Dattilo&quot; title=&quot;Kristin Dattilo&quot;&gt;Kristin Dattilo&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Allison&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;26&lt;/td&gt;
+&lt;td&gt;&quot;Blackout&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;Season_5&quot;&gt;Season 5&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=5&quot; title=&quot;Edit section: Season 5&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;table class=&quot;wikitable&quot;&gt;
+&lt;tr&gt;
+&lt;th&gt;Actor&lt;/th&gt;
+&lt;th&gt;Character&lt;/th&gt;
+&lt;th&gt;Season #&lt;/th&gt;
+&lt;th&gt;Episode #&lt;/th&gt;
+&lt;th&gt;Episode Title&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Jennifer Copping&lt;/td&gt;
+&lt;td&gt;Mara&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&quot;Tunnel of Love&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Lisa_Dean_Ryan&quot; title=&quot;Lisa Dean Ryan&quot;&gt;Lisa Dean Ryan&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Schoolgirl&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&quot;Back to School&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Scott_Grimes&quot; title=&quot;Scott Grimes&quot;&gt;Scott Grimes&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Christopher&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Buddy System&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;mw-redirect&quot; href=&quot;/wiki/Brigitta_Dau&quot; title=&quot;Brigitta Dau&quot;&gt;Brigitta Dau&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Claire&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&quot;Buddy System&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Tony_Dakota&quot; title=&quot;Tony Dakota&quot;&gt;Tony Dakota&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Clavo&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Perrey_Reeves&quot; title=&quot;Perrey Reeves&quot;&gt;Perrey Reeves&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Tracy Hill&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Johannah_Newmarch&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Johannah Newmarch (page does not exist)&quot;&gt;Johannah Newmarch&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lisa&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Richard_Leacock&quot; title=&quot;Richard Leacock&quot;&gt;Richard Leacock&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jam&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Pat_Bermel&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Pat Bermel (page does not exist)&quot;&gt;Pat Bermel&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Inspector Nickerson&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;Just Say No! High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Deanna_Milligan&quot; title=&quot;Deanna Milligan&quot;&gt;Deanna Milligan&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Vanessa&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;Just Say No! High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Peter_Outerbridge&quot; title=&quot;Peter Outerbridge&quot;&gt;Peter Outerbridge&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Jeff Chandler&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&quot;Just Say No! High&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tony Dakota&lt;/td&gt;
+&lt;td&gt;Clavo&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a class=&quot;new&quot; href=&quot;/w/index.php?title=Don_MacKay&amp;amp;action=edit&amp;amp;redlink=1&quot; title=&quot;Don MacKay (page does not exist)&quot;&gt;Don MacKay&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Kyle Morgan&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;John Pyper-Ferguson&lt;/td&gt;
+&lt;td&gt;Joshua, group leader&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;&quot;Poison&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Terence_Kelly_(actor)&quot; title=&quot;Terence Kelly (actor)&quot;&gt;Terence Kelly&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Edward Arbogast&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;This Ain&#39;t No Summer Camp&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Merrilyn_Gann&quot; title=&quot;Merrilyn Gann&quot;&gt;Merrilyn Gann&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Rosalie Arbogast&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;&quot;This Ain&#39;t No Summer Camp&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Ocean_Hellman&quot; title=&quot;Ocean Hellman&quot;&gt;Ocean Hellman&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Suzanne Ross&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;&quot;The Girl Next Door&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Lochlyn_Munro&quot; title=&quot;Lochlyn Munro&quot;&gt;Lochlyn Munro&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Vince&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;&quot;The Girl Next Door&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Leslie_Carlson&quot; title=&quot;Leslie Carlson&quot;&gt;Leslie Carlson&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Professor Gray&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;&quot;Diplomas for Sale&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tony Dakota&lt;/td&gt;
+&lt;td&gt;Clavo&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Number One with a Bullet&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/David_DeLuise&quot; title=&quot;David DeLuise&quot;&gt;David DeLuise&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Stevenson&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Number One with a Bullet&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Kamala_Lopez&quot; title=&quot;Kamala Lopez&quot;&gt;Kamala Lopez&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Marta&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Number One with a Bullet&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sandra P. Grant&lt;/td&gt;
+&lt;td&gt;reporter&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;&quot;Number One with a Bullet&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Don_S._Davis&quot; title=&quot;Don S. Davis&quot;&gt;Don S. Davis&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lt. Donnelly&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;&quot;Film at Eleven&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Jennifer Copping&lt;/td&gt;
+&lt;td&gt;Melanie&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;&quot;Under the Influence&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;/wiki/Jada_Pinkett_Smith&quot; title=&quot;Jada Pinkett Smith&quot;&gt;Jada Pinkett Smith&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Nicole&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;21&lt;/td&gt;
+&lt;td&gt;&quot;Homegirls&quot;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;span class=&quot;citation wikicite&quot; id=&quot;endnote_reference_name_A&quot;&gt;&lt;b&gt;&lt;a href=&quot;#ref_reference_name_A&quot;&gt;^*&lt;/a&gt;&lt;/b&gt;&lt;/span&gt; Mario Van Peebles also directed these episodes.&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;See_also&quot;&gt;See also&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=6&quot; title=&quot;Edit section: See also&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;i&gt;&lt;a href=&quot;/wiki/Jump_Street_(franchise)&quot; title=&quot;Jump Street (franchise)&quot;&gt;Jump Street&lt;/a&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;span class=&quot;mw-headline&quot; id=&quot;References&quot;&gt;References&lt;/span&gt;&lt;span class=&quot;mw-editsection&quot;&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;[&lt;/span&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&amp;amp;section=7&quot; title=&quot;Edit section: References&quot;&gt;edit&lt;/a&gt;&lt;span class=&quot;mw-editsection-bracket&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;All information sourced from &lt;a class=&quot;external text&quot; href=&quot;http://www.imdb.com/title/tt0092312/&quot; rel=&quot;nofollow&quot;&gt;&lt;i&gt;21 Jump Street&lt;/i&gt;&lt;/a&gt; on &lt;a href=&quot;/wiki/IMDb&quot; title=&quot;IMDb&quot;&gt;IMDb&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div aria-labelledby=&quot;Jump_Street&quot; class=&quot;navbox&quot; role=&quot;navigation&quot; style=&quot;padding:3px&quot;&gt;
+&lt;table class=&quot;nowraplinks collapsible autocollapse navbox-inner&quot; style=&quot;border-spacing:0;background:transparent;color:inherit&quot;&gt;
+&lt;tr&gt;
+&lt;th class=&quot;navbox-title&quot; colspan=&quot;2&quot; scope=&quot;col&quot;&gt;
+&lt;div class=&quot;plainlinks hlist navbar mini&quot;&gt;
+&lt;ul&gt;
+&lt;li class=&quot;nv-view&quot;&gt;&lt;a href=&quot;/wiki/Template:21_Jump_Street&quot; title=&quot;Template:21 Jump Street&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;View this template&quot;&gt;v&lt;/abbr&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;nv-talk&quot;&gt;&lt;a href=&quot;/wiki/Template_talk:21_Jump_Street&quot; title=&quot;Template talk:21 Jump Street&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;Discuss this template&quot;&gt;t&lt;/abbr&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li class=&quot;nv-edit&quot;&gt;&lt;a class=&quot;external text&quot; href=&quot;//en.wikipedia.org/w/index.php?title=Template:21_Jump_Street&amp;amp;action=edit&quot;&gt;&lt;abbr style=&quot;;;background:none transparent;border:none;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;&quot; title=&quot;Edit this template&quot;&gt;e&lt;/abbr&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;Jump_Street&quot; style=&quot;font-size:114%;margin:0 4em&quot;&gt;&lt;i&gt;&lt;a href=&quot;/wiki/Jump_Street_(franchise)&quot; title=&quot;Jump Street (franchise)&quot;&gt;Jump Street&lt;/a&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th class=&quot;navbox-group&quot; scope=&quot;row&quot; style=&quot;width:1%&quot;&gt;Television&lt;/th&gt;
+&lt;td class=&quot;navbox-list navbox-odd hlist&quot; style=&quot;text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px&quot;&gt;
+&lt;div style=&quot;padding:0em 0.25em&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;i&gt;&lt;a href=&quot;/wiki/21_Jump_Street&quot; title=&quot;21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;&lt;/i&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/wiki/List_of_21_Jump_Street_episodes&quot; title=&quot;List of 21 Jump Street episodes&quot;&gt;episodes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&quot;mw-selflink selflink&quot;&gt;guest stars&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;i&gt;&lt;a href=&quot;/wiki/Booker_(TV_series)&quot; title=&quot;Booker (TV series)&quot;&gt;Booker&lt;/a&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th class=&quot;navbox-group&quot; scope=&quot;row&quot; style=&quot;width:1%&quot;&gt;Films&lt;/th&gt;
+&lt;td class=&quot;navbox-list navbox-even hlist&quot; style=&quot;text-align:left;border-left-width:2px;border-left-style:solid;width:100%;padding:0px&quot;&gt;
+&lt;div style=&quot;padding:0em 0.25em&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;i&gt;&lt;a href=&quot;/wiki/21_Jump_Street_(film)&quot; title=&quot;21 Jump Street (film)&quot;&gt;21 Jump Street&lt;/a&gt;&lt;/i&gt; (2012)&lt;/li&gt;
+&lt;li&gt;&lt;i&gt;&lt;a href=&quot;/wiki/22_Jump_Street&quot; title=&quot;22 Jump Street&quot;&gt;22 Jump Street&lt;/a&gt;&lt;/i&gt; (2014)
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/wiki/22_Jump_Street_(Original_Motion_Picture_Score)&quot; title=&quot;22 Jump Street (Original Motion Picture Score)&quot;&gt;Score&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;!--
+NewPP limit report
+Parsed by mw1226
+Cached time: 20180113030452
+Cache expiry: 1900800
+Dynamic content: false
+CPU time usage: 0.080 seconds
+Real time usage: 0.106 seconds
+Preprocessor visited node count: 320/1000000
+Preprocessor generated node count: 0/1500000
+Post‐expand include size: 6477/2097152 bytes
+Template argument size: 229/2097152 bytes
+Highest expansion depth: 12/40
+Expensive parser function count: 0/500
+Lua time usage: 0.011/10.000 seconds
+Lua memory usage: 837 KB/50 MB
+--&gt;
+&lt;!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   53.750      1 -total
+ 71.21%   38.273      1 Template:IMDb_title
+ 29.78%   16.009      1 Template:Str_len
+ 22.71%   12.209      1 Template:21_Jump_Street
+ 19.74%   10.609      1 Template:Navbox
+  8.96%    4.817      1 Template:EditAtWikidata
+  7.84%    4.212      1 Template:Str_rightmost
+  2.85%    1.530      2 Template:Trim
+  2.85%    1.530      2 Template:Ref
+  2.55%    1.372      1 Template:Note
+--&gt;
+&lt;/div&gt;
+&lt;!-- Saved in parser cache with key enwiki:pcache:idhash:28400841-0!canonical and timestamp 20180113030454 and revision id 820109238
+ --&gt;
+&lt;noscript&gt;&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1&quot; style=&quot;border: none; position: absolute;&quot; title=&quot;&quot; width=&quot;1&quot;/&gt;&lt;/noscript&gt;&lt;/div&gt; &lt;div class=&quot;printfooter&quot;&gt;
+                                            Retrieved from &quot;&lt;a dir=&quot;ltr&quot; href=&quot;https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&quot;&gt;https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&lt;/a&gt;&quot;                                      &lt;/div&gt;
+&lt;div class=&quot;catlinks&quot; data-mw=&quot;interface&quot; id=&quot;catlinks&quot;&gt;&lt;div class=&quot;mw-normal-catlinks&quot; id=&quot;mw-normal-catlinks&quot;&gt;&lt;a href=&quot;/wiki/Help:Category&quot; title=&quot;Help:Category&quot;&gt;Categories&lt;/a&gt;: &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;/wiki/Category:21_Jump_Street&quot; title=&quot;Category:21 Jump Street&quot;&gt;21 Jump Street&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;/wiki/Category:Lists_of_actors_by_role&quot; title=&quot;Category:Lists of actors by role&quot;&gt;Lists of actors by role&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;/wiki/Category:Lists_of_American_television_series_characters&quot; title=&quot;Category:Lists of American television series characters&quot;&gt;Lists of American television series characters&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;/wiki/Category:Lists_of_drama_television_characters&quot; title=&quot;Category:Lists of drama television characters&quot;&gt;Lists of drama television characters&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;/wiki/Category:Lists_of_guest_appearances_in_television&quot; title=&quot;Category:Lists of guest appearances in television&quot;&gt;Lists of guest appearances in television&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt; &lt;div class=&quot;visualClear&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;mw-navigation&quot;&gt;
+&lt;h2&gt;Navigation menu&lt;/h2&gt;
+&lt;div id=&quot;mw-head&quot;&gt;
+&lt;div aria-labelledby=&quot;p-personal-label&quot; class=&quot;&quot; id=&quot;p-personal&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-personal-label&quot;&gt;Personal tools&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li id=&quot;pt-anonuserpage&quot;&gt;Not logged in&lt;/li&gt;&lt;li id=&quot;pt-anontalk&quot;&gt;&lt;a accesskey=&quot;n&quot; href=&quot;/wiki/Special:MyTalk&quot; title=&quot;Discussion about edits from this IP address [n]&quot;&gt;Talk&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;pt-anoncontribs&quot;&gt;&lt;a accesskey=&quot;y&quot; href=&quot;/wiki/Special:MyContributions&quot; title=&quot;A list of edits made from this IP address [y]&quot;&gt;Contributions&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;pt-createaccount&quot;&gt;&lt;a href=&quot;/w/index.php?title=Special:CreateAccount&amp;amp;returnto=List+of+guest+stars+on+21+Jump+Street&quot; title=&quot;You are encouraged to create an account and log in; however, it is not mandatory&quot;&gt;Create account&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;pt-login&quot;&gt;&lt;a accesskey=&quot;o&quot; href=&quot;/w/index.php?title=Special:UserLogin&amp;amp;returnto=List+of+guest+stars+on+21+Jump+Street&quot; title=&quot;You&#39;re encouraged to log in; however, it&#39;s not mandatory. [o]&quot;&gt;Log in&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;left-navigation&quot;&gt;
+&lt;div aria-labelledby=&quot;p-namespaces-label&quot; class=&quot;vectorTabs&quot; id=&quot;p-namespaces&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-namespaces-label&quot;&gt;Namespaces&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li class=&quot;selected&quot; id=&quot;ca-nstab-main&quot;&gt;&lt;span&gt;&lt;a accesskey=&quot;c&quot; href=&quot;/wiki/List_of_guest_stars_on_21_Jump_Street&quot; title=&quot;View the content page [c]&quot;&gt;Article&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;&lt;li id=&quot;ca-talk&quot;&gt;&lt;span&gt;&lt;a accesskey=&quot;t&quot; href=&quot;/wiki/Talk:List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;discussion&quot; title=&quot;Discussion about the content page [t]&quot;&gt;Talk&lt;/a&gt;&lt;/span&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-variants-label&quot; class=&quot;vectorMenu emptyPortlet&quot; id=&quot;p-variants&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-variants-label&quot;&gt;
+&lt;span&gt;Variants&lt;/span&gt;
+&lt;/h3&gt;
+&lt;div class=&quot;menu&quot;&gt;
+&lt;ul&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;right-navigation&quot;&gt;
+&lt;div aria-labelledby=&quot;p-views-label&quot; class=&quot;vectorTabs&quot; id=&quot;p-views&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-views-label&quot;&gt;Views&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li class=&quot;collapsible selected&quot; id=&quot;ca-view&quot;&gt;&lt;span&gt;&lt;a href=&quot;/wiki/List_of_guest_stars_on_21_Jump_Street&quot;&gt;Read&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;collapsible&quot; id=&quot;ca-edit&quot;&gt;&lt;span&gt;&lt;a accesskey=&quot;e&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=edit&quot; title=&quot;Edit this page [e]&quot;&gt;Edit&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;collapsible&quot; id=&quot;ca-history&quot;&gt;&lt;span&gt;&lt;a accesskey=&quot;h&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=history&quot; title=&quot;Past revisions of this page [h]&quot;&gt;View history&lt;/a&gt;&lt;/span&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-cactions-label&quot; class=&quot;vectorMenu emptyPortlet&quot; id=&quot;p-cactions&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-cactions-label&quot;&gt;&lt;span&gt;More&lt;/span&gt;&lt;/h3&gt;
+&lt;div class=&quot;menu&quot;&gt;
+&lt;ul&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;p-search&quot; role=&quot;search&quot;&gt;
+&lt;h3&gt;
+&lt;label for=&quot;searchInput&quot;&gt;Search&lt;/label&gt;
+&lt;/h3&gt;
+&lt;form action=&quot;/w/index.php&quot; id=&quot;searchform&quot;&gt;
+&lt;div id=&quot;simpleSearch&quot;&gt;
+&lt;input accesskey=&quot;f&quot; id=&quot;searchInput&quot; name=&quot;search&quot; placeholder=&quot;Search Wikipedia&quot; title=&quot;Search Wikipedia [f]&quot; type=&quot;search&quot;/&gt;&lt;input name=&quot;title&quot; type=&quot;hidden&quot; value=&quot;Special:Search&quot;/&gt;&lt;input class=&quot;searchButton mw-fallbackSearchButton&quot; id=&quot;mw-searchButton&quot; name=&quot;fulltext&quot; title=&quot;Search Wikipedia for this text&quot; type=&quot;submit&quot; value=&quot;Search&quot;/&gt;&lt;input class=&quot;searchButton&quot; id=&quot;searchButton&quot; name=&quot;go&quot; title=&quot;Go to a page with this exact name if it exists&quot; type=&quot;submit&quot; value=&quot;Go&quot;/&gt; &lt;/div&gt;
+&lt;/form&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;mw-panel&quot;&gt;
+&lt;div id=&quot;p-logo&quot; role=&quot;banner&quot;&gt;&lt;a class=&quot;mw-wiki-logo&quot; href=&quot;/wiki/Main_Page&quot; title=&quot;Visit the main page&quot;&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-navigation-label&quot; class=&quot;portal&quot; id=&quot;p-navigation&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-navigation-label&quot;&gt;Navigation&lt;/h3&gt;
+&lt;div class=&quot;body&quot;&gt;
+&lt;ul&gt;
+&lt;li id=&quot;n-mainpage-description&quot;&gt;&lt;a accesskey=&quot;z&quot; href=&quot;/wiki/Main_Page&quot; title=&quot;Visit the main page [z]&quot;&gt;Main page&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-contents&quot;&gt;&lt;a href=&quot;/wiki/Portal:Contents&quot; title=&quot;Guides to browsing Wikipedia&quot;&gt;Contents&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-featuredcontent&quot;&gt;&lt;a href=&quot;/wiki/Portal:Featured_content&quot; title=&quot;Featured content – the best of Wikipedia&quot;&gt;Featured content&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-currentevents&quot;&gt;&lt;a href=&quot;/wiki/Portal:Current_events&quot; title=&quot;Find background information on current events&quot;&gt;Current events&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-randompage&quot;&gt;&lt;a accesskey=&quot;x&quot; href=&quot;/wiki/Special:Random&quot; title=&quot;Load a random article [x]&quot;&gt;Random article&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-sitesupport&quot;&gt;&lt;a href=&quot;https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;amp;utm_medium=sidebar&amp;amp;utm_campaign=C13_en.wikipedia.org&amp;amp;uselang=en&quot; title=&quot;Support us&quot;&gt;Donate to Wikipedia&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-shoplink&quot;&gt;&lt;a href=&quot;//shop.wikimedia.org&quot; title=&quot;Visit the Wikipedia store&quot;&gt;Wikipedia store&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-interaction-label&quot; class=&quot;portal&quot; id=&quot;p-interaction&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-interaction-label&quot;&gt;Interaction&lt;/h3&gt;
+&lt;div class=&quot;body&quot;&gt;
+&lt;ul&gt;
+&lt;li id=&quot;n-help&quot;&gt;&lt;a href=&quot;/wiki/Help:Contents&quot; title=&quot;Guidance on how to use and edit Wikipedia&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-aboutsite&quot;&gt;&lt;a href=&quot;/wiki/Wikipedia:About&quot; title=&quot;Find out about Wikipedia&quot;&gt;About Wikipedia&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-portal&quot;&gt;&lt;a href=&quot;/wiki/Wikipedia:Community_portal&quot; title=&quot;About the project, what you can do, where to find things&quot;&gt;Community portal&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-recentchanges&quot;&gt;&lt;a accesskey=&quot;r&quot; href=&quot;/wiki/Special:RecentChanges&quot; title=&quot;A list of recent changes in the wiki [r]&quot;&gt;Recent changes&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;n-contactpage&quot;&gt;&lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Contact_us&quot; title=&quot;How to contact Wikipedia&quot;&gt;Contact page&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-tb-label&quot; class=&quot;portal&quot; id=&quot;p-tb&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-tb-label&quot;&gt;Tools&lt;/h3&gt;
+&lt;div class=&quot;body&quot;&gt;
+&lt;ul&gt;
+&lt;li id=&quot;t-whatlinkshere&quot;&gt;&lt;a accesskey=&quot;j&quot; href=&quot;/wiki/Special:WhatLinksHere/List_of_guest_stars_on_21_Jump_Street&quot; title=&quot;List of all English Wikipedia pages containing links to this page [j]&quot;&gt;What links here&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-recentchangeslinked&quot;&gt;&lt;a accesskey=&quot;k&quot; href=&quot;/wiki/Special:RecentChangesLinked/List_of_guest_stars_on_21_Jump_Street&quot; rel=&quot;nofollow&quot; title=&quot;Recent changes in pages linked from this page [k]&quot;&gt;Related changes&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-upload&quot;&gt;&lt;a accesskey=&quot;u&quot; href=&quot;/wiki/Wikipedia:File_Upload_Wizard&quot; title=&quot;Upload files [u]&quot;&gt;Upload file&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-specialpages&quot;&gt;&lt;a accesskey=&quot;q&quot; href=&quot;/wiki/Special:SpecialPages&quot; title=&quot;A list of all special pages [q]&quot;&gt;Special pages&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-permalink&quot;&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;oldid=820109238&quot; title=&quot;Permanent link to this revision of the page&quot;&gt;Permanent link&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-info&quot;&gt;&lt;a href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;action=info&quot; title=&quot;More information about this page&quot;&gt;Page information&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-wikibase&quot;&gt;&lt;a accesskey=&quot;g&quot; href=&quot;https://www.wikidata.org/wiki/Special:EntityPage/Q6621947&quot; title=&quot;Link to connected data repository item [g]&quot;&gt;Wikidata item&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-cite&quot;&gt;&lt;a href=&quot;/w/index.php?title=Special:CiteThisPage&amp;amp;page=List_of_guest_stars_on_21_Jump_Street&amp;amp;id=820109238&quot; title=&quot;Information on how to cite this page&quot;&gt;Cite this page&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-coll-print_export-label&quot; class=&quot;portal&quot; id=&quot;p-coll-print_export&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-coll-print_export-label&quot;&gt;Print/export&lt;/h3&gt;
+&lt;div class=&quot;body&quot;&gt;
+&lt;ul&gt;
+&lt;li id=&quot;coll-create_a_book&quot;&gt;&lt;a href=&quot;/w/index.php?title=Special:Book&amp;amp;bookcmd=book_creator&amp;amp;referer=List+of+guest+stars+on+21+Jump+Street&quot;&gt;Create a book&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;coll-download-as-rdf2latex&quot;&gt;&lt;a href=&quot;/w/index.php?title=Special:ElectronPdf&amp;amp;page=List+of+guest+stars+on+21+Jump+Street&amp;amp;action=show-download-screen&quot;&gt;Download as PDF&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;t-print&quot;&gt;&lt;a accesskey=&quot;p&quot; href=&quot;/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;printable=yes&quot; title=&quot;Printable version of this page [p]&quot;&gt;Printable version&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div aria-labelledby=&quot;p-lang-label&quot; class=&quot;portal&quot; id=&quot;p-lang&quot; role=&quot;navigation&quot;&gt;
+&lt;h3 id=&quot;p-lang-label&quot;&gt;Languages&lt;/h3&gt;
+&lt;div class=&quot;body&quot;&gt;
+&lt;ul&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;after-portlet after-portlet-lang&quot;&gt;&lt;span class=&quot;wb-langlinks-add wb-langlinks-link&quot;&gt;&lt;a class=&quot;wbc-editpage&quot; href=&quot;https://www.wikidata.org/wiki/Special:EntityPage/Q6621947#sitelinks-wikipedia&quot; title=&quot;Add interlanguage links&quot;&gt;Add links&lt;/a&gt;&lt;/span&gt;&lt;/div&gt; &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footer&quot; role=&quot;contentinfo&quot;&gt;
+&lt;ul id=&quot;footer-info&quot;&gt;
+&lt;li id=&quot;footer-info-lastmod&quot;&gt; This page was last edited on 13 January 2018, at 03:04.&lt;/li&gt;
+&lt;li id=&quot;footer-info-copyright&quot;&gt;Text is available under the &lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License&quot; rel=&quot;license&quot;&gt;Creative Commons Attribution-ShareAlike License&lt;/a&gt;&lt;a href=&quot;//creativecommons.org/licenses/by-sa/3.0/&quot; rel=&quot;license&quot; style=&quot;display:none;&quot;&gt;&lt;/a&gt;;
+additional terms may apply.  By using this site, you agree to the &lt;a href=&quot;//wikimediafoundation.org/wiki/Terms_of_Use&quot;&gt;Terms of Use&lt;/a&gt; and &lt;a href=&quot;//wikimediafoundation.org/wiki/Privacy_policy&quot;&gt;Privacy Policy&lt;/a&gt;. Wikipedia® is a registered trademark of the &lt;a href=&quot;//www.wikimediafoundation.org/&quot;&gt;Wikimedia Foundation, Inc.&lt;/a&gt;, a non-profit organization.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul id=&quot;footer-places&quot;&gt;
+&lt;li id=&quot;footer-places-privacy&quot;&gt;&lt;a class=&quot;extiw&quot; href=&quot;https://wikimediafoundation.org/wiki/Privacy_policy&quot; title=&quot;wmf:Privacy policy&quot;&gt;Privacy policy&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-about&quot;&gt;&lt;a href=&quot;/wiki/Wikipedia:About&quot; title=&quot;Wikipedia:About&quot;&gt;About Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-disclaimer&quot;&gt;&lt;a href=&quot;/wiki/Wikipedia:General_disclaimer&quot; title=&quot;Wikipedia:General disclaimer&quot;&gt;Disclaimers&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-contact&quot;&gt;&lt;a href=&quot;//en.wikipedia.org/wiki/Wikipedia:Contact_us&quot;&gt;Contact Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-developers&quot;&gt;&lt;a href=&quot;https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute&quot;&gt;Developers&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-cookiestatement&quot;&gt;&lt;a href=&quot;https://wikimediafoundation.org/wiki/Cookie_statement&quot;&gt;Cookie statement&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;footer-places-mobileview&quot;&gt;&lt;a class=&quot;noprint stopMobileRedirectToggle&quot; href=&quot;//en.m.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;amp;mobileaction=toggle_view_mobile&quot;&gt;Mobile view&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul class=&quot;noprint&quot; id=&quot;footer-icons&quot;&gt;
+&lt;li id=&quot;footer-copyrightico&quot;&gt;
+&lt;a href=&quot;https://wikimediafoundation.org/&quot;&gt;&lt;img alt=&quot;Wikimedia Foundation&quot; height=&quot;31&quot; src=&quot;/static/images/wikimedia-button.png&quot; srcset=&quot;/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x&quot; width=&quot;88&quot;/&gt;&lt;/a&gt; &lt;/li&gt;
+&lt;li id=&quot;footer-poweredbyico&quot;&gt;
+&lt;a href=&quot;//www.mediawiki.org/&quot;&gt;&lt;img alt=&quot;Powered by MediaWiki&quot; height=&quot;31&quot; src=&quot;/static/images/poweredby_mediawiki_88x31.png&quot; srcset=&quot;/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x&quot; width=&quot;88&quot;/&gt;&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&quot;clear: both;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({&quot;wgPageParseReport&quot;:{&quot;limitreport&quot;:{&quot;cputime&quot;:&quot;0.080&quot;,&quot;walltime&quot;:&quot;0.106&quot;,&quot;ppvisitednodes&quot;:{&quot;value&quot;:320,&quot;limit&quot;:1000000},&quot;ppgeneratednodes&quot;:{&quot;value&quot;:0,&quot;limit&quot;:1500000},&quot;postexpandincludesize&quot;:{&quot;value&quot;:6477,&quot;limit&quot;:2097152},&quot;templateargumentsize&quot;:{&quot;value&quot;:229,&quot;limit&quot;:2097152},&quot;expansiondepth&quot;:{&quot;value&quot;:12,&quot;limit&quot;:40},&quot;expensivefunctioncount&quot;:{&quot;value&quot;:0,&quot;limit&quot;:500},&quot;entityaccesscount&quot;:{&quot;value&quot;:1,&quot;limit&quot;:400},&quot;timingprofile&quot;:[&quot;100.00%   53.750      1 -total&quot;,&quot; 71.21%   38.273      1 Template:IMDb_title&quot;,&quot; 29.78%   16.009      1 Template:Str_len&quot;,&quot; 22.71%   12.209      1 Template:21_Jump_Street&quot;,&quot; 19.74%   10.609      1 Template:Navbox&quot;,&quot;  8.96%    4.817      1 Template:EditAtWikidata&quot;,&quot;  7.84%    4.212      1 Template:Str_rightmost&quot;,&quot;  2.85%    1.530      2 Template:Trim&quot;,&quot;  2.85%    1.530      2 Template:Ref&quot;,&quot;  2.55%    1.372      1 Template:Note&quot;]},&quot;scribunto&quot;:{&quot;limitreport-timeusage&quot;:{&quot;value&quot;:&quot;0.011&quot;,&quot;limit&quot;:&quot;10.000&quot;},&quot;limitreport-memusage&quot;:{&quot;value&quot;:856620,&quot;limit&quot;:52428800}},&quot;cachereport&quot;:{&quot;origin&quot;:&quot;mw1226&quot;,&quot;timestamp&quot;:&quot;20180113030452&quot;,&quot;ttl&quot;:1900800,&quot;transientcontent&quot;:false}}});});&lt;/script&gt;&lt;script&gt;(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({&quot;wgBackendResponseTime&quot;:78,&quot;wgHostname&quot;:&quot;mw1249&quot;});});&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [85]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">groups</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [86]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[86]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>137
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [118]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[118]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;\nActor\nCharacter\nSeason #\nEpisode #\nEpisode Title\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [119]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">groups</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[119]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;\nBarney Martin\nCharlie\n1\n1\n&quot;Pilot&quot;\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [120]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rows</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [121]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[121]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>647
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [122]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[122]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Barney Martin&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [123]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">column_names</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;th&#39;</span><span class="p">):</span>
+    <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [124]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[124]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>28
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [126]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">column_names</span> <span class="o">=</span> <span class="n">column_names</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [127]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">column_names</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[127]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Actor&#39;, &#39;Character&#39;, &#39;Season #&#39;, &#39;Episode #&#39;, &#39;Episode Title&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [134]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [135]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[135]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>647
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [148]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rows</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[148]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&lt;td&gt;&lt;a href=&quot;/wiki/Barney_Martin&quot; title=&quot;Barney Martin&quot;&gt;Barney Martin&lt;/a&gt;&lt;/td&gt;,
+ &lt;td&gt;Charlie&lt;/td&gt;,
+ &lt;td&gt;1&lt;/td&gt;,
+ &lt;td&gt;1&lt;/td&gt;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [153]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="n">column_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [154]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[154]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Actor</th>
+      <th>Character</th>
+      <th>Season #</th>
+      <th>Episode #</th>
+      <th>Episode Title</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [155]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+
+&lt;th&gt;Actor&lt;/th&gt;
+
+
+&lt;th&gt;Character&lt;/th&gt;
+
+
+&lt;th&gt;Season #&lt;/th&gt;
+
+
+&lt;th&gt;Episode #&lt;/th&gt;
+
+
+&lt;th&gt;Episode Title&lt;/th&gt;
+
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [173]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;href&#39;</span><span class="p">:</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)}):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+navigation
+search
+television
+Fox
+21 Jump Street
+1 Season 1
+2 Season 2
+3 Season 3
+4 Season 4
+5 Season 5
+6 See also
+7 References
+edit
+Barney Martin
+Brandon Douglas
+Reginald T. Dorsey
+Billy Jayne
+Steve Antin
+Traci Lind
+Leah Ayres
+Geoffrey Blake
+Josh Brolin
+Jamie Bozian
+John D&#39;Aquino
+Troy Byer
+Lezlie Deane
+Blair Underwood
+Robert Picardo
+Scott Schwartz
+Liane Curtis
+Byron Thames
+Sherilyn Fenn
+Christopher Heyerdahl
+Kurtwood Smith
+Sarah G. Buxton
+Jason Priestley
+edit
+Kurtwood Smith
+Ray Walston
+Pauly Shore
+Shannon Tweed
+Lochlyn Munro
+Mindy Cohn
+Kent McCord
+Don S. Davis
+Tom Wright
+Jean Sagal
+Liz Sagal
+Deborah Lacey
+Bradford English
+Christina Applegate
+Peter Berg
+Gabriel Jarret
+Bruce French
+Dann Florek
+Gregory Itzin
+Brad Pitt
+Don S. Davis
+Sam Anderson
+edit
+Leo Rossi
+Peri Gilpin
+Kelly Hu
+Russell Wong
+Christopher Titus
+Dom DeLuise
+Kehli O&#39;Byrne
+Larenz Tate
+Maia Brewton
+Michael DeLuise
+Mario Van Peebles
+*
+Bridget Fonda
+Conor O&#39;Farrell
+Andrew Lauer
+Claude Brooks
+Margot Rose
+edit
+Don S. Davis
+Robert Romanus
+Rob Estes
+Stu Nahan
+Mario Van Peebles
+*
+Thomas Haden Church
+Billy Warlock
+Tony Plana
+Julie Warner
+Barbara Tarbuck
+Kamala Lopez
+Pamela Adlon
+Christine Elise
+Robyn Lively
+Vince Vaughn
+Mickey Jones
+Ray Baker
+Keith Coogan
+Shannen Doherty
+Wallace Langham
+Rosie Perez
+Don S. Davis
+Chick Hearn
+Kareem Abdul-Jabbar
+John Waters
+John Pyper-Ferguson
+Diedrich Bader
+Kelly Perine
+Kristin Dattilo
+edit
+Lisa Dean Ryan
+Scott Grimes
+Brigitta Dau
+Tony Dakota
+Perrey Reeves
+Johannah Newmarch
+Richard Leacock
+Pat Bermel
+Deanna Milligan
+Peter Outerbridge
+Don MacKay
+Terence Kelly
+Merrilyn Gann
+Ocean Hellman
+Lochlyn Munro
+Leslie Carlson
+David DeLuise
+Kamala Lopez
+Don S. Davis
+Jada Pinkett Smith
+^*
+edit
+Jump Street
+edit
+21 Jump Street
+IMDb
+v
+t
+e
+Jump Street
+21 Jump Street
+episodes
+Booker
+21 Jump Street
+22 Jump Street
+Score
+https://en.wikipedia.org/w/index.php?title=List_of_guest_stars_on_21_Jump_Street&amp;oldid=820109238
+Categories
+21 Jump Street
+Lists of actors by role
+Lists of American television series characters
+Lists of drama television characters
+Lists of guest appearances in television
+Talk
+Contributions
+Create account
+Log in
+Article
+Talk
+Read
+Edit
+View history
+
+Main page
+Contents
+Featured content
+Current events
+Random article
+Donate to Wikipedia
+Wikipedia store
+Help
+About Wikipedia
+Community portal
+Recent changes
+Contact page
+What links here
+Related changes
+Upload file
+Special pages
+Permanent link
+Page information
+Wikidata item
+Cite this page
+Create a book
+Download as PDF
+Printable version
+Add links
+Creative Commons Attribution-ShareAlike License
+
+Terms of Use
+Privacy Policy
+Wikimedia Foundation, Inc.
+Privacy policy
+About Wikipedia
+Disclaimers
+Contact Wikipedia
+Developers
+Cookie statement
+Mobile view
+
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [168]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+    <span class="n">column_mark</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+
+&lt;th&gt;Actor&lt;/th&gt;
+
+
+&lt;th&gt;Character&lt;/th&gt;
+
+
+&lt;th&gt;Season #&lt;/th&gt;
+
+
+&lt;th&gt;Episode #&lt;/th&gt;
+
+
+&lt;th&gt;Episode Title&lt;/th&gt;
+
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [159]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">cols</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[159]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>-1
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [96]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [98]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[98]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Actor&#39;, &#39;Character&#39;, &#39;Season&#39;, &#39;#&#39;, &#39;Episode&#39;, &#39;#&#39;, &#39;Episode&#39;, &#39;Title&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [99]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[99]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;Barney&#39;, &#39;Martin&#39;, &#39;Charlie&#39;, &#39;1&#39;, &#39;1&#39;, &#39;&quot;Pilot&quot;&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [104]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">HTMLTableParser</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">parse_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_html_table</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>\
+                    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">)]</span>
+
+        <span class="k">def</span> <span class="nf">parse_html_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+            <span class="n">n_columns</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">n_rows</span><span class="o">=</span><span class="mi">0</span>
+            <span class="n">column_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># Find number of rows and columns</span>
+            <span class="c1"># we also find the column titles if we can</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+
+                <span class="c1"># Determine the number of rows in the table</span>
+                <span class="n">td_tags</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">td_tags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">n_rows</span><span class="o">+=</span><span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">n_columns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># Set the number of columns for our table</span>
+                        <span class="n">n_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">td_tags</span><span class="p">)</span>
+
+                <span class="c1"># Handle column names if we find them</span>
+                <span class="n">th_tags</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;th&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">th_tags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">th</span> <span class="ow">in</span> <span class="n">th_tags</span><span class="p">:</span>
+                        <span class="n">column_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">th</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+
+            <span class="c1"># Safeguard on Column Titles</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_columns</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Column titles do not match the number of columns&quot;</span><span class="p">)</span>
+
+            <span class="n">columns</span> <span class="o">=</span> <span class="n">column_names</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_columns</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span><span class="p">,</span>
+                              <span class="n">index</span><span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_rows</span><span class="p">))</span>
+            <span class="n">row_marker</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;tr&#39;</span><span class="p">):</span>
+                <span class="n">column_marker</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">columns</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="n">row_marker</span><span class="p">,</span><span class="n">column_marker</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+                    <span class="n">column_marker</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">row_marker</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># Convert to float if possible</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [115]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">hp</span> <span class="o">=</span> <span class="n">HTMLTableParser</span><span class="p">()</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">parse_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="c1"># Grabbing the table from the tuple</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[115]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[wikitable]</td>
+      <td>Actor                Chara...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[wikitable]</td>
+      <td>Actor                Charact...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[wikitable]</td>
+      <td>Actor                Char...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[wikitable]</td>
+      <td>Actor             Character ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[wikitable]</td>
+      <td>Actor             Character ...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [114]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">table2</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">table2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[114]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Actor</th>
+      <th>Character</th>
+      <th>Season #</th>
+      <th>Episode #</th>
+      <th>Episode Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Barney Martin</td>
+      <td>Charlie</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brandon Douglas</td>
+      <td>Kenny Weckerle</td>
+      <td>1.0</td>
+      <td>1 &amp; 2</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Reginald T. Dorsey</td>
+      <td>Tyrell "Waxer" Thompson</td>
+      <td>1.0</td>
+      <td>1 &amp; 2</td>
+      <td>"Pilot"</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Billy Jayne</td>
+      <td>Mark Dorian</td>
+      <td>1.0</td>
+      <td>2</td>
+      <td>"America, What a Town"</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Steve Antin</td>
+      <td>Stevie Delano</td>
+      <td>1.0</td>
+      <td>2</td>
+      <td>"America, What a Town"</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [117]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[117]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Actor</th>
+      <th>Character</th>
+      <th>Season #</th>
+      <th>Episode #</th>
+      <th>Episode Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Kurtwood Smith</td>
+      <td>Spencer Phillips</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>"In the Custody of a Clown"</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ray Walston</td>
+      <td>Judge Desmond</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>"In the Custody of a Clown"</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Barney Martin</td>
+      <td>Edison Coulter</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>"In the Custody of a Clown"</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Jason Priestley</td>
+      <td>Brian Krompasick</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>"Two for the Road "</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Pauly Shore</td>
+      <td>Kenny Ryan</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>"Two for the Road"</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'32ed99b',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

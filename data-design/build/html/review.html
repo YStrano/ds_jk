@@ -1,0 +1,1062 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; Data and Design version 7150b89</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Data and Design version 7150b89" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="03-datafiles.html">Data Accession</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-ProjectA.html">Project A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-intro_to_scraping_I.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-scraping-jumpstreet.html">Scraping the Street</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_scraping_and_nltk.html">Webscraping and Natural Language Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Machine-Learning-Intro.html">Introduction to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_ML_Intro.html">Intro to Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="010-Decision-Trees.html">Decision Tree Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data and Design</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/review.ipynb" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">iris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-5-e424f79a46d4&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>sns<span class="ansi-blue-fg">.</span>jointplot<span class="ansi-blue-fg">(</span>data<span class="ansi-blue-fg">=</span>iris<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: jointplot() missing 2 required positional arguments: &#39;x&#39; and &#39;y&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">iris</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a157a9780&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/review_4_1.png" src="_images/review_4_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;petal_width&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">iris</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;seaborn.axisgrid.JointGrid at 0x1a157c9080&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/review_5_1.png" src="_images/review_5_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">iris</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;species&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;seaborn.axisgrid.PairGrid at 0x1a1ebb2438&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/review_6_1.png" src="_images/review_6_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gapminder</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/swcarpentry/python-novice-gapminder/gh-pages/data/asia_gdp_per_capita.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gapminder</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>'year'</th>
+      <th>'Afghanistan'</th>
+      <th>'Bahrain'</th>
+      <th>'Bangladesh'</th>
+      <th>'Cambodia'</th>
+      <th>'China'</th>
+      <th>'Hong Kong China'</th>
+      <th>'India'</th>
+      <th>'Indonesia'</th>
+      <th>'Iran'</th>
+      <th>...</th>
+      <th>'Philippines'</th>
+      <th>'Saudi Arabia'</th>
+      <th>'Singapore'</th>
+      <th>'Sri Lanka'</th>
+      <th>'Syria'</th>
+      <th>'Taiwan'</th>
+      <th>'Thailand'</th>
+      <th>'Vietnam'</th>
+      <th>'West Bank and Gaza'</th>
+      <th>'Yemen Rep.'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1952</td>
+      <td>779.445314</td>
+      <td>9867.084765</td>
+      <td>684.244172</td>
+      <td>368.469286</td>
+      <td>400.448611</td>
+      <td>3054.421209</td>
+      <td>546.565749</td>
+      <td>749.681655</td>
+      <td>3035.326002</td>
+      <td>...</td>
+      <td>1272.880995</td>
+      <td>6459.554823</td>
+      <td>2315.138227</td>
+      <td>1083.532030</td>
+      <td>1643.485354</td>
+      <td>1206.947913</td>
+      <td>757.797418</td>
+      <td>605.066492</td>
+      <td>1515.592329</td>
+      <td>781.717576</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1957</td>
+      <td>820.853030</td>
+      <td>11635.799450</td>
+      <td>661.637458</td>
+      <td>434.038336</td>
+      <td>575.987001</td>
+      <td>3629.076457</td>
+      <td>590.061996</td>
+      <td>858.900271</td>
+      <td>3290.257643</td>
+      <td>...</td>
+      <td>1547.944844</td>
+      <td>8157.591248</td>
+      <td>2843.104409</td>
+      <td>1072.546602</td>
+      <td>2117.234893</td>
+      <td>1507.861290</td>
+      <td>793.577415</td>
+      <td>676.285448</td>
+      <td>1827.067742</td>
+      <td>804.830455</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1962</td>
+      <td>853.100710</td>
+      <td>12753.275140</td>
+      <td>686.341554</td>
+      <td>496.913648</td>
+      <td>487.674018</td>
+      <td>4692.648272</td>
+      <td>658.347151</td>
+      <td>849.289770</td>
+      <td>4187.329802</td>
+      <td>...</td>
+      <td>1649.552153</td>
+      <td>11626.419750</td>
+      <td>3674.735572</td>
+      <td>1074.471960</td>
+      <td>2193.037133</td>
+      <td>1822.879028</td>
+      <td>1002.199172</td>
+      <td>772.049160</td>
+      <td>2198.956312</td>
+      <td>825.623201</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1967</td>
+      <td>836.197138</td>
+      <td>14804.672700</td>
+      <td>721.186086</td>
+      <td>523.432314</td>
+      <td>612.705693</td>
+      <td>6197.962814</td>
+      <td>700.770611</td>
+      <td>762.431772</td>
+      <td>5906.731805</td>
+      <td>...</td>
+      <td>1814.127430</td>
+      <td>16903.048860</td>
+      <td>4977.418540</td>
+      <td>1135.514326</td>
+      <td>1881.923632</td>
+      <td>2643.858681</td>
+      <td>1295.460660</td>
+      <td>637.123289</td>
+      <td>2649.715007</td>
+      <td>862.442146</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1972</td>
+      <td>739.981106</td>
+      <td>18268.658390</td>
+      <td>630.233627</td>
+      <td>421.624026</td>
+      <td>676.900092</td>
+      <td>8315.928145</td>
+      <td>724.032527</td>
+      <td>1111.107907</td>
+      <td>9613.818607</td>
+      <td>...</td>
+      <td>1989.374070</td>
+      <td>24837.428650</td>
+      <td>8597.756202</td>
+      <td>1213.395530</td>
+      <td>2571.423014</td>
+      <td>4062.523897</td>
+      <td>1524.358936</td>
+      <td>699.501644</td>
+      <td>3133.409277</td>
+      <td>1265.047031</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gapminder</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Index([&#39;&#39;year&#39;&#39;, &#39;&#39;Afghanistan&#39;&#39;, &#39;&#39;Bahrain&#39;&#39;, &#39;&#39;Bangladesh&#39;&#39;, &#39;&#39;Cambodia&#39;&#39;,
+       &#39;&#39;China&#39;&#39;, &#39;&#39;Hong Kong China&#39;&#39;, &#39;&#39;India&#39;&#39;, &#39;&#39;Indonesia&#39;&#39;, &#39;&#39;Iran&#39;&#39;,
+       &#39;&#39;Iraq&#39;&#39;, &#39;&#39;Israel&#39;&#39;, &#39;&#39;Japan&#39;&#39;, &#39;&#39;Jordan&#39;&#39;, &#39;&#39;Korea Dem. Rep.&#39;&#39;,
+       &#39;&#39;Korea Rep.&#39;&#39;, &#39;&#39;Kuwait&#39;&#39;, &#39;&#39;Lebanon&#39;&#39;, &#39;&#39;Malaysia&#39;&#39;, &#39;&#39;Mongolia&#39;&#39;,
+       &#39;&#39;Myanmar&#39;&#39;, &#39;&#39;Nepal&#39;&#39;, &#39;&#39;Oman&#39;&#39;, &#39;&#39;Pakistan&#39;&#39;, &#39;&#39;Philippines&#39;&#39;,
+       &#39;&#39;Saudi Arabia&#39;&#39;, &#39;&#39;Singapore&#39;&#39;, &#39;&#39;Sri Lanka&#39;&#39;, &#39;&#39;Syria&#39;&#39;, &#39;&#39;Taiwan&#39;&#39;,
+       &#39;&#39;Thailand&#39;&#39;, &#39;&#39;Vietnam&#39;&#39;, &#39;&#39;West Bank and Gaza&#39;&#39;, &#39;&#39;Yemen Rep.&#39;&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gapminder</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gap2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/gapminder.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">gap2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>'year'</th>
+      <th>'Afghanistan'</th>
+      <th>'Bahrain'</th>
+      <th>'Bangladesh'</th>
+      <th>'Cambodia'</th>
+      <th>'China'</th>
+      <th>'Hong Kong China'</th>
+      <th>'India'</th>
+      <th>'Indonesia'</th>
+      <th>...</th>
+      <th>'Philippines'</th>
+      <th>'Saudi Arabia'</th>
+      <th>'Singapore'</th>
+      <th>'Sri Lanka'</th>
+      <th>'Syria'</th>
+      <th>'Taiwan'</th>
+      <th>'Thailand'</th>
+      <th>'Vietnam'</th>
+      <th>'West Bank and Gaza'</th>
+      <th>'Yemen Rep.'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1952</td>
+      <td>779.445314</td>
+      <td>9867.084765</td>
+      <td>684.244172</td>
+      <td>368.469286</td>
+      <td>400.448611</td>
+      <td>3054.421209</td>
+      <td>546.565749</td>
+      <td>749.681655</td>
+      <td>...</td>
+      <td>1272.880995</td>
+      <td>6459.554823</td>
+      <td>2315.138227</td>
+      <td>1083.532030</td>
+      <td>1643.485354</td>
+      <td>1206.947913</td>
+      <td>757.797418</td>
+      <td>605.066492</td>
+      <td>1515.592329</td>
+      <td>781.717576</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1957</td>
+      <td>820.853030</td>
+      <td>11635.799450</td>
+      <td>661.637458</td>
+      <td>434.038336</td>
+      <td>575.987001</td>
+      <td>3629.076457</td>
+      <td>590.061996</td>
+      <td>858.900271</td>
+      <td>...</td>
+      <td>1547.944844</td>
+      <td>8157.591248</td>
+      <td>2843.104409</td>
+      <td>1072.546602</td>
+      <td>2117.234893</td>
+      <td>1507.861290</td>
+      <td>793.577415</td>
+      <td>676.285448</td>
+      <td>1827.067742</td>
+      <td>804.830455</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1962</td>
+      <td>853.100710</td>
+      <td>12753.275140</td>
+      <td>686.341554</td>
+      <td>496.913648</td>
+      <td>487.674018</td>
+      <td>4692.648272</td>
+      <td>658.347151</td>
+      <td>849.289770</td>
+      <td>...</td>
+      <td>1649.552153</td>
+      <td>11626.419750</td>
+      <td>3674.735572</td>
+      <td>1074.471960</td>
+      <td>2193.037133</td>
+      <td>1822.879028</td>
+      <td>1002.199172</td>
+      <td>772.049160</td>
+      <td>2198.956312</td>
+      <td>825.623201</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>1967</td>
+      <td>836.197138</td>
+      <td>14804.672700</td>
+      <td>721.186086</td>
+      <td>523.432314</td>
+      <td>612.705693</td>
+      <td>6197.962814</td>
+      <td>700.770611</td>
+      <td>762.431772</td>
+      <td>...</td>
+      <td>1814.127430</td>
+      <td>16903.048860</td>
+      <td>4977.418540</td>
+      <td>1135.514326</td>
+      <td>1881.923632</td>
+      <td>2643.858681</td>
+      <td>1295.460660</td>
+      <td>637.123289</td>
+      <td>2649.715007</td>
+      <td>862.442146</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1972</td>
+      <td>739.981106</td>
+      <td>18268.658390</td>
+      <td>630.233627</td>
+      <td>421.624026</td>
+      <td>676.900092</td>
+      <td>8315.928145</td>
+      <td>724.032527</td>
+      <td>1111.107907</td>
+      <td>...</td>
+      <td>1989.374070</td>
+      <td>24837.428650</td>
+      <td>8597.756202</td>
+      <td>1213.395530</td>
+      <td>2571.423014</td>
+      <td>4062.523897</td>
+      <td>1524.358936</td>
+      <td>699.501644</td>
+      <td>3133.409277</td>
+      <td>1265.047031</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 35 columns</p>
+</div></div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Jacob Frias Koehler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'7150b89',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
