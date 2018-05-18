@@ -123,8 +123,28 @@
 
 ### [Lesson 17: Feature Selection, Pipelines, and Evaluation](https://github.com/jfkoehler/Pipelines-and-Pickles)
 
-### [Lesson 18: Introduction to Neural Networks]()
+### [Lesson 18: Introduction to Neural Networks](https://github.com/jfkoehler/GA-FLASK)
 
+## Additional Resources
+
+For more information on this topic, check out:
+
+- [The Flask Documentation](http://flask.pocoo.org/docs/0.11/)
+- [A Flask tutorial to follow along with](https://github.com/miguelgrinberg/flask-pycon2014)
+- [Another tutorial that gets into CSS styling](https://code.tutsplus.com/tutorials/an-introduction-to-pythons-flask-framework--net-28822)
+- [The Flask mega tutorial](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ii-templates)
+- [Flask's development server is not for production](https://stackoverflow.com/questions/12269537/is-the-server-bundled-with-flask-safe-to-use-in-production)
+- [Setting up Flask on AWS EC2](http://bathompso.com/blog/Flask-AWS-Setup/). This should be your next step if you want to share your model with the world!
+- [A great guide to those weird "decorators"](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/).
+
+### Production coding
+
+- Add [logging](https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/) to your code; you'll be very glad you did.
+- Think ahead and include [error handling](https://eli.thegreenplace.net/2008/08/21/robust-exception-handling/), via [try/except clauses](https://jeffknupp.com/blog/2013/02/06/write-cleaner-python-use-exceptions/)
+- Get more comfortable with git, including [feature branching](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow).
+- Include [unit tests](http://www.diveintopython.net/unit_testing/index.html); the [pytest module](http://pythontesting.net/framework/pytest/pytest-introduction/) is great.
+- [Integrate databases](http://zetcode.com/db/sqlitepythontutorial/)!
+- Beware technical debt, especially [machine learning technical debt](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43146.pdf).
 
 ## In Course Projects
 
