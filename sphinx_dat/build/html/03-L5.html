@@ -1,0 +1,1791 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Regularized Methods &#8212; GA-DAT-3-20 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Further Regression Considerations" href="02-L5.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Regularized-Methods">
+<h1>Regularized Methods<a class="headerlink" href="#Regularized-Methods" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Feature Scaling</li>
+<li>Test/Train split</li>
+<li>Ridge, LASSO, Elastic Net Regression methods</li>
+</ul>
+<hr class="docutils" />
+<p>In a regular linear scenario, we start with a regular linear function.</p>
+<div class="math">
+\[\hat y = b + ax_0\]</div>
+<p>The mean square error of these predictions would be given by:</p>
+<div class="math">
+\[RSS(a, b) = \sum_{i = 1}^n(y_i -  (ax_i + b))^2\]</div>
+<p>From this basic <span class="math">\(MSE\)</span> formulation, we can introduce some
+Regularized methods that add a <em>regularization term</em> to the <span class="math">\(MSE\)</span>.
+We will look at three methods that offer slight variations on this term.</p>
+<div class="section" id="Feature-Scaling">
+<h2>Feature Scaling<a class="headerlink" href="#Feature-Scaling" title="Permalink to this headline">¶</a></h2>
+<p>To use these methods, we want to scale our data. Many Machine Learning
+algorithms don’t do well with data operating on very different scales.
+Using the <code class="docutils literal"><span class="pre">MinMaxScaler</span></code> normalizes the data and brings the values
+between 0 and 1. The <code class="docutils literal"><span class="pre">StandardScaler</span></code> method is less sensitive to wide
+ranges of values. We will use both on our Ames housing data. To begin,
+we need to select the numeric columns from the DataFrame so we can
+transform them only.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> notebook
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1">#get our data and select the numer</span>
+<span class="n">ames</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/ames_housing.csv&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">ames</span><span class="p">[</span><span class="s1">&#39;SalePrice&#39;</span><span class="p">]</span>
+<span class="n">ames</span> <span class="o">=</span> <span class="n">ames</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;SalePrice&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ames_numeric</span> <span class="o">=</span> <span class="n">ames</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span> <span class="o">=</span> <span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+<span class="n">ames_numeric</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>MSSubClass</th>
+      <th>LotArea</th>
+      <th>OverallQual</th>
+      <th>OverallCond</th>
+      <th>YearBuilt</th>
+      <th>YearRemodAdd</th>
+      <th>BsmtFinSF1</th>
+      <th>BsmtFinSF2</th>
+      <th>BsmtUnfSF</th>
+      <th>...</th>
+      <th>GarageArea</th>
+      <th>WoodDeckSF</th>
+      <th>OpenPorchSF</th>
+      <th>EnclosedPorch</th>
+      <th>3SsnPorch</th>
+      <th>ScreenPorch</th>
+      <th>PoolArea</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>60</td>
+      <td>8450</td>
+      <td>7</td>
+      <td>5</td>
+      <td>2003</td>
+      <td>2003</td>
+      <td>706</td>
+      <td>0</td>
+      <td>150</td>
+      <td>...</td>
+      <td>548</td>
+      <td>0</td>
+      <td>61</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>20</td>
+      <td>9600</td>
+      <td>6</td>
+      <td>8</td>
+      <td>1976</td>
+      <td>1976</td>
+      <td>978</td>
+      <td>0</td>
+      <td>284</td>
+      <td>...</td>
+      <td>460</td>
+      <td>298</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>60</td>
+      <td>11250</td>
+      <td>7</td>
+      <td>5</td>
+      <td>2001</td>
+      <td>2002</td>
+      <td>486</td>
+      <td>0</td>
+      <td>434</td>
+      <td>...</td>
+      <td>608</td>
+      <td>0</td>
+      <td>42</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>70</td>
+      <td>9550</td>
+      <td>7</td>
+      <td>5</td>
+      <td>1915</td>
+      <td>1970</td>
+      <td>216</td>
+      <td>0</td>
+      <td>540</td>
+      <td>...</td>
+      <td>642</td>
+      <td>0</td>
+      <td>35</td>
+      <td>272</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2006</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>60</td>
+      <td>14260</td>
+      <td>8</td>
+      <td>5</td>
+      <td>2000</td>
+      <td>2000</td>
+      <td>655</td>
+      <td>0</td>
+      <td>490</td>
+      <td>...</td>
+      <td>836</td>
+      <td>192</td>
+      <td>84</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2008</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Using-the-Scaler-on-a-DataFrame">
+<h2>Using the Scaler on a DataFrame<a class="headerlink" href="#Using-the-Scaler-on-a-DataFrame" title="Permalink to this headline">¶</a></h2>
+<p>Below, we can compare the results of the two scaling transformations by
+passing a list of column names to the scaler. Note the practice of
+initializing the object, fitting it, and transforming.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">std_scaled</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">minmax_scaled</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">cols</span> <span class="o">=</span> <span class="n">ames_numeric</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">std_df</span> <span class="o">=</span> <span class="n">std_scaled</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ames</span><span class="p">[[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]])</span>
+<span class="n">minmax_df</span> <span class="o">=</span> <span class="n">minmax_scaled</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ames</span><span class="p">[[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">std_df</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+      <th>32</th>
+      <th>33</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.730865</td>
+      <td>0.073375</td>
+      <td>-0.207142</td>
+      <td>0.651479</td>
+      <td>-0.517200</td>
+      <td>1.050994</td>
+      <td>0.878668</td>
+      <td>0.575425</td>
+      <td>-0.288653</td>
+      <td>-0.944591</td>
+      <td>...</td>
+      <td>0.351000</td>
+      <td>-0.752176</td>
+      <td>0.216503</td>
+      <td>-0.359325</td>
+      <td>-0.116339</td>
+      <td>-0.270208</td>
+      <td>-0.068692</td>
+      <td>-0.087688</td>
+      <td>-1.599111</td>
+      <td>0.138777</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.728492</td>
+      <td>-0.872563</td>
+      <td>-0.091886</td>
+      <td>-0.071836</td>
+      <td>2.179628</td>
+      <td>0.156734</td>
+      <td>-0.429577</td>
+      <td>1.171992</td>
+      <td>-0.288653</td>
+      <td>-0.641228</td>
+      <td>...</td>
+      <td>-0.060731</td>
+      <td>1.626195</td>
+      <td>-0.704483</td>
+      <td>-0.359325</td>
+      <td>-0.116339</td>
+      <td>-0.270208</td>
+      <td>-0.068692</td>
+      <td>-0.087688</td>
+      <td>-0.489110</td>
+      <td>-0.614439</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.726120</td>
+      <td>0.073375</td>
+      <td>0.073480</td>
+      <td>0.651479</td>
+      <td>-0.517200</td>
+      <td>0.984752</td>
+      <td>0.830215</td>
+      <td>0.092907</td>
+      <td>-0.288653</td>
+      <td>-0.301643</td>
+      <td>...</td>
+      <td>0.631726</td>
+      <td>-0.752176</td>
+      <td>-0.070361</td>
+      <td>-0.359325</td>
+      <td>-0.116339</td>
+      <td>-0.270208</td>
+      <td>-0.068692</td>
+      <td>-0.087688</td>
+      <td>0.990891</td>
+      <td>0.138777</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.723747</td>
+      <td>0.309859</td>
+      <td>-0.096897</td>
+      <td>0.651479</td>
+      <td>-0.517200</td>
+      <td>-1.863632</td>
+      <td>-0.720298</td>
+      <td>-0.499274</td>
+      <td>-0.288653</td>
+      <td>-0.061670</td>
+      <td>...</td>
+      <td>0.790804</td>
+      <td>-0.752176</td>
+      <td>-0.176048</td>
+      <td>4.092524</td>
+      <td>-0.116339</td>
+      <td>-0.270208</td>
+      <td>-0.068692</td>
+      <td>-0.087688</td>
+      <td>-1.599111</td>
+      <td>-1.367655</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.721374</td>
+      <td>0.073375</td>
+      <td>0.375148</td>
+      <td>1.374795</td>
+      <td>-0.517200</td>
+      <td>0.951632</td>
+      <td>0.733308</td>
+      <td>0.463568</td>
+      <td>-0.288653</td>
+      <td>-0.174865</td>
+      <td>...</td>
+      <td>1.698485</td>
+      <td>0.780197</td>
+      <td>0.563760</td>
+      <td>-0.359325</td>
+      <td>-0.116339</td>
+      <td>-0.270208</td>
+      <td>-0.068692</td>
+      <td>-0.087688</td>
+      <td>2.100892</td>
+      <td>0.138777</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">minmax_df</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+      <th>32</th>
+      <th>33</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.235294</td>
+      <td>0.033420</td>
+      <td>0.666667</td>
+      <td>0.500</td>
+      <td>0.949275</td>
+      <td>0.883333</td>
+      <td>0.125089</td>
+      <td>0.0</td>
+      <td>0.064212</td>
+      <td>...</td>
+      <td>0.386460</td>
+      <td>0.000000</td>
+      <td>0.111517</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.090909</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000685</td>
+      <td>0.000000</td>
+      <td>0.038795</td>
+      <td>0.555556</td>
+      <td>0.875</td>
+      <td>0.753623</td>
+      <td>0.433333</td>
+      <td>0.173281</td>
+      <td>0.0</td>
+      <td>0.121575</td>
+      <td>...</td>
+      <td>0.324401</td>
+      <td>0.347725</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.363636</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001371</td>
+      <td>0.235294</td>
+      <td>0.046507</td>
+      <td>0.666667</td>
+      <td>0.500</td>
+      <td>0.934783</td>
+      <td>0.866667</td>
+      <td>0.086109</td>
+      <td>0.0</td>
+      <td>0.185788</td>
+      <td>...</td>
+      <td>0.428773</td>
+      <td>0.000000</td>
+      <td>0.076782</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.727273</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.002056</td>
+      <td>0.294118</td>
+      <td>0.038561</td>
+      <td>0.666667</td>
+      <td>0.500</td>
+      <td>0.311594</td>
+      <td>0.333333</td>
+      <td>0.038271</td>
+      <td>0.0</td>
+      <td>0.231164</td>
+      <td>...</td>
+      <td>0.452750</td>
+      <td>0.000000</td>
+      <td>0.063985</td>
+      <td>0.492754</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.090909</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.002742</td>
+      <td>0.235294</td>
+      <td>0.060576</td>
+      <td>0.777778</td>
+      <td>0.500</td>
+      <td>0.927536</td>
+      <td>0.833333</td>
+      <td>0.116052</td>
+      <td>0.0</td>
+      <td>0.209760</td>
+      <td>...</td>
+      <td>0.589563</td>
+      <td>0.224037</td>
+      <td>0.153565</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>0.50</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 34 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Fit-a-Linear-Model-on-Scaled-Data">
+<h2>Fit a Linear Model on Scaled Data<a class="headerlink" href="#Fit-a-Linear-Model-on-Scaled-Data" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ames_numeric_scaled</span> <span class="o">=</span> <span class="n">std_scaled</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ames</span><span class="p">[[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ames_numeric_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/anaconda3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to &#39;gelss&#39; driver.
+  warnings.warn(mesg, RuntimeWarning)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ames_numeric_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ames_numeric_scaled</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R-squared score: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">RMSE: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+R-squared score: 1.0
+RMSE: 0.1457
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Splitting-the-Data">
+<h2>Splitting the Data<a class="headerlink" href="#Splitting-the-Data" title="Permalink to this headline">¶</a></h2>
+<p>As we have seen, we will tend to overfit the data if we use the entire
+dataset to determine the model. To account for this, we will split our
+datasets into a <strong>training set</strong> to build our model on, and a <strong>test
+set</strong> to evaluate the performance of the model. We have a handy sklearn
+method for doing this, who by default splits the data into 80% for
+training and 20% for testing.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">ames_numeric_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">pred</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+<span class="n">rmse</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[25]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>0.1907947761739675
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Regularized-Methods-Comparison">
+<h2>Regularized Methods Comparison<a class="headerlink" href="#Regularized-Methods-Comparison" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">crime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/crime_data.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">crime</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>population</th>
+      <th>householdsize</th>
+      <th>agePct12t21</th>
+      <th>agePct12t29</th>
+      <th>agePct16t24</th>
+      <th>agePct65up</th>
+      <th>numbUrban</th>
+      <th>pctUrban</th>
+      <th>medIncome</th>
+      <th>pctWWage</th>
+      <th>...</th>
+      <th>MedOwnCostPctInc</th>
+      <th>MedOwnCostPctIncNoMtg</th>
+      <th>NumInShelters</th>
+      <th>NumStreet</th>
+      <th>PctForeignBorn</th>
+      <th>PctBornSameState</th>
+      <th>PctSameHouse85</th>
+      <th>PctSameCity85</th>
+      <th>PctSameState85</th>
+      <th>ViolentCrimesPerPop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11980</td>
+      <td>3.10</td>
+      <td>12.47</td>
+      <td>21.44</td>
+      <td>10.93</td>
+      <td>11.33</td>
+      <td>11980</td>
+      <td>100.0</td>
+      <td>75122</td>
+      <td>89.24</td>
+      <td>...</td>
+      <td>21.1</td>
+      <td>14.0</td>
+      <td>11</td>
+      <td>0</td>
+      <td>10.66</td>
+      <td>53.72</td>
+      <td>65.29</td>
+      <td>78.09</td>
+      <td>89.14</td>
+      <td>41.02</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>23123</td>
+      <td>2.82</td>
+      <td>11.01</td>
+      <td>21.30</td>
+      <td>10.48</td>
+      <td>17.18</td>
+      <td>23123</td>
+      <td>100.0</td>
+      <td>47917</td>
+      <td>78.99</td>
+      <td>...</td>
+      <td>20.7</td>
+      <td>12.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8.30</td>
+      <td>77.17</td>
+      <td>71.27</td>
+      <td>90.22</td>
+      <td>96.12</td>
+      <td>127.56</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>29344</td>
+      <td>2.43</td>
+      <td>11.36</td>
+      <td>25.88</td>
+      <td>11.01</td>
+      <td>10.28</td>
+      <td>29344</td>
+      <td>100.0</td>
+      <td>35669</td>
+      <td>82.00</td>
+      <td>...</td>
+      <td>21.7</td>
+      <td>11.6</td>
+      <td>16</td>
+      <td>0</td>
+      <td>5.00</td>
+      <td>44.77</td>
+      <td>36.60</td>
+      <td>61.26</td>
+      <td>82.85</td>
+      <td>218.59</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16656</td>
+      <td>2.40</td>
+      <td>12.55</td>
+      <td>25.20</td>
+      <td>12.19</td>
+      <td>17.57</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>20580</td>
+      <td>68.15</td>
+      <td>...</td>
+      <td>20.6</td>
+      <td>14.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.04</td>
+      <td>88.71</td>
+      <td>56.70</td>
+      <td>90.17</td>
+      <td>96.24</td>
+      <td>306.64</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>140494</td>
+      <td>2.45</td>
+      <td>18.09</td>
+      <td>32.89</td>
+      <td>20.04</td>
+      <td>13.26</td>
+      <td>140494</td>
+      <td>100.0</td>
+      <td>21577</td>
+      <td>75.78</td>
+      <td>...</td>
+      <td>17.3</td>
+      <td>11.7</td>
+      <td>327</td>
+      <td>4</td>
+      <td>1.49</td>
+      <td>64.35</td>
+      <td>42.29</td>
+      <td>70.61</td>
+      <td>85.66</td>
+      <td>442.95</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 89 columns</p>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">y</span> <span class="o">=</span> <span class="n">crime</span><span class="p">[</span><span class="s1">&#39;ViolentCrimesPerPop&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X</span> <span class="o">=</span> <span class="n">crime</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;ViolentCrimesPerPop&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The r2 value is : </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The RMSE value is </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The r2 value is : 0.4786
+The RMSE value is 415.6595
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Ridge-Regression">
+<h2>Ridge Regression<a class="headerlink" href="#Ridge-Regression" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+\[RSS(w, b) = \sum_{i = 1} ^ N (y_i - (wx_i + b))^2 + \alpha \sum_{j = 1}^p w_j^2\]</div>
+<p>Many feature coefficients will be determined with small values. Larger
+<span class="math">\(\alpha\)</span> means larger penalty, zero is base LinearRegression, and
+the default for sklearn’s implementation is 1.0.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Ridge</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ridge_reg</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ridge_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[35]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Ridge(alpha=1, copy_X=True, fit_intercept=True, max_iter=None,
+   normalize=False, random_state=None, solver=&#39;cholesky&#39;, tol=0.001)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rpred</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rpred</span><span class="p">))</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The r2 value is : </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The RMSE value is </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The r2 value is : 0.4757
+The RMSE value is 416.7998
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ridge_reg</span><span class="o">.</span><span class="n">coef_</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[38]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>88
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">crime</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[39]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(1994, 89)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ridge_reg</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">ridge_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">rpred</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rpred</span><span class="p">))</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The r2 value is : </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The RMSE value is </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The r2 value is : 0.5295
+The RMSE value is 394.8400
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Lasso-Regression">
+<h2>Lasso Regression<a class="headerlink" href="#Lasso-Regression" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+\[RSS(w, b) = \sum_{i = 1} ^ N (y_i - (wx_i + b))^2 + \alpha \sum_{j = 1}^p |w_j|\]</div>
+<p>Now, we end up in effect setting variables with low influence to a
+coefficient of zero. Compared to Ridge, we would use Lasso if there are
+only a few variables with substantial effects.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lasso_reg</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lasso_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[43]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Lasso(alpha=2.0, copy_X=True, fit_intercept=True, max_iter=1000,
+   normalize=False, positive=False, precompute=False, random_state=None,
+   selection=&#39;cyclic&#39;, tol=0.0001, warm_start=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lpred</span> <span class="o">=</span> <span class="n">lasso_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">lpred</span><span class="p">))</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The r2 value is : </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">The RMSE value is </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The r2 value is : 0.5295
+The RMSE value is 423.7267
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lasso_reg</span><span class="o">.</span><span class="n">coef_</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[46]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>18
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">sorted</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">lasso_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)),</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+    <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="si">{}</span><span class="s1">, </span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+        PctKidsBornNeverMar, 1987.236
+        PctKids2Par, -842.249
+        PctVacantBoarded, 343.748
+        PctHousOccup, -331.982
+        PctForeignBorn, 328.357
+        MalePctDivorce, 292.700
+        NumInShelters, 248.496
+        MedOwnCostPctIncNoMtg, -192.645
+        PctWorkMom, -141.906
+        pctWInvInc, -136.523
+        pctUrban, 123.742
+        PctEmplManu, -113.120
+        MedYrHousBuilt, 82.142
+        pctWPubAsst, 71.706
+        agePct12t29, -59.647
+        RentQrange, 47.841
+        PctSameCity85, 45.718
+        OwnOccHiQuart, 15.365
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Elastic-Net">
+<h2>Elastic Net<a class="headerlink" href="#Elastic-Net" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+\[RSS(w, b) = \sum_{i = 1} ^ N (y_i - (wx_i + b))^2 + r\alpha\sum_{i = 1}^n |w_j| + \frac{1-r}{2} \alpha \sum_{j = 1}^p w_j^2\]</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">ElasticNet</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">elastic_reg</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">elastic_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">epred</span> <span class="o">=</span> <span class="n">elastic_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">epred</span><span class="p">))</span>
+<span class="n">rmse</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[49]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>395.9689402572352
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ridge_score</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">lasso_score</span> <span class="o">=</span> <span class="n">lasso_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">elastic_score</span> <span class="o">=</span> <span class="n">elastic_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ridge: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ridge_score</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Lasso: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lasso_score</span><span class="p">),</span>
+      <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Elastic Net: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elastic_score</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Ridge: 0.5295
+Lasso: 0.4582
+Elastic Net: 0.5268
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaled</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="PROBLEM">
+<h2>PROBLEM<a class="headerlink" href="#PROBLEM" title="Permalink to this headline">¶</a></h2>
+<p>Return to your Ames Data. We have covered a lot of ground today, so
+let’s summarize the things we could do to improve the performance of our
+original model that compared the Above Ground Living Area to the
+Logarithm of the Sale Price.</p>
+<div class="alert alert-info" role="alert"><ol class="arabic simple">
+<li>Clean data, drop missing values</li>
+<li>Transform data, code variables using either ordinal values or
+OneHotEncoder methods</li>
+<li>Create more features from existing features</li>
+<li>Split our data into testing and training sets</li>
+<li>Normalize quantitative features</li>
+<li>Use Regularized Regression methods and Polynomial regression to
+improve performance of model</li>
+</ol>
+</div><p>Can you use some or all of these ideas to improve upon your initial
+model?</p>
+</div>
+<div class="section" id="Additional-Resources">
+<h2>Additional Resources<a class="headerlink" href="#Additional-Resources" title="Permalink to this headline">¶</a></h2>
+<p>The last two lessons have pulled heavily from these resources. I
+recommend them all strongly as excellent resources:</p>
+<ul class="simple">
+<li>SciKitLearn documentation on Regression:
+<a class="reference external" href="http://scikit-learn.org/stable/supervised_learning.html#supervised-learning">http://scikit-learn.org/stable/supervised_learning.html#supervised-learning</a></li>
+<li>Aurelien Geron, <em>Hands on Machine Learning with SciKitLearn and
+TensorFlow</em></li>
+<li>James et. al, <em>An Introduction to Statistical Learning: With
+Applications in R</em></li>
+<li>Philipp K. Janert, <em>Data Analysis with OpenSource Tools</em></li>
+<li>University of Michigan Coursera Class on Machine Learning with
+SciKitLearn: <a class="reference external" href="https://www.coursera.org/learn/python-machine-learning">https://www.coursera.org/learn/python-machine-learning</a></li>
+<li>Stanford University course on Machine Learning:
+<a class="reference external" href="https://www.coursera.org/learn/machine-learning">https://www.coursera.org/learn/machine-learning</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="02-L5.html" title="previous chapter">Further Regression Considerations</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, JF Koehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/03-L5.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

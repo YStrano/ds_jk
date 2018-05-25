@@ -1,0 +1,1847 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Linear Regression &#8212; GA-DAT-3-20 1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Linear-Regression">
+<h1>Linear Regression<a class="headerlink" href="#Linear-Regression" title="Permalink to this headline">¶</a></h1>
+<p>Below, we have a simple dataset dealing with mammalian sleep time.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">an</span> <span class="n">updated</span> <span class="ow">and</span> <span class="n">expanded</span> <span class="n">version</span> <span class="n">of</span> <span class="n">the</span> <span class="n">mammals</span> <span class="n">sleep</span> <span class="n">dataset</span><span class="o">.</span> <span class="n">Updated</span> <span class="n">sleep</span> <span class="n">times</span> <span class="ow">and</span> <span class="n">weights</span> <span class="n">were</span> <span class="n">taken</span> <span class="kn">from</span> <span class="nn">V.</span> <span class="n">M</span><span class="o">.</span> <span class="n">Savage</span> <span class="ow">and</span> <span class="n">G</span><span class="o">.</span> <span class="n">B</span><span class="o">.</span> <span class="n">West</span><span class="o">.</span> <span class="n">A</span> <span class="n">quantitative</span><span class="p">,</span> <span class="n">theoretical</span> <span class="n">framework</span> <span class="k">for</span> <span class="n">understanding</span> <span class="n">mammalian</span> <span class="n">sleep</span><span class="o">.</span> <span class="n">Proceedings</span> <span class="n">of</span> <span class="n">the</span> <span class="n">National</span> <span class="n">Academy</span> <span class="n">of</span> <span class="n">Sciences</span><span class="p">,</span> <span class="mi">104</span> <span class="p">(</span><span class="mi">3</span><span class="p">):</span><span class="mi">1051</span><span class="o">-</span><span class="mi">1056</span><span class="p">,</span> <span class="mf">2007.</span>
+</pre></div>
+</div>
+<p>Let’s use this to examine the relationship between brain and bodyweight
+in these critters.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/mammals.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>genus</th>
+      <th>vore</th>
+      <th>order</th>
+      <th>conservation</th>
+      <th>sleep_total</th>
+      <th>sleep_rem</th>
+      <th>sleep_cycle</th>
+      <th>awake</th>
+      <th>brainwt</th>
+      <th>bodywt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Owl monkey</td>
+      <td>Aotus</td>
+      <td>omni</td>
+      <td>Primates</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>1.8</td>
+      <td>NaN</td>
+      <td>7.0</td>
+      <td>0.01550</td>
+      <td>0.480</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Greater short-tailed shrew</td>
+      <td>Blarina</td>
+      <td>omni</td>
+      <td>Soricomorpha</td>
+      <td>lc</td>
+      <td>14.9</td>
+      <td>2.3</td>
+      <td>0.133333</td>
+      <td>9.1</td>
+      <td>0.00029</td>
+      <td>0.019</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cow</td>
+      <td>Bos</td>
+      <td>herbi</td>
+      <td>Artiodactyla</td>
+      <td>domesticated</td>
+      <td>4.0</td>
+      <td>0.7</td>
+      <td>0.666667</td>
+      <td>20.0</td>
+      <td>0.42300</td>
+      <td>600.000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Dog</td>
+      <td>Canis</td>
+      <td>carni</td>
+      <td>Carnivora</td>
+      <td>domesticated</td>
+      <td>10.1</td>
+      <td>2.9</td>
+      <td>0.333333</td>
+      <td>13.9</td>
+      <td>0.07000</td>
+      <td>14.000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Roe deer</td>
+      <td>Capreolus</td>
+      <td>herbi</td>
+      <td>Artiodactyla</td>
+      <td>lc</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.0</td>
+      <td>0.09820</td>
+      <td>14.800</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;bodywt&#39;</span><span class="p">,</span> <span class="s1">&#39;brainwt&#39;</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x110ebf668&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_4_1.png" src="_images/04-L6_4_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">bodywt</span><span class="p">,</span> <span class="n">critters</span><span class="o">.</span><span class="n">brainwt</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">bodywt</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">brainwt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(array([52.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  1.,  1.]),
+ array([1.400000e-04, 5.713260e-01, 1.142512e+00, 1.713698e+00,
+        2.284884e+00, 2.856070e+00, 3.427256e+00, 3.998442e+00,
+        4.569628e+00, 5.140814e+00, 5.712000e+00]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_5_1.png" src="_images/04-L6_5_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span><span class="p">[</span><span class="s1">&#39;log_bodywt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">bodywt</span><span class="p">)</span>
+<span class="n">critters</span><span class="p">[</span><span class="s1">&#39;log_brainwt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">brainwt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">,</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(array([ 6.,  2.,  7.,  8., 12.,  4.,  9.,  5.,  1.,  2.]),
+ array([-8.87386814, -7.8122244 , -6.75058066, -5.68893693, -4.62729319,
+        -3.56564946, -2.50400572, -1.44236198, -0.38071825,  0.68092549,
+         1.74256923]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_7_1.png" src="_images/04-L6_7_1.png" />
+</div>
+</div>
+<div class="section" id="Similar-Model">
+<h2>Similar Model<a class="headerlink" href="#Similar-Model" title="Permalink to this headline">¶</a></h2>
+<p>Use the code below as a starting place to examine additional
+correlations between the dependent variables <code class="docutils literal"><span class="pre">sleep_rem</span></code> and
+<code class="docutils literal"><span class="pre">awake</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">log_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bodywt&#39;</span><span class="p">,</span> <span class="s1">&#39;brainwt&#39;</span><span class="p">,</span><span class="s1">&#39;sleep_rem&#39;</span><span class="p">,</span> <span class="s1">&#39;awake&#39;</span><span class="p">]</span>  <span class="c1"># add other relationships in need of transformation</span>
+<span class="n">log_critters</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">log_critters</span><span class="p">[</span><span class="n">log_columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_critters</span><span class="p">[</span><span class="n">log_columns</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 56 entries, 1 to 82
+Data columns (total 13 columns):
+name            56 non-null object
+genus           56 non-null object
+vore            51 non-null object
+order           56 non-null object
+conservation    36 non-null object
+sleep_total     56 non-null float64
+sleep_rem       48 non-null float64
+sleep_cycle     30 non-null float64
+awake           56 non-null float64
+brainwt         56 non-null float64
+bodywt          56 non-null float64
+log_bodywt      56 non-null float64
+log_brainwt     56 non-null float64
+dtypes: float64(8), object(5)
+memory usage: 8.6+ KB
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;sleep_rem&#39;</span><span class="p">,</span> <span class="s1">&#39;awake&#39;</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1118202e8&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_11_1.png" src="_images/04-L6_11_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">critters</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">sleep_rem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(array([5., 2., 1., 2., 2., 3., 3., 1., 0., 1.]),
+ array([0.6 , 1.03, 1.46, 1.89, 2.32, 2.75, 3.18, 3.61, 4.04, 4.47, 4.9 ]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_13_1.png" src="_images/04-L6_13_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">log_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bodywt&#39;</span><span class="p">,</span> <span class="s1">&#39;brainwt&#39;</span><span class="p">,</span><span class="s1">&#39;sleep_rem&#39;</span><span class="p">,</span> <span class="s1">&#39;awake&#39;</span><span class="p">]</span>  <span class="c1"># add other relationships in need of transformation</span>
+<span class="n">log_critters</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">log_critters</span><span class="p">[</span><span class="n">log_columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_critters</span><span class="p">[</span><span class="n">log_columns</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">log_critters</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;sleep_rem&#39;</span><span class="p">,</span> <span class="s1">&#39;awake&#39;</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x111eba390&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_15_1.png" src="_images/04-L6_15_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">log_critters</span><span class="o">.</span><span class="n">sleep_rem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>(array([2., 2., 1., 0., 3., 1., 3., 4., 3., 1.]),
+ array([-0.22184875, -0.13064427, -0.03943978,  0.0517647 ,  0.14296918,
+         0.23417367,  0.32537815,  0.41658263,  0.50778711,  0.5989916 ,
+         0.69019608]),
+ &lt;a list of 10 Patch objects&gt;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_16_1.png" src="_images/04-L6_16_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="SciKitLearn-Example">
+<h2>SciKitLearn Example<a class="headerlink" href="#SciKitLearn-Example" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">feature_selection</span>
+
+
+<span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span>
+<span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">pvals</span> <span class="o">=</span> <span class="n">feature_selection</span><span class="o">.</span><span class="n">f_regression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">coef_</span>
+<span class="n">y_int</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-Values: &#39;</span><span class="p">,</span><span class="n">pvals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coefficients: &#39;</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Intercept: &#39;</span><span class="p">,</span> <span class="n">y_int</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2 Score: &#39;</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+P-Values:  [5.81867221e-15]
+Coefficients:  [0.70604083]
+Intercept:  -5.0593949533633324
+R2 Score:  0.9684556562664695
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/anaconda3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to &#39;gelss&#39; driver.
+  warnings.warn(mesg, RuntimeWarning)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">,</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predictions</span> <span class="o">-</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2 Score: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RMSE: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))))</span>
+<span class="n">skew</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">predictions</span> <span class="o">-</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)])</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Residual Skew: &#39;</span><span class="p">,</span> <span class="n">skew</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pvalues : &#39;</span><span class="p">,</span><span class="n">pvals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+R2 Score: 0.9685
+RMSE: 5.2114
+Residual Skew:  0   -1.086958
+dtype: float64
+Pvalues :  [5.81867221e-15]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_19_1.png" src="_images/04-L6_19_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Modularizing-the-Evaluation">
+<h2>Modularizing the Evaluation<a class="headerlink" href="#Modularizing-the-Evaluation" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
+    <span class="n">pvals</span> <span class="o">=</span> <span class="n">feature_selection</span><span class="o">.</span><span class="n">f_regression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">coefficients</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">coef_</span>
+    <span class="n">y_int</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">intercept_</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">predictions</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-Values: &#39;</span><span class="p">,</span><span class="n">pvals</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coefficients: &#39;</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Intercept: &#39;</span><span class="p">,</span> <span class="n">y_int</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2 Score: &#39;</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">residuals</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">algo</span> <span class="o">=</span> <span class="n">lm</span><span class="p">)</span>
+
+
+
+
+
+
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+P-Values:  [5.81867221e-15]
+Coefficients:  [0.70604083]
+Intercept:  -5.0593949533633324
+R2 Score:  0.9684556562664695
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_22_2.png" src="_images/04-L6_22_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Intercept">
+<h2>Intercept<a class="headerlink" href="#Intercept" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[26]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([-5.05939495])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span>
+<span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[29]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=False, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([0.])
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">,</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">log_bodywt</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predictions</span> <span class="o">-</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2 Score: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RMSE: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))))</span>
+<span class="n">skew</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">predictions</span> <span class="o">-</span> <span class="n">critters</span><span class="o">.</span><span class="n">log_brainwt</span><span class="p">)])</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Residual Skew: &#39;</span><span class="p">,</span> <span class="n">skew</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+R2 Score: -3.3423
+RMSE: 5.2114
+Residual Skew:  0   -1.086958
+dtype: float64
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_27_1.png" src="_images/04-L6_27_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Using-LinearRegression">
+<h2>Using <code class="docutils literal"><span class="pre">LinearRegression</span></code><a class="headerlink" href="#Using-LinearRegression" title="Permalink to this headline">¶</a></h2>
+<p>We have now seen that the data in its earliest state did not allow fo
+the best linear regression fit. Attempt to generate two more models
+using the log-transformed data to see how this changes the model’s
+performance. Update X and y to match the log-transformed data and add
+True and False to the loop so we examine each scenario.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">sleep_total</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">critters</span><span class="o">.</span><span class="n">sleep_rem</span><span class="p">)</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">boolean</span> <span class="ow">in</span> <span class="n">loop</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;y-intercept:&#39;</span><span class="p">,</span> <span class="n">boolean</span><span class="p">)</span>
+    <span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">fit_intercept</span><span class="o">=</span><span class="n">boolean</span><span class="p">)</span>
+    <span class="n">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lm</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+y-intercept: True
+P-Values:  [1.75893488e-05]
+Coefficients:  [1.00280053]
+Intercept:  -1.6665711805104912
+R2 Score:  0.6501852799095109
+
+y-intercept: False
+P-Values:  [1.75893488e-05]
+Coefficients:  [0.31440803]
+Intercept:  0.0
+R2 Score:  0.3299559230103468
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/anaconda3/lib/python3.6/site-packages/ipykernel_launcher.py:1: FutureWarning: reshape is deprecated and will raise in a subsequent release. Please use .values.reshape(...) instead
+  &#34;&#34;&#34;Entry point for launching an IPython kernel.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_29_2.png" src="_images/04-L6_29_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Base-Regression-Classes">
+<h2>Base Regression Classes<a class="headerlink" href="#Base-Regression-Classes" title="Permalink to this headline">¶</a></h2>
+<p>Compare the earlier model to implementations of the <code class="docutils literal"><span class="pre">Lasso,</span> <span class="pre">Ridge</span></code> and
+<code class="docutils literal"><span class="pre">ElasticNet</span></code> regularized models.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">ElasticNet</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lasso</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">()</span>
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">()</span>
+<span class="n">enet</span> <span class="o">=</span> <span class="n">ElasticNet</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lasso</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+P-Values:  [1.75893488e-05]
+Coefficients:  [0.]
+Intercept:  0.6562802408598044
+R2 Score:  0.0
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[42]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Lasso(alpha=1.0, copy_X=True, fit_intercept=True, max_iter=1000,
+   normalize=False, positive=False, precompute=False, random_state=None,
+   selection=&#39;cyclic&#39;, tol=0.0001, warm_start=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_33_2.png" src="_images/04-L6_33_2.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ridge</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+P-Values:  [1.75893488e-05]
+Coefficients:  [0.83125448]
+Intercept:  -1.2692080241453652
+R2 Score:  0.6311583173621546
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[43]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Ridge(alpha=1.0, copy_X=True, fit_intercept=True, max_iter=None,
+   normalize=False, random_state=None, solver=&#39;auto&#39;, tol=0.001)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_34_2.png" src="_images/04-L6_34_2.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">get_linear_model_metrics</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">enet</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+P-Values:  [1.75893488e-05]
+Coefficients:  [0.]
+Intercept:  0.6562802408598044
+R2 Score:  0.0
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[44]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>ElasticNet(alpha=1.0, copy_X=True, fit_intercept=True, l1_ratio=0.5,
+      max_iter=1000, normalize=False, positive=False, precompute=False,
+      random_state=None, selection=&#39;cyclic&#39;, tol=0.0001, warm_start=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_35_2.png" src="_images/04-L6_35_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="CitiBike-Example">
+<h2>CitiBike Example<a class="headerlink" href="#CitiBike-Example" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">bikes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/bikeshare.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">bikes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>instant</th>
+      <th>dteday</th>
+      <th>season</th>
+      <th>yr</th>
+      <th>mnth</th>
+      <th>hr</th>
+      <th>holiday</th>
+      <th>weekday</th>
+      <th>workingday</th>
+      <th>weathersit</th>
+      <th>temp</th>
+      <th>atemp</th>
+      <th>hum</th>
+      <th>windspeed</th>
+      <th>casual</th>
+      <th>registered</th>
+      <th>cnt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.24</td>
+      <td>0.2879</td>
+      <td>0.81</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>13</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.22</td>
+      <td>0.2727</td>
+      <td>0.80</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>32</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.22</td>
+      <td>0.2727</td>
+      <td>0.80</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>27</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.24</td>
+      <td>0.2879</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>10</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.24</td>
+      <td>0.2879</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="k">import</span> <span class="n">scatter_matrix</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">bikes</span><span class="p">[[</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;atemp&#39;</span><span class="p">,</span> <span class="s1">&#39;casual&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_40_0.png" src="_images/04-L6_40_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">correlations</span> <span class="o">=</span> <span class="n">bikes</span><span class="p">[[</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;atemp&#39;</span><span class="p">,</span> <span class="s1">&#39;casual&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">correlations</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlations</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+            temp     atemp    casual
+temp    1.000000  0.987672  0.459616
+atemp   0.987672  1.000000  0.454080
+casual  0.459616  0.454080  1.000000
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[49]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x118c88da0&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/04-L6_41_2.png" src="_images/04-L6_41_2.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">y</span> <span class="o">=</span> <span class="n">bikes</span><span class="p">[</span><span class="s1">&#39;casual&#39;</span><span class="p">]</span>
+<span class="n">x_sets</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;atemp&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">,</span> <span class="s1">&#39;atemp&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_sets</span><span class="p">:</span>
+    <span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">bikes</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score for &#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">bikes</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">y</span><span class="p">)),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">coefficients&#39;</span><span class="p">,</span> <span class="n">lm</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Score for  [&#39;temp&#39;] 0.183
+coefficients [77.7759093]
+
+Score for  [&#39;atemp&#39;] 0.173
+coefficients [81.36647969]
+
+Score for  [&#39;temp&#39;, &#39;atemp&#39;] 0.189
+coefficients [ 193.59735771 -122.24947894]
+
+</pre></div></div>
+</div>
+<p>Even though the 2-variable model temp + atemp has a higher explanation
+of variance than two variables on their own, and both variables are
+considered significant (p values approaching 0), we can see that
+together, their coefficients are wildly different. This can introduce
+error in how we explain models.</p>
+<p>What happens if we use a second variable that isn’t highly correlated
+with temperature, like humidity?</p>
+</div>
+<div class="section" id="Multicollinearity-with-dummy-variables">
+<h2>Multicollinearity with dummy variables<a class="headerlink" href="#Multicollinearity-with-dummy-variables" title="Permalink to this headline">¶</a></h2>
+<p>There can be a similar effect from a feature set that is a singular
+matrix, which is when there is a clear relationship in the matrix (for
+example, the sum of all rows = 1).</p>
+<p>Run through the following code on your own. What happens to the
+coefficients when you include all weather situations instead of just
+including all except one?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">bikes</span><span class="o">.</span><span class="n">weathersit</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;weather_&#39;</span><span class="p">)</span>
+<span class="n">weather</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[59]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weather__1</th>
+      <th>weather__2</th>
+      <th>weather__3</th>
+      <th>weather__4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">bikes</span> <span class="o">=</span> <span class="n">bikes</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">bikes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">bikes</span><span class="p">[[</span><span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="s1">&#39;weather_1&#39;</span><span class="p">,</span> <span class="s1">&#39;weather_2&#39;</span><span class="p">]]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span>
+<span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[61]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>instant</th>
+      <th>dteday</th>
+      <th>season</th>
+      <th>yr</th>
+      <th>mnth</th>
+      <th>hr</th>
+      <th>holiday</th>
+      <th>weekday</th>
+      <th>workingday</th>
+      <th>weathersit</th>
+      <th>...</th>
+      <th>atemp</th>
+      <th>hum</th>
+      <th>windspeed</th>
+      <th>casual</th>
+      <th>registered</th>
+      <th>cnt</th>
+      <th>weather__1</th>
+      <th>weather__2</th>
+      <th>weather__3</th>
+      <th>weather__4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.2879</td>
+      <td>0.81</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>13</td>
+      <td>16</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.2727</td>
+      <td>0.80</td>
+      <td>0.0</td>
+      <td>8</td>
+      <td>32</td>
+      <td>40</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.2727</td>
+      <td>0.80</td>
+      <td>0.0</td>
+      <td>5</td>
+      <td>27</td>
+      <td>32</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.2879</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>3</td>
+      <td>10</td>
+      <td>13</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2011-01-01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.2879</td>
+      <td>0.75</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.023349865121625624
+[4.05237297e+12 4.05237297e+12 4.05237297e+12 4.05237297e+12]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">weather</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">weather</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">y</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-57-9914e36f5b4a&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>lm<span class="ansi-blue-fg">.</span>fit<span class="ansi-blue-fg">(</span>weather<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> print<span class="ansi-blue-fg">(</span>lm<span class="ansi-blue-fg">.</span>score<span class="ansi-blue-fg">(</span>weather<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> print<span class="ansi-blue-fg">(</span>lm<span class="ansi-blue-fg">.</span>coef_<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ansi-cyan-fg">__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2131</span>         <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>Series<span class="ansi-blue-fg">,</span> np<span class="ansi-blue-fg">.</span>ndarray<span class="ansi-blue-fg">,</span> Index<span class="ansi-blue-fg">,</span> list<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2132</span>             <span class="ansi-red-fg"># either boolean or fancy integer index</span>
+<span class="ansi-green-fg">-&gt; 2133</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getitem_array<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2134</span>         <span class="ansi-green-fg">elif</span> isinstance<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> DataFrame<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2135</span>             <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getitem_frame<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py</span> in <span class="ansi-cyan-fg">_getitem_array</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2175</span>             <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_take<span class="ansi-blue-fg">(</span>indexer<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> convert<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2176</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2177</span><span class="ansi-red-fg">             </span>indexer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>loc<span class="ansi-blue-fg">.</span>_convert_to_indexer<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2178</span>             <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_take<span class="ansi-blue-fg">(</span>indexer<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> convert<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2179</span>
+
+<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/pandas/core/indexing.py</span> in <span class="ansi-cyan-fg">_convert_to_indexer</span><span class="ansi-blue-fg">(self, obj, axis, is_setter)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1267</span>                 <span class="ansi-green-fg">if</span> mask<span class="ansi-blue-fg">.</span>any<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1268</span>                     raise KeyError(&#39;{mask} not in index&#39;
+<span class="ansi-green-fg">-&gt; 1269</span><span class="ansi-red-fg">                                    .format(mask=objarr[mask]))
+</span><span class="ansi-green-intense-fg ansi-bold">   1270</span>
+<span class="ansi-green-intense-fg ansi-bold">   1271</span>                 <span class="ansi-green-fg">return</span> _values_from_object<span class="ansi-blue-fg">(</span>indexer<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">KeyError</span>: &#39;[1 2 3] not in index&#39;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Problem">
+<h2>Problem<a class="headerlink" href="#Problem" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Add the dummy variables for the weather situations to the DataFrame.</li>
+<li>Find at least two additional features that are not correlated with
+current features but could be strong indicators for predicting guest
+riders.</li>
+<li>Fit a model to these features, describe the results.</li>
+</ol>
+<hr class="docutils" />
+<p><strong>Extra</strong></p>
+<p>Generate your model using a <code class="docutils literal"><span class="pre">train_test_split</span></code>, and evaluate it on the
+test set.</p>
+<p>Do this five times and determine the quality of the average of these
+models.</p>
+<hr class="docutils" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, JF Koehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/04-L6.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
